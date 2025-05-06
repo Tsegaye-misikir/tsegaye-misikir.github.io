@@ -11,7 +11,7 @@ I'm a researcher and lecturer in NLP at the University of Groningen. I focus on:
 - Empowering low-resource languages
 - Scalable AI for education and emotion-aware systems
 
-You can read more on my [Google Scholar](#), [ORCID](#), or [LinkedIn](#).
+You can read more on my [Google Scholar](https://scholar.google.co.uk/citations?user=PtsMPscAAAAJ&hl=en), [ORCID](#), or [LinkedIn](#).
 
 ---
 
