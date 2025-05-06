@@ -16,9 +16,8 @@ I teach and coordinate several courses in Artificial Intelligence and Natural La
 Here are some of the courses I have taught:
 
 - **Natural Language Processing**
-- **Machine Learning**
-- **Deep Learning**
-- **AI for Education**
-- **Multilingual NLP**
+- **Large Language Models**
+- **Language Techology Practical**
+- **Artificial Intelligence 1**
 
 For detailed descriptions, schedules, and materials, please refer to the [Ocasys page](https://ocasys.rug.nl/current/staff/t.m.tashu).
