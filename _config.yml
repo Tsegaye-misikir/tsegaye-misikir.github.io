@@ -4,3 +4,8 @@ theme: minima
 author: Tsegaye M. Tashu
 email: your.email@example.com
 github_username: your-username
+
+nav:
+  - Home: /
+  - About: /about
+  - Courses: /courses
