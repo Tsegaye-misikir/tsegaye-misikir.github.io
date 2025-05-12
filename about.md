@@ -9,9 +9,9 @@ I am **Tsegaye M. Tashu**, an Assistant Professor in **Natural Language Processi
 
 My research focuses on **human-centered NLP**, with an emphasis on:
 
-- 🌍 **Multilingual Representation Learning** — especially for low-resource languages like Amharic and North African dialects  
-- 🎓 **AI for Education** — building adaptive learning systems and automated feedback tools  
-- 💬 **Emotion Recognition** — developing emotionally intelligent dialogue systems
+- **Multilingual Representation Learning** — especially for low-resource languages like Amharic and North African dialects  
+- **AI for Education** — building adaptive learning systems and automated feedback tools  
+- **Emotion Recognition** — developing emotionally intelligent dialogue systems
 
 I have extensive teaching experience across institutions in Europe and Africa, and I currently coordinate and teach courses such as **Natural Language Processing**, **Artificial Intelligence**, and **Large Language Models**.
 
