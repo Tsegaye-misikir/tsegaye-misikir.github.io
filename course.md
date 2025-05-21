@@ -20,6 +20,6 @@ Here are some of the courses I have taught:
 - **Language Techology Practical**
 - **Artificial Intelligence 1**
 
-  5. **Mahajan, V.**, **Birihanu, E.**, & **Tashu, T. M.**  <a href="https://ceur-ws.org/Vol-3792/paper3.pdf" target="_blank"> _A Dynamic Session-Based Recommendation System with Graph Neural Networks_  *(Conference name not specified)*, 2024.
+  5. **Mahajan, V.**, **Birihanu, E.**, & **Tashu, T. M.**  <a href="https://ceur-ws.org/Vol-3792/paper3.pdf" target="_blank"> _A Dynamic Session-Based Recommendation System with Graph Neural Networks_ </a> *(Conference name not specified)*, 2024.
 
 For detailed descriptions, schedules, and materials, please refer to the [Ocasys page](https://ocasys.rug.nl/current/staff/t.m.tashu).
