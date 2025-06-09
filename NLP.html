@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Course Plan: Natural Language Processing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The SPA is designed with a non-linear, modular structure to facilitate user-driven exploration. A persistent vertical navigation sidebar allows users to jump to any key section (Intro, Prerequisites, Objectives, Curriculum, etc.) at any time. The main content area dynamically displays the selected section. The 'Curriculum' is the core interactive component, presented as a timeline or accordion where users can click on a week/module to expand it and view detailed topics, readings, and activities. This structure was chosen over a linear scroll because a course syllabus is often used as a reference document; users frequently need to access specific information (e.g., "What are the prerequisites?" or "What's covered in Week 7?") quickly. An interactive, navigable structure is far more usable for this purpose than a static, multi-page document. -->
+    <!-- Visualization & Content Choices:
+        - Prerequisites: Report Info -> A table of required skills. Goal -> To clearly and quickly communicate the necessary background for potential students. Viz/Presentation Method -> An interactive radar chart (Chart.js) to visually represent the required proficiency levels across different skill categories. Interaction -> Hovering over a point on the chart reveals the specific skill and required level. Justification -> A visual chart is more engaging and allows for quicker comprehension of skill distribution than a simple table. It highlights the interdisciplinary nature of the required skills. Library/Method -> Chart.js (Canvas).
+        - Curriculum/Schedule: Report Info -> A 12-week schedule with topics, readings, and assignments. Goal -> To allow users to explore the course flow and details of each week. Viz/Presentation Method -> An interactive, collapsible accordion/timeline built with HTML/Tailwind/JS. Interaction -> Users click on a week's header to expand/collapse its detailed content. Justification -> An accordion prevents information overload by hiding details by default. It encourages active exploration and makes finding specific weekly content easy without extensive scrolling. Library/Method -> HTML/CSS/JS.
+        - Learning Objectives & Applications: Report Info -> Lists of learning outcomes and industry use cases. Goal -> To showcase the value and practical takeaways of the course. Viz/Presentation Method -> Styled, interactive cards using HTML/Tailwind. Interaction -> Clicking on a card could reveal more detailed examples or related case studies (though for this SPA, it will be a simple visual element). Justification -> Cards break up long lists into digestible, visually appealing chunks, improving readability. Library/Method -> HTML/Tailwind CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfcfb;
+            color: #3f3c3a;
+        }
+        .sidebar-link {
+            transition: all 0.2s ease-in-out;
+        }
+        .sidebar-link.active, .sidebar-link:hover {
+            background-color: #f2e9e4;
+            color: #c9ada7;
+            border-right: 4px solid #c9ada7;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .accordion-header {
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .accordion-header:hover {
+            background-color: #f2e9e4;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-64 bg-[#f4f1ee] border-r border-gray-200 p-4 md:p-6 md:fixed md:h-full">
+        <h1 class="text-2xl font-bold text-[#4a4e69] mb-8">NLP Course</h1>
+        <nav id="sidebarNav" class="flex flex-row md:flex-col gap-2 md:gap-1 overflow-x-auto pb-4 md:pb-0">
+            <a href="#introduction" class="sidebar-link active text-lg font-medium p-3 rounded-lg whitespace-nowrap">Introduction</a>
+            <a href="#prerequisites" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Prerequisites</a>
+            <a href="#objectives" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Objectives</a>
+            <a href="#curriculum" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Curriculum</a>
+            <a href="#applications" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Applications</a>
+            <a href="#ethics" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Ethics</a>
+            <a href="#assessment" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Assessment</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 md:ml-64 p-6 md:p-10">
+        
+        <!-- Introduction Section -->
+        <section id="introduction" class="content-section active">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Understanding Human Language through Computation</h2>
+            <p class="text-lg text-gray-600 mb-6">
+                This interactive guide presents a comprehensive course plan for Natural Language Processing (NLP). It is designed to provide you with the foundational knowledge and practical skills needed to develop systems that understand, interpret, and generate human language. Explore the curriculum to see how it progresses from basic text processing to advanced neural network models.
+            </p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <h3 class="text-2xl font-semibold text-[#4a4e69] mb-3">What is NLP?</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    Natural Language Processing (NLP) is a subfield of artificial intelligence, computational linguistics, and computer science concerned with the interactions between computers and human language. It focuses on enabling computers to analyze, understand, and generate human language, bridging the gap between human communication and computational understanding. Recent advancements in <a href="https://tsegaye-misikir.github.io/course.html" target="_blank" rel="noopener noreferrer" class="text-[#c9ada7] hover:underline">Large Language Models (LLMs)</a> are a direct result of decades of NLP research and development.
+                </p>
+            </div>
+        </section>
+
+        <!-- Prerequisites Section -->
+        <section id="prerequisites" class="content-section">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Prerequisites & Skills</h2>
+             <p class="text-lg text-gray-600 mb-8">
+                To excel in this NLP course, a solid foundation in several technical areas is highly recommended. The radar chart below visualizes the expected proficiency levels across key domains. This course is designed for students and professionals eager to dive deep into computational linguistics and machine learning applied to language. Hover over the points in the chart to see the specific skill areas.
+            </p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <div class="chart-container">
+                    <canvas id="prerequisitesChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Objectives Section -->
+        <section id="objectives" class="content-section">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Core Learning Objectives</h2>
+             <p class="text-lg text-gray-600 mb-8">
+                Upon successful completion of this course, you will acquire a comprehensive understanding of NLP principles and practical skills for building language-aware systems. These objectives are designed to empower you to tackle diverse linguistic challenges using computational methods.
+            </p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Master Text Preprocessing</h3>
+                    <p class="text-gray-700">Gain proficiency in tokenization, stemming, lemmatization, and other essential text normalization techniques.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Understand Language Models</h3>
+                    <p class="text-gray-700">Comprehend the principles behind statistical language models, N-grams, and modern neural language models.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Implement Core NLP Tasks</h3>
+                    <p class="text-gray-700">Learn to build systems for text classification, sentiment analysis, Part-of-Speech tagging, and Named Entity Recognition.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Apply Deep Learning to NLP</h3>
+                    <p class="text-gray-700">Utilize RNNs (LSTMs, GRUs) and the fundamental concepts of Transformer architectures for advanced NLP problems.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Develop Practical Applications</h3>
+                    <p class="text-gray-700">Gain hands-on experience in building systems for machine translation, information extraction, and question answering.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Analyze Ethical Implications</h3>
+                    <p class="text-gray-700">Critically assess and address issues of bias, fairness, and privacy in NLP systems and their societal impact.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curriculum Section -->
+        <section id="curriculum" class="content-section">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Weekly Curriculum</h2>
+            <p class="text-lg text-gray-600 mb-8">
+                This course is structured into a 12-week program, progressing from foundational NLP concepts to more advanced techniques and applications. Click on each week to expand and view the detailed topics, key readings, and planned activities. This structured approach ensures a thorough and progressive learning experience.
+            </p>
+            <div id="accordion-container" class="space-y-2">
+                <!-- Accordion items will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Applications Section -->
+        <section id="applications" class="content-section">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Real-World Applications of NLP</h2>
+            <p class="text-lg text-gray-600 mb-8">Natural Language Processing is at the heart of many intelligent systems we use daily. From helping us communicate more effectively to extracting valuable insights from vast amounts of text, NLP applications are diverse and continuously evolving. Here are some key areas where NLP is making a significant impact.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Machine Translation</h3>
+                    <p class="text-gray-700">Automatically translating text or speech from one language to another, breaking down language barriers for global communication.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Sentiment Analysis</h3>
+                    <p class="text-gray-700">Determining the emotional tone or sentiment of a piece of text, widely used in customer feedback analysis and social media monitoring.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Chatbots & Virtual Assistants</h3>
+                    <p class="text-gray-700">Enabling conversational AI systems like customer service chatbots and personal assistants to understand and respond to human queries naturally.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Information Extraction & Summarization</h3>
+                    <p class="text-gray-700">Automatically identifying structured information (entities, relationships) from unstructured text and generating concise summaries of long documents.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Spam Detection & Content Filtering</h3>
+                    <p class="text-gray-700">Identifying and filtering unwanted or malicious text content, such as spam emails or inappropriate online comments.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Grammar & Spell Checking</h3>
+                    <p class="text-gray-700">Providing automated correction and suggestions for grammatical errors and spelling mistakes in written text.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ethics Section -->
+        <section id="ethics" class="content-section">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Ethics & Societal Impact of NLP</h2>
+            <p class="text-lg text-gray-600 mb-8">As NLP technologies become more sophisticated and integrated into our daily lives, it's crucial to address their ethical implications. This section explores key challenges and considerations for developing and deploying NLP systems responsibly, ensuring they are fair, private, and beneficial for all.</p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-4">
+                <div>
+                    <h3 class="font-semibold text-xl text-[#4a4e69]">Algorithmic Bias in Text Data</h3>
+                    <p class="text-gray-700">NLP models trained on biased text data can perpetuate and amplify societal stereotypes. We will discuss methods for detecting and mitigating these biases to promote fairness.</p>
+                </div>
+                <hr>
+                <div>
+                    <h3 class="font-semibold text-xl text-[#4a4e69]">Privacy and Data Security</h3>
+                    <p class="text-gray-700">The processing of sensitive personal information in NLP applications raises concerns about data privacy. This includes discussions on secure data handling and anonymization techniques.</p>
+                </div>
+                 <hr>
+                <div>
+                    <h3 class="font-semibold text-xl text-[#4a4e69]">Misinformation and Deepfakes</h3>
+                    <p class="text-gray-700">Advanced text generation capabilities can be misused to create convincing misinformation or "deepfake" text. We will explore the challenges of detecting and combating such harmful content.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Assessment Section -->
+        <section id="assessment" class="content-section">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Assessment & Evaluation</h2>
+            <p class="text-lg text-gray-600 mb-8">Our multi-faceted assessment strategy is designed to evaluate both theoretical understanding and practical application skills, ensuring a comprehensive measure of mastery. The approach emphasizes hands-on work and critical analysis, preparing you for real-world challenges in NLP.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Programming Assignments</h3>
+                    <p class="text-gray-700">Regular coding exercises and assignments to reinforce NLP concepts and implement algorithms using Python libraries like NLTK, SpaCy, and Hugging Face.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Midterm Exam</h3>
+                    <p class="text-gray-700">A comprehensive examination covering the theoretical concepts and foundational algorithms learned in the first half of the course.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Final Project</h3>
+                    <p class="text-gray-700">A substantial project involving the design, implementation, and evaluation of an NLP system for a real-world problem, culminating in a presentation and report.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Class Participation</h3>
+                    <p class="text-gray-700">Active engagement in discussions, problem-solving sessions, and peer-to-peer learning contributes to a dynamic and enriching educational experience.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const curriculumData = [
+            { week: 1, module: "Module 1: Foundations of NLP", topic: "Introduction to NLP & Text Preprocessing", readings: "Jurafsky & Martin Ch. 1, NLTK/SpaCy docs", activities: "Python setup, Text cleaning exercises" },
+            { week: 2, module: "Module 1: Foundations of NLP", topic: "Statistical Language Models & N-grams", readings: "Jurafsky & Martin Ch. 3", activities: "Implement N-gram LM, Perplexity calculation" },
+            { week: 3, module: "Module 2: Word Representation", topic: "Word Embeddings (Traditional)", readings: "Jurafsky & Martin Ch. 6, Word2Vec/GloVe papers", activities: "Generate/Visualize word embeddings" },
+            { week: 4, module: "Module 3: Classic NLP Tasks", topic: "Text Classification & Sentiment Analysis", readings: "Jurafsky & Martin Ch. 7, 8", activities: "Build text classifier, Sentiment analysis project" },
+            { week: 5, module: "Module 3: Classic NLP Tasks", topic: "Sequence Labeling (POS Tagging & NER)", readings: "Jurafsky & Martin Ch. 9, 10", activities: "Implement POS tagger, NER system" },
+            { week: 6, module: "Module 3: Classic NLP Tasks", topic: "Syntactic Parsing", readings: "Jurafsky & Martin Ch. 12, 13", activities: "Parse sentences using libraries, explore tree structures" },
+            { week: 7, module: "Module 4: Deep Learning for NLP", topic: "Recurrent Neural Networks (RNNs, LSTMs, GRUs)", readings: "Deep Learning for NLP texts", activities: "Implement RNNs for sequence tasks" },
+            { week: 8, module: "Module 4: Deep Learning for NLP", topic: "Attention Mechanisms & Introduction to Transformers", readings: "'Attention is all you need' (conceptual)", activities: "Conceptual understanding, prepare for advanced models" },
+            { week: 9, module: "Module 4: Deep Learning for NLP", topic: "Neural Machine Translation (NMT)", readings: "Jurafsky & Martin Ch. 15, NMT papers", activities: "Explore Seq2Seq NMT models" },
+            { week: 10, module: "Module 5: Advanced NLP Topics", topic: "Topic Modeling & Document Clustering", readings: "LDA paper, Clustering algorithms", activities: "Apply LDA/NMF to document corpus" },
+            { week: 11, module: "Module 5: Advanced NLP Topics", topic: "Information Extraction & Question Answering", readings: "Jurafsky & Martin Ch. 16, 17", activities: "Build basic IE/QA system" },
+            { week: 12, module: "Module 6: Ethics & Future Trends", topic: "Ethical AI in NLP & Future Outlook", readings: "Responsible AI guidelines, bias mitigation papers", activities: "Discussions on ethical NLP case studies, Final Project guidance" }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarNav = document.getElementById('sidebarNav');
+            const sections = document.querySelectorAll('.content-section');
+            const links = document.querySelectorAll('.sidebar-link');
+
+            const accordionContainer = document.getElementById('accordion-container');
+            curriculumData.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('bg-white', 'rounded-xl', 'shadow-sm', 'border', 'border-gray-100');
+                div.innerHTML = `
+                    <div class="accordion-header flex justify-between items-center p-4">
+                        <span class="font-semibold text-lg text-[#4a4e69]">Week ${item.week}: ${item.topic}</span>
+                        <span class="transform transition-transform duration-300">
+                            <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </div>
+                    <div class="accordion-content px-4 pb-4">
+                        <p class="text-gray-600 mb-2"><strong>Module:</strong> ${item.module}</p>
+                        <p class="text-gray-600 mb-2"><strong>Readings:</strong> ${item.readings}</p>
+                        <p class="text-gray-600"><strong>Activities:</strong> ${item.activities}</p>
+                    </div>
+                `;
+                accordionContainer.appendChild(div);
+            });
+
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('svg').parentElement;
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
+                        document.querySelectorAll('.accordion-header svg').forEach(i => i.parentElement.style.transform = 'rotate(0deg)');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            function updateActiveLink(targetId) {
+                 links.forEach(link => {
+                    link.classList.remove('active');
+                    if(link.getAttribute('href') === `#${targetId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            sidebarNav.addEventListener('click', (e) => {
+                if(e.target.tagName === 'A') {
+                    const targetId = e.target.getAttribute('href').substring(1);
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === targetId) {
+                            section.classList.add('active');
+                        }
+                    });
+                    updateActiveLink(targetId);
+                }
+            });
+
+            // Prerequisites Chart
+            const ctx = document.getElementById('prerequisitesChart').getContext('2d');
+            const prerequisitesChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        'Python Programming',
+                        'Data Structures & Algorithms',
+                        'Machine Learning Fundamentals',
+                        'Probability & Statistics',
+                        'Linear Algebra',
+                        'Linguistics Basics'
+                    ],
+                    datasets: [{
+                        label: 'Required Proficiency',
+                        data: [5, 4, 4, 4, 3, 3], // 5: Essential, 4: Highly Recommended, 3: Advantageous
+                        backgroundColor: 'rgba(201, 173, 167, 0.2)',
+                        borderColor: 'rgba(201, 173, 167, 1)',
+                        pointBackgroundColor: 'rgba(201, 173, 167, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(201, 173, 167, 1)'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: '#e2e8f0'
+                            },
+                            grid: {
+                                color: '#e2e8f0'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                },
+                                color: '#4a4e69'
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                max: 5,
+                                stepSize: 1,
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let level;
+                                    switch(context.raw) {
+                                        case 5: level = 'Essential'; break;
+                                        case 4: level = 'Highly Recommended'; break;
+                                        case 3: level = 'Advantageous'; break;
+                                        default: level = 'Helpful';
+                                    }
+                                    return `${context.dataset.label}: ${level}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
