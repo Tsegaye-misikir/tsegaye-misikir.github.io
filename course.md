@@ -15,6 +15,8 @@ I teach and coordinate several courses in Artificial Intelligence and Natural La
 
 Here are some of the courses I have taught:
 
+[Large Language Models](course)
+
 - **Natural Language Processing**
 - **Large Language Models**
 - **Language Techology Practical**
