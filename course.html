@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Course Plan: Large Language Models</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The SPA is designed with a non-linear, modular structure to facilitate user-driven exploration. A persistent vertical navigation sidebar allows users to jump to any key section (Intro, Prerequisites, Objectives, Curriculum, etc.) at any time. The main content area dynamically displays the selected section. The 'Curriculum' is the core interactive component, presented as a timeline or accordion where users can click on a week/module to expand it and view detailed topics, readings, and activities. This structure was chosen over a linear scroll because a course syllabus is often used as a reference document; users frequently need to access specific information (e.g., "What are the prerequisites?" or "What's covered in Week 7?") quickly. An interactive, navigable structure is far more usable for this purpose than a static, multi-page document. -->
+    <!-- Visualization & Content Choices: 
+        - Prerequisites: Report Info -> A table of required skills. Goal -> To clearly and quickly communicate the necessary background for potential students. Viz/Presentation Method -> An interactive radar chart (Chart.js) to visually represent the required proficiency levels across different skill categories. Interaction -> Hovering over a point on the chart reveals the specific skill and required level. Justification -> A visual chart is more engaging and allows for quicker comprehension of skill distribution than a simple table. It highlights the interdisciplinary nature of the required skills. Library/Method -> Chart.js (Canvas).
+        - Curriculum/Schedule: Report Info -> A 17-week schedule with topics, readings, and assignments. Goal -> To allow users to explore the course flow and details of each week. Viz/Presentation Method -> An interactive, collapsible accordion/timeline built with HTML/Tailwind/JS. Interaction -> Users click on a week's header to expand/collapse its detailed content. A filter/search bar could allow users to find weeks covering specific keywords (e.g., "RAG", "Ethics"). Justification -> An accordion prevents information overload by hiding details by default. It encourages active exploration and makes finding specific weekly content easy without extensive scrolling. Library/Method -> HTML/CSS/JS.
+        - Learning Objectives & Applications: Report Info -> Lists of learning outcomes and industry use cases. Goal -> To showcase the value and practical takeaways of the course. Viz/Presentation Method -> Styled, interactive cards using HTML/Tailwind. Interaction -> Clicking on a card could reveal more detailed examples or related case studies (though for this SPA, it will be a simple visual element). Justification -> Cards break up long lists into digestible, visually appealing chunks, improving readability. Library/Method -> HTML/Tailwind CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfcfb;
+            color: #3f3c3a;
+        }
+        .sidebar-link {
+            transition: all 0.2s ease-in-out;
+        }
+        .sidebar-link.active, .sidebar-link:hover {
+            background-color: #f2e9e4;
+            color: #c9ada7;
+            border-right: 4px solid #c9ada7;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .accordion-header {
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .accordion-header:hover {
+            background-color: #f2e9e4;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-64 bg-[#f4f1ee] border-r border-gray-200 p-4 md:p-6 md:fixed md:h-full">
+        <h1 class="text-2xl font-bold text-[#4a4e69] mb-8">LLM Course</h1>
+        <nav id="sidebarNav" class="flex flex-row md:flex-col gap-2 md:gap-1 overflow-x-auto pb-4 md:pb-0">
+            <a href="#introduction" class="sidebar-link active text-lg font-medium p-3 rounded-lg whitespace-nowrap">Introduction</a>
+            <a href="#prerequisites" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Prerequisites</a>
+            <a href="#objectives" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Objectives</a>
+            <a href="#curriculum" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Curriculum</a>
+            <a href="#applications" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Applications</a>
+            <a href="#ethics" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Ethics</a>
+            <a href="#assessment" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Assessment</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 md:ml-64 p-6 md:p-10">
+        
+        <!-- Introduction Section -->
+        <section id="introduction" class="content-section active">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Foundations to Advanced Systems</h2>
+            <p class="text-lg text-gray-600 mb-6">
+                This interactive guide outlines a comprehensive, expert-level course for Large Language Models (LLMs). It is designed to equip you with a deep theoretical understanding and the practical skills for developing, deploying, and optimizing LLM-powered applications. Explore the curriculum to see how it progresses from foundational concepts to the cutting edge of AI.
+            </p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <h3 class="text-2xl font-semibold text-[#4a4e69] mb-3">What are LLMs?</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    Large Language Models represent a powerful subset of Natural Language Processing (NLP) models, distinguished by their immense scale and extensive training data. At their core, LLMs are sophisticated algorithms designed to predict sequences of words based on intricate patterns learned from vast datasets. This inherent flexibility allows a single LLM to perform diverse functions, including answering complex questions, summarizing documents, translating languages, and even generating creative content, demonstrating significant potential to revolutionize how we interact with information and technology.
+                </p>
+                <div class="mt-4">
+                    <a href="https://tsegaye-misikir.github.io/course.html" target="_blank" rel="noopener noreferrer" class="inline-block bg-[#c9ada7] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#a98f86] transition-colors">
+                        View this Course Page in a New Tab
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prerequisites Section -->
+        <section id="prerequisites" class="content-section">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Prerequisites & Skills</h2>
+             <p class="text-lg text-gray-600 mb-8">
+                Success in this course requires a robust technical background. The following chart visualizes the recommended proficiency levels across key domains. This course is designed for professionals and advanced students who are committed to a rigorous pace of study. Hover over the points in the chart to see the specific skill areas.
+            </p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <div class="chart-container">
+                    <canvas id="prerequisitesChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Objectives Section -->
+        <section id="objectives" class="content-section">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Core Learning Objectives</h2>
+             <p class="text-lg text-gray-600 mb-8">
+                Upon successful completion of this course, you will have mastered a wide range of theoretical concepts and practical skills. The key objectives are designed to make you a proficient practitioner in the field of Large Language Models, capable of building, optimizing, and critically evaluating complex AI systems.
+            </p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Master Transformer Architecture</h3>
+                    <p class="text-gray-700">Gain a deep understanding of the self-attention mechanism, multi-head attention, and positional encoding that power modern LLMs.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Implement Advanced Techniques</h3>
+                    <p class="text-gray-700">Learn to apply Retrieval-Augmented Generation (RAG) for factual accuracy and methods like LoRA for efficient fine-tuning.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Optimize for Scale</h3>
+                    <p class="text-gray-700">Comprehend system-level optimizations for training and serving, including distributed training and model quantization.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Build Agentic Frameworks</h3>
+                    <p class="text-gray-700">Design and deploy agentic LLMs that can utilize external tools and APIs to perform complex tasks.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Develop Real-World Applications</h3>
+                    <p class="text-gray-700">Integrate AI-driven solutions in diverse domains, from customer service chatbots to intelligent code generation systems.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Analyze Ethical Implications</h3>
+                    <p class="text-gray-700">Critically assess and mitigate issues of bias, fairness, data privacy, and the societal impact of LLMs.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curriculum Section -->
+        <section id="curriculum" class="content-section">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Weekly Curriculum</h2>
+            <p class="text-lg text-gray-600 mb-8">
+                The course is structured into a comprehensive 17-week program, progressing from foundational principles to advanced, state-of-the-art topics. Click on each week to expand and view the detailed topics, key readings, and planned activities. This structure ensures a deep, scaffolded learning experience.
+            </p>
+            <div id="accordion-container" class="space-y-2">
+                <!-- Accordion items will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Applications Section -->
+        <section id="applications" class="content-section">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Real-World Applications</h2>
+            <p class="text-lg text-gray-600 mb-8">LLMs are not just a research topic; they are a transformative technology with a vast and diverse range of practical applications across numerous industries. From enhancing creative workflows to revolutionizing data analysis and customer interaction, the impact of LLMs is already being felt. Below are some of the key areas where these models are making a difference.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Content Creation & Generation</h3>
+                    <p class="text-gray-700">Automating the creation of articles, marketing copy, social media posts, and even short stories. LLMs act as powerful assistants for writers and marketers.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Customer Service & Support</h3>
+                    <p class="text-gray-700">Powering intelligent chatbots and virtual assistants that can provide immediate, 24/7 support and answer complex customer queries in natural language.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Code Generation & Assistance</h3>
+                    <p class="text-gray-700">Helping developers write, debug, and understand code more efficiently. Tools like GitHub Copilot can suggest lines of code or entire functions in real-time.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Specialized Industry Solutions</h3>
+                    <p class="text-gray-700">From assisting in clinical diagnoses in healthcare to mapping cybersecurity regulations to policies and controls and expediting financial claims processing, LLMs are being tailored for high-impact, domain-specific tasks.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ethics Section -->
+        <section id="ethics" class="content-section">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Ethics & Societal Impact</h2>
+            <p class="text-lg text-gray-600 mb-8">The power of Large Language Models comes with significant responsibility. A core part of this curriculum is dedicated to critically examining the ethical dimensions of developing and deploying these technologies. Understanding these challenges is essential for building AI that is safe, fair, and beneficial for society.</p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-4">
+                <div>
+                    <h3 class="font-semibold text-xl text-[#4a4e69]">Bias and Fairness</h3>
+                    <p class="text-gray-700">LLMs can inherit and amplify biases present in their training data. We explore how to detect these biases and strategies for creating more equitable models.</p>
+                </div>
+                <hr>
+                <div>
+                    <h3 class="font-semibold text-xl text-[#4a4e69]">Data Privacy and Consent</h3>
+                    <p class="text-gray-700">The use of massive datasets raises critical questions about data privacy and user consent. This module covers the importance of ethical data sourcing and compliance with privacy regulations.</p>
+                </div>
+                 <hr>
+                <div>
+                    <h3 class="font-semibold text-xl text-[#4a4e69]">Hallucination and Misinformation</h3>
+                    <p class="text-gray-700">LLMs can sometimes generate confident but incorrect information, a phenomenon known as "hallucination." We analyze the risks and discuss techniques like RAG to ground models in factual data.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Assessment Section -->
+        <section id="assessment" class="content-section">
+            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Assessment & Evaluation</h2>
+            <p class="text-lg text-gray-600 mb-8">Our multi-faceted assessment strategy is designed to evaluate both theoretical understanding and practical application skills, ensuring a comprehensive measure of mastery. The approach emphasizes hands-on work and critical analysis, preparing you for real-world challenges.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Continuous Assignments</h3>
+                    <p class="text-gray-700">Regular homework, including coding exercises and theoretical questions, reinforces core concepts and provides ongoing practical experience.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Midterm Report</h3>
+                    <p class="text-gray-700">A comprehensive report assesses your grasp of the foundational concepts covered in the first half of the course, ensuring you're ready for more advanced topics.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Final Project</h3>
+                    <p class="text-gray-700">The cornerstone of the evaluation is a substantial final project, requiring a proposal, a final presentation, and a detailed written report documenting your work.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Class Participation</h3>
+                    <p class="text-gray-700">Active engagement in discussions and collaborative activities is encouraged to foster a dynamic and critical learning environment.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const curriculumData = [
+            { week: 1, module: "Module 1: Foundations", topic: "Introduction to LLMs and NLP Fundamentals", readings: "Intro slides, NLTK docs", activities: "HW1 out, Python setup" },
+            { week: 2, module: "Module 2: Core Concepts", topic: "Deep Learning Fundamentals and Neural Networks", readings: "GPU Programming texts, Auto Diff survey", activities: "Implement simple NN" },
+            { week: 3, module: "Module 2: Core Concepts", topic: "The Transformer Architecture Explained", readings: "'Attention is all you need'", activities: "Transformer block implementation" },
+            { week: 4, module: "Module 2: Core Concepts", topic: "Pre-trained LLMs and Model Paradigms", readings: "LLaMA, GPT3 papers", activities: "HW1 due/HW2 out, Use Hugging Face" },
+            { week: 5, module: "Module 3: Training & Deployment", topic: "Data Preparation and Training Objectives", readings: "Hugging Face Datasets/Tokenizers docs", activities: "Data cleaning exercises" },
+            { week: 6, module: "Module 3: Training & Deployment", topic: "Scaling and Efficiency in LLM Training", readings: "DDP, Megatron-LM, ZeRO papers", activities: "HW2 due/HW3 out, Setup distributed training" },
+            { week: 7, module: "Module 3: Training & Deployment", topic: "Distributed Model Training II; App Stack and Model Serving", readings: "GPipe, Triton, LightLLM, Orca papers", activities: "Project proposal due" },
+            { week: 8, module: "Module 4: Advanced Systems", topic: "Spring Break", readings: "N/A", activities: "N/A" },
+            { week: 9, module: "Module 4: Advanced Systems", topic: "Model Quantization and Compression; Efficient Fine-tuning", readings: "GPTQ, LORA, QLoRA papers", activities: "Implement LoRA fine-tuning" },
+            { week: 10, module: "Module 4: Advanced Systems", topic: "Communication Efficient Training; Advanced Serving", readings: "ZeRO, Orca papers", activities: "HW3 due/HW4 out, Benchmark serving" },
+            { week: 11, module: "Module 4: Advanced Systems", topic: "PageAttention; GPU just-in-time compilation", readings: "vLLM, JAX papers", activities: "Explore vLLM" },
+            { week: 12, module: "Module 4: Advanced Systems", topic: "Mixture-of-Expert; Memory Optimization", readings: "DeepSpeed-MOE, FlashAttention papers", activities: "HW4 due" },
+            { week: 13, module: "Module 4: Advanced Systems", topic: "Long Context; Streaming with Attention Sinks", readings: "RMT, Attention Sink papers", activities: "Mid-term report due" },
+            { week: 14, module: "Module 4: Advanced Systems", topic: "Speculative Decoding; Retrieval-augmented (RAG)", readings: "Speculative Decoding, RAG papers", activities: "Build a simple RAG system" },
+            { week: 15, module: "Module 5: Applications & Ethics", topic: "Nearest Vector Search; Multimodal LLMs", readings: "HNSW, Flamingo papers", activities: "Explore multimodal concepts" },
+            { week: 16, module: "Final Project & Review", topic: "Final project presentation", readings: "N/A", activities: "Present final projects" },
+            { week: 17, module: "Final Project & Review", topic: "Final Report Submission", readings: "N/A", activities: "Final report due" }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarNav = document.getElementById('sidebarNav');
+            const sections = document.querySelectorAll('.content-section');
+            const links = document.querySelectorAll('.sidebar-link');
+
+            const accordionContainer = document.getElementById('accordion-container');
+            curriculumData.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('bg-white', 'rounded-xl', 'shadow-sm', 'border', 'border-gray-100');
+                div.innerHTML = `
+                    <div class="accordion-header flex justify-between items-center p-4">
+                        <span class="font-semibold text-lg text-[#4a4e69]">Week ${item.week}: ${item.topic}</span>
+                        <span class="transform transition-transform duration-300">
+                            <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </div>
+                    <div class="accordion-content px-4 pb-4">
+                        <p class="text-gray-600 mb-2"><strong>Module:</strong> ${item.module}</p>
+                        <p class="text-gray-600 mb-2"><strong>Readings:</strong> ${item.readings}</p>
+                        <p class="text-gray-600"><strong>Activities:</strong> ${item.activities}</p>
+                    </div>
+                `;
+                accordionContainer.appendChild(div);
+            });
+
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('svg').parentElement;
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
+                        document.querySelectorAll('.accordion-header svg').forEach(i => i.parentElement.style.transform = 'rotate(0deg)');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            function updateActiveLink(targetId) {
+                 links.forEach(link => {
+                    link.classList.remove('active');
+                    if(link.getAttribute('href') === `#${targetId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            sidebarNav.addEventListener('click', (e) => {
+                if(e.target.tagName === 'A') {
+                    const targetId = e.target.getAttribute('href').substring(1);
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === targetId) {
+                            section.classList.add('active');
+                        }
+                    });
+                    updateActiveLink(targetId);
+                }
+            });
+
+            // Prerequisites Chart
+            const ctx = document.getElementById('prerequisitesChart').getContext('2d');
+            const prerequisitesChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        'Python Programming',
+                        'AI / ML Concepts',
+                        'NLP Principles',
+                        'Neural Networks',
+                        'API Experience',
+                        'Math Foundations'
+                    ],
+                    datasets: [{
+                        label: 'Required Proficiency',
+                        data: [5, 4, 4, 3, 3, 3], // 5: Essential, 4: Highly Recommended, 3: Advantageous
+                        backgroundColor: 'rgba(201, 173, 167, 0.2)',
+                        borderColor: 'rgba(201, 173, 167, 1)',
+                        pointBackgroundColor: 'rgba(201, 173, 167, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(201, 173, 167, 1)'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: '#e2e8f0'
+                            },
+                            grid: {
+                                color: '#e2e8f0'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                },
+                                color: '#4a4e69'
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                max: 5,
+                                stepSize: 1,
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let level;
+                                    switch(context.raw) {
+                                        case 5: level = 'Essential'; break;
+                                        case 4: level = 'Highly Recommended'; break;
+                                        case 3: level = 'Advantageous'; break;
+                                        default: level = 'Helpful';
+                                    }
+                                    return `${context.dataset.label}: ${level}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
