@@ -17,7 +17,7 @@ Here are some of the courses I have taught:
 
 
 
-- **Natural Language Processing**
+- **[Natural Language Processing](NLP)**
 - **[Large Language Models](llm)**
 - **Language Techology Practical**
 - **Artificial Intelligence 1**
