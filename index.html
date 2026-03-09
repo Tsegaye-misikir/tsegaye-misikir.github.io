@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tsegaye M. Tashu — NLP Researcher & Educator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1520;
+      --bg2:       #111d2e;
+      --bg3:       #162034;
+      --line:      rgba(255,255,255,0.07);
+      --text:      #e8e2d6;
+      --muted:     #7a8699;
+      --gold:      #d4a853;
+      --gold-dim:  rgba(212,168,83,0.15);
+      --teal:      #4ba89a;
+      --teal-dim:  rgba(75,168,154,0.12);
+      --red:       #c0614a;
+      --serif:     'DM Serif Display', Georgia, serif;
+      --sans:      'Sora', sans-serif;
+      --mono:      'JetBrains Mono', monospace;
+      --ease:      cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999; opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 64px;
+      background: rgba(13,21,32,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--gold);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.25s var(--ease);
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; color: var(--text); }
+
+    /* ── SECTIONS ── */
+    section { padding: 7rem clamp(1.5rem, 8vw, 6rem); min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+    section:nth-child(even) { background: var(--bg2); }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .section-label::after {
+      content: '';
+      display: inline-block;
+      width: 40px; height: 1px;
+      background: var(--gold); opacity: 0.5;
+    }
+
+    h2.section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 3rem;
+    }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      padding-top: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 440px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-tags {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      margin-bottom: 2.5rem;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.85rem;
+      border-radius: 2px;
+      border: 1px solid;
+    }
+    .tag-gold  { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+    .tag-teal  { border-color: var(--teal); color: var(--teal); background: var(--teal-dim); }
+    .tag-muted { border-color: rgba(255,255,255,0.15); color: var(--muted); }
+
+    .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.25s var(--ease);
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--bg);
+      border: 1px solid var(--gold);
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--gold);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+    .btn-outline:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    /* Hero visual */
+    .hero-visual {
+      display: flex; justify-content: flex-end; align-items: center;
+    }
+    .hero-card {
+      width: 320px;
+      border: 1px solid var(--line);
+      background: var(--bg3);
+      padding: 2rem;
+      position: relative;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--teal));
+    }
+    .hc-avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--teal));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif); font-size: 1.8rem; color: var(--bg);
+      margin-bottom: 1.25rem;
+    }
+    .hc-name { font-family: var(--serif); font-size: 1.1rem; margin-bottom: 0.25rem; }
+    .hc-pos {
+      font-family: var(--mono); font-size: 0.65rem;
+      color: var(--muted); letter-spacing: 0.06em; margin-bottom: 1.25rem;
+    }
+    .hc-divider { height: 1px; background: var(--line); margin: 1rem 0; }
+    .hc-affil {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem;
+    }
+    .hc-affil .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+    }
+    .hc-affil .dot.teal { background: var(--teal); }
+    .hc-links { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+    .hc-link {
+      font-family: var(--mono); font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .hc-link:hover { color: var(--gold); }
+
+    /* Hero bg decoration */
+    .hero-deco {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,168,83,0.05) 0%, transparent 70%);
+      top: -100px; right: -200px;
+      pointer-events: none;
+    }
+    .hero-deco2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(75,168,154,0.05) 0%, transparent 70%);
+      bottom: 0; left: -100px;
+      pointer-events: none;
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse at 70% 50%, black 20%, transparent 70%);
+    }
+
+    /* ── ABOUT ── */
+    #about { min-height: auto; }
+    .about-grid {
+      display: grid; grid-template-columns: 2fr 1fr; gap: 5rem;
+      max-width: 1100px;
+    }
+    .about-body { font-size: 1rem; color: var(--muted); line-height: 1.85; }
+    .about-body p { margin-bottom: 1.25rem; }
+    .about-body strong { color: var(--text); font-weight: 500; }
+    .about-body a { color: var(--gold); text-decoration: none; }
+    .about-body a:hover { text-decoration: underline; }
+
+    .about-stats { display: flex; flex-direction: column; gap: 1.5rem; }
+    .stat-card {
+      border: 1px solid var(--line);
+      padding: 1.25rem 1.5rem;
+      background: var(--bg3);
+    }
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── RESEARCH ── */
+    #research { min-height: auto; }
+    .research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1100px; }
+
+    .pub-card {
+      border: 1px solid var(--line);
+      padding: 1.75rem;
+      background: var(--bg3);
+      transition: border-color 0.25s, transform 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .pub-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s var(--ease);
+    }
+    .pub-card:hover { border-color: rgba(212,168,83,0.3); transform: translateY(-2px); }
+    .pub-card:hover::after { transform: scaleX(1); }
+
+    .pub-venue {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.6rem;
+    }
+    .pub-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      line-height: 1.4;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    .pub-authors {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
+    .pub-abstract {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+    .pub-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    /* ── PUB FILTERS ── */
+    .pub-filters {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-bottom: 2.5rem; max-width: 1100px;
+    }
+    .pub-filter-btn {
+      font-family: var(--mono); font-size: 0.65rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.4rem 1rem; border: 1px solid var(--line);
+      background: transparent; color: var(--muted);
+      cursor: pointer; transition: all 0.2s; border-radius: 2px;
+    }
+    .pub-filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .pub-filter-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+
+    .pub-count {
+      font-family: var(--mono); font-size: 0.65rem;
+      color: var(--muted); letter-spacing: 0.06em;
+      margin-bottom: 1.5rem; max-width: 1100px;
+    }
+    .pub-count span { color: var(--gold); }
+
+    .pub-year-group { max-width: 1100px; margin-bottom: 3rem; }
+    .pub-year-label {
+      font-family: var(--serif); font-size: 1.4rem; color: var(--gold);
+      margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .pub-year-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--line);
+    }
+    .pub-list { display: flex; flex-direction: column; gap: 1rem; }
+
+    .pub-card-row {
+      border: 1px solid var(--line);
+      padding: 1.4rem 1.75rem;
+      background: var(--bg3);
+      transition: border-color 0.2s, transform 0.2s;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.5rem;
+      align-items: start;
+      position: relative;
+      overflow: hidden;
+    }
+    .pub-card-row::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--gold);
+      transform: scaleY(0); transform-origin: top;
+      transition: transform 0.25s var(--ease);
+    }
+    .pub-card-row:hover { border-color: rgba(212,168,83,0.25); transform: translateX(3px); }
+    .pub-card-row:hover::before { transform: scaleY(1); }
+
+    .pub-row-num {
+      font-family: var(--mono); font-size: 0.65rem;
+      color: var(--muted); min-width: 24px; padding-top: 0.15rem;
+    }
+    .pub-row-body {}
+    .pub-row-title {
+      font-family: var(--serif); font-size: 1rem;
+      line-height: 1.4; color: var(--text); margin-bottom: 0.4rem;
+    }
+    .pub-row-title a {
+      color: inherit; text-decoration: none;
+      transition: color 0.2s;
+    }
+    .pub-row-title a:hover { color: var(--gold); }
+    .pub-row-authors { font-size: 0.8rem; color: var(--muted); font-style: italic; margin-bottom: 0.5rem; }
+    .pub-row-venue {
+      font-family: var(--mono); font-size: 0.62rem;
+      letter-spacing: 0.08em; color: var(--teal);
+    }
+    .pub-row-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
+    .pub-row-link {
+      font-family: var(--mono); font-size: 0.62rem;
+      letter-spacing: 0.06em; color: var(--muted);
+      text-decoration: none; white-space: nowrap;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--line);
+      transition: all 0.2s; flex-shrink: 0;
+      align-self: center;
+    }
+    .pub-row-link:hover { border-color: var(--gold); color: var(--gold); }
+
+    .interests-section { margin-top: 4rem; max-width: 1100px; }
+    .interests-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; border: 1px solid var(--line); }
+    .interest-item {
+      padding: 2rem;
+      background: var(--bg3);
+      border-right: 1px solid var(--line);
+    }
+    .interest-item:last-child { border-right: none; }
+    .interest-icon { font-size: 1.75rem; margin-bottom: 1rem; }
+    .interest-title { font-family: var(--serif); font-size: 1.05rem; margin-bottom: 0.5rem; }
+    .interest-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── COURSES ── */
+    #courses { min-height: auto; }
+    .courses-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1100px; }
+
+    .course-card {
+      border: 1px solid var(--line);
+      background: var(--bg3);
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+    .course-card:hover { border-color: rgba(75,168,154,0.4); }
+
+    .course-header {
+      padding: 1.5rem 1.75rem 1.25rem;
+      border-bottom: 1px solid var(--line);
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .course-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      background: var(--teal-dim);
+      border: 1px solid rgba(75,168,154,0.2);
+    }
+    .course-meta { flex: 1; }
+    .course-code {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--teal);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .course-title { font-family: var(--serif); font-size: 1.05rem; line-height: 1.3; }
+    .course-body { padding: 1.5rem 1.75rem; }
+    .course-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
+    .course-info { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .course-info-item {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-family: var(--mono); font-size: 0.62rem;
+      letter-spacing: 0.06em; color: var(--muted);
+    }
+    .course-info-item svg { opacity: 0.5; }
+
+    /* ── LLM INTERACTIVE ── */
+    .llm-section { margin-top: 4rem; max-width: 1100px; }
+    .llm-card {
+      border: 1px solid rgba(212,168,83,0.25);
+      background: linear-gradient(135deg, rgba(212,168,83,0.04), rgba(75,168,154,0.04));
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .llm-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--teal));
+    }
+    .llm-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .llm-title { font-family: var(--serif); font-size: 1.8rem; line-height: 1.3; margin-bottom: 1rem; }
+    .llm-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.5rem; }
+    .llm-topics { list-style: none; }
+    .llm-topics li {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.83rem; color: var(--muted);
+      padding: 0.4rem 0; border-bottom: 1px solid var(--line);
+    }
+    .llm-topics li::before { content: '→'; color: var(--gold); font-family: var(--mono); }
+    .llm-topics li:last-child { border-bottom: none; }
+
+    .terminal {
+      background: #071017;
+      border: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      line-height: 1.8;
+      overflow: hidden;
+    }
+    .terminal-bar {
+      background: rgba(255,255,255,0.04);
+      padding: 0.5rem 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .terminal-body { padding: 1.25rem; }
+    .t-line { display: flex; }
+    .t-prompt { color: var(--teal); margin-right: 0.5rem; flex-shrink: 0; }
+    .t-cmd { color: var(--text); }
+    .t-out { color: var(--muted); padding-left: 1.2rem; }
+    .t-gold { color: var(--gold); }
+    .t-blank { height: 0.4rem; }
+
+    /* ── CONTACT ── */
+    #contact { min-height: auto; }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      max-width: 1000px; align-items: start;
+    }
+    .contact-intro { font-size: 1rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
+    .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--line);
+      background: var(--bg3);
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+    .contact-item:hover { border-color: var(--gold); }
+    .contact-item-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      background: var(--gold-dim);
+      border: 1px solid rgba(212,168,83,0.2);
+    }
+    .contact-item-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+    .contact-item-value { font-size: 0.88rem; color: var(--text); }
+
+    .contact-form-note {
+      font-size: 0.83rem; color: var(--muted); line-height: 1.7;
+      padding: 1.5rem;
+      border: 1px solid var(--line);
+      background: var(--bg3);
+    }
+    .contact-form-note a { color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem clamp(1.5rem, 8vw, 6rem);
+      border-top: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+    .fade-in:nth-child(2) { transition-delay: 0.1s; }
+    .fade-in:nth-child(3) { transition-delay: 0.2s; }
+    .fade-in:nth-child(4) { transition-delay: 0.3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-grid, .about-grid, .contact-grid, .llm-inner { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .research-grid, .courses-grid { grid-template-columns: 1fr; }
+      .interests-grid { grid-template-columns: 1fr; }
+      .interest-item { border-right: none; border-bottom: 1px solid var(--line); }
+      .nav-links { display: none; }
+      .nav-toggle { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <nav>
+    <a href="#home" class="nav-logo">T.M.<span>Tashu</span></a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#courses">Teaching</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Menu">☰</button>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div id="mobileNav" style="display:none; position:fixed; inset:0; z-index:99; background:rgba(13,21,32,0.97); backdrop-filter:blur(16px); flex-direction:column; align-items:center; justify-content:center; gap:2.5rem;">
+    <a href="#home" onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Home</a>
+    <a href="#about" onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">About</a>
+    <a href="#research" onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Research</a>
+    <a href="#courses" onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Teaching</a>
+    <a href="#contact" onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Contact</a>
+    <button onclick="closeMobile()" style="font-family:var(--mono);font-size:0.8rem;color:var(--muted);background:none;border:1px solid var(--line);padding:0.5rem 1.5rem;cursor:pointer;color:var(--text);">Close</button>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section id="home">
+    <div class="hero-grid-lines"></div>
+    <div class="hero-deco"></div>
+    <div class="hero-deco2"></div>
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow fade-in visible">Assistant Professor · NLP Researcher</div>
+        <h1 class="hero-name fade-in visible">Tsegaye<br><em>Misikir Tashu</em></h1>
+        <p class="hero-title fade-in visible">AI & Natural Language Processing</p>
+        <p class="hero-desc fade-in visible">
+          Researching multilingual NLP, emotion recognition, and AI for education —
+          bridging computational linguistics with practical, human-centred AI systems.
+        </p>
+        <div class="hero-tags fade-in visible">
+          <span class="tag tag-gold">Multilingual NLP</span>
+          <span class="tag tag-teal">Emotion Recognition</span>
+          <span class="tag tag-gold">NLP for Education</span>
+          <span class="tag tag-teal">LLMs & RAG</span>
+          <span class="tag tag-muted">Cross-lingual AI</span>
+        </div>
+        <div class="hero-links fade-in visible">
+          <a href="#research" class="btn btn-primary">View Research ↓</a>
+          <a href="#contact" class="btn btn-outline">Get in Touch</a>
+          <a href="https://github.com/Tsegaye-misikir" target="_blank" class="btn btn-outline">GitHub ↗</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hc-avatar">T</div>
+          <div class="hc-name">Dr. Tsegaye M. Tashu</div>
+          <div class="hc-pos">Assistant Professor · NLP &amp; AI Education</div>
+          <div class="hc-divider"></div>
+          <div class="hc-affil">
+            <span class="dot"></span>
+            University of Groningen
+          </div>
+          <div class="hc-affil">
+            <span class="dot teal"></span>
+            Breda University of Applied Sciences
+          </div>
+          <div class="hc-divider"></div>
+          <div style="font-family:var(--mono);font-size:0.62rem;color:var(--muted);letter-spacing:0.06em;margin-bottom:0.5rem;">RESEARCH FOCUS</div>
+          <div style="font-size:0.8rem;color:var(--muted);">Multilingual LLMs · Emotion AI · PBL Curriculum Innovation</div>
+          <div class="hc-links">
+            <a class="hc-link" href="/cdn-cgi/l/email-protection#2652084b085247554e536654534108484a">Email ↗</a>
+            <a class="hc-link" href="https://github.com/Tsegaye-misikir" target="_blank">GitHub ↗</a>
+            <a class="hc-link" href="#research">Publications ↓</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section id="about">
+    <div class="section-label">About</div>
+    <h2 class="section-title">Background &amp;<br><em>Academic Profile</em></h2>
+    <div class="about-grid">
+      <div class="about-body">
+        <p>
+          I am an <strong>Assistant Professor</strong> at the <strong>University of Groningen</strong>, 
+          Faculty of Science and Engineering, where I teach <em>Language Technology Practicals</em> 
+          for BSc Artificial Intelligence students. I am also affiliated with 
+          <strong>Breda University of Applied Sciences (BUas)</strong>, contributing to curriculum design 
+          and graduation project coordination.
+        </p>
+        <p>
+          My research sits at the intersection of <strong>multilingual NLP</strong>, 
+          <strong>affective computing</strong>, and <strong>AI-powered education</strong>. 
+          I investigate how large language models handle cross-lingual emotion recognition 
+          and how NLP tools can be leveraged to support more effective, equitable educational systems.
+        </p>
+        <p>
+          Practical AI education is a core commitment. Through the 
+          <strong>Comenius Teaching Fellows</strong> grant programme, I am developing 
+          Problem-Based Learning frameworks for NLP courses — designing an "AI Design Spine" 
+          that weaves together Language Technology Practicals, Machine Learning Practicals, 
+          and Social Robotics Practicals into a coherent, industry-relevant curriculum.
+        </p>
+        <p>
+          I completed my doctoral training focusing on deep NLP methods and have since built 
+          expertise across transformer architectures, instruction fine-tuning, RAG systems, 
+          and Vision-Language Models — both for advancing research and for student-facing 
+          pedagogical innovation.
+        </p>
+        <div style="margin-top:2rem;">
+          <a href="/cdn-cgi/l/email-protection#e490ca89ca9085978c91a4969183ca8a88" class="btn btn-primary" style="font-size:0.68rem;">Contact Me ↗</a>
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-number">2</div>
+          <div class="stat-label">Academic Affiliations</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">33</div>
+          <div class="stat-label">Publications</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">306+</div>
+          <div class="stat-label">Citations (Google Scholar)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2018–</div>
+          <div class="stat-label">Active Research Since</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RESEARCH ── -->
+  <section id="research">
+    <div class="section-label">Research</div>
+    <h2 class="section-title">Publications &amp;<br><em>Research Interests</em></h2>
+
+    <!-- Filter bar -->
+    <div class="pub-filters">
+      <button class="pub-filter-btn active" onclick="filterPubs('all', this)">All</button>
+      <button class="pub-filter-btn" onclick="filterPubs('2025', this)">2025</button>
+      <button class="pub-filter-btn" onclick="filterPubs('2024', this)">2024</button>
+      <button class="pub-filter-btn" onclick="filterPubs('2023', this)">2023</button>
+      <button class="pub-filter-btn" onclick="filterPubs('2022', this)">2022</button>
+      <button class="pub-filter-btn" onclick="filterPubs('2021', this)">2021</button>
+      <button class="pub-filter-btn" onclick="filterPubs('2020', this)">2020</button>
+      <button class="pub-filter-btn" onclick="filterPubs('2019', this)">2019</button>
+      <button class="pub-filter-btn" onclick="filterPubs('2018', this)">2018</button>
+    </div>
+    <div class="pub-count" id="pubCount"><span id="pubNum">33</span> publications</div>
+
+    <!-- 2025 -->
+    <div class="pub-year-group" data-year="2025">
+      <div class="pub-year-label">2025</div>
+      <div class="pub-list">
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">1</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title"><a href="https://aclanthology.org/2025.trustnlp-main.24/" target="_blank">Difficulty Estimation in Natural Language Tasks with Action Scores</a></div>
+            <div class="pub-row-authors">Angelov, A., Tashu, T. M., &amp; Valdenegro-Toro, M.</div>
+            <div class="pub-row-venue">TrustNLP 2025 · ACL Anthology · pp. 351–364</div>
+            <div class="pub-row-tags"><span class="tag tag-teal">Trustworthy NLP</span><span class="tag tag-muted">Sample Difficulty</span><span class="tag tag-gold">Transformers</span></div>
+          </div>
+          <a href="https://aclanthology.org/2025.trustnlp-main.24/" target="_blank" class="pub-row-link">PDF ↗</a>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">2</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title"><a href="https://aclanthology.org/2025.uncertainlp-main.12/" target="_blank">Confidence Calibration in Large Language Model-Based Entity Matching</a></div>
+            <div class="pub-row-authors">Kamsteeg, I., Cardenas-Cartagena, J., van Beers, F., Tashu, T. M., &amp; Valdenegro-Toro, M.</div>
+            <div class="pub-row-venue">UncertaiNLP 2025 · ACL Anthology · pp. 120–137 · Suzhou, China</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">LLMs</span><span class="tag tag-teal">Uncertainty</span><span class="tag tag-muted">Entity Matching</span></div>
+          </div>
+          <a href="https://aclanthology.org/2025.uncertainlp-main.12/" target="_blank" class="pub-row-link">PDF ↗</a>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">3</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title"><a href="https://aclanthology.org/2025.sumeval-2.4/" target="_blank">Cross-Lingual Document Recommendations with Transformer-Based Representations: Evaluating Multilingual Models and Mapping Techniques</a></div>
+            <div class="pub-row-authors">Tashu, T. M., Kontos, E. R., Sabatelli, M., &amp; Valdenegro-Toro, M.</div>
+            <div class="pub-row-venue">SUMEVAL 2025 · ACL Anthology · pp. 39–47</div>
+            <div class="pub-row-tags"><span class="tag tag-teal">Cross-lingual</span><span class="tag tag-gold">Recommendation</span><span class="tag tag-muted">Multilingual NLP</span></div>
+          </div>
+          <a href="https://aclanthology.org/2025.sumeval-2.4/" target="_blank" class="pub-row-link">PDF ↗</a>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">4</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title"><a href="https://aclanthology.org/2025.loreslm-1.20/" target="_blank">Mapping Cross-Lingual Sentence Representations for Low-Resource Language Pairs Using Pre-trained Language Models</a></div>
+            <div class="pub-row-authors">Tudor, A. I. &amp; Tashu, T. M.</div>
+            <div class="pub-row-venue">LoResLM 2025 · ACL Anthology · pp. 249–257 · Abu Dhabi</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Low-Resource NLP</span><span class="tag tag-teal">Cross-lingual</span><span class="tag tag-muted">mBERT · XLM-R</span></div>
+          </div>
+          <a href="https://aclanthology.org/2025.loreslm-1.20/" target="_blank" class="pub-row-link">PDF ↗</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2024 -->
+    <div class="pub-year-group" data-year="2024">
+      <div class="pub-year-label">2024</div>
+      <div class="pub-list">
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">5</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title"><a href="https://arxiv.org/abs/2409.04795" target="_blank">Phrase-Level Adversarial Training for Mitigating Bias in Neural Network-based Automatic Essay Scoring</a></div>
+            <div class="pub-row-authors">Philip, H. &amp; Tashu, T. M.</div>
+            <div class="pub-row-venue">arXiv preprint · arXiv:2409.04795 · 2024</div>
+            <div class="pub-row-tags"><span class="tag tag-teal">Essay Scoring</span><span class="tag tag-gold">Bias Mitigation</span><span class="tag tag-muted">Adversarial Training</span></div>
+          </div>
+          <a href="https://arxiv.org/abs/2409.04795" target="_blank" class="pub-row-link">arXiv ↗</a>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">6</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title"><a href="https://ceur-ws.org/Vol-3792/paper3.pdf" target="_blank">A Dynamic Session-Based Recommendation System with Graph Neural Networks</a></div>
+            <div class="pub-row-authors">Mahajan, V., Birihanu, E. &amp; Tashu, T. M.</div>
+            <div class="pub-row-venue">ITAT 2024 · CEUR-WS Vol. 3792</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Recommendation</span><span class="tag tag-teal">Graph Neural Networks</span></div>
+          </div>
+          <a href="https://ceur-ws.org/Vol-3792/paper3.pdf" target="_blank" class="pub-row-link">PDF ↗</a>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">7</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Mapping Transformer Leveraged Embeddings for Cross-Lingual Document Representation</div>
+            <div class="pub-row-authors">Tashu, T. M., Kontos, E. R., Sabatelli, M. &amp; Valdenegro-Toro, M.</div>
+            <div class="pub-row-venue">arXiv · CoRR abs/2401.06583 · 2024</div>
+            <div class="pub-row-tags"><span class="tag tag-teal">Cross-lingual</span><span class="tag tag-muted">Document Representation</span><span class="tag tag-gold">Transformers</span></div>
+          </div>
+          <a href="https://arxiv.org/abs/2401.06583" target="_blank" class="pub-row-link">arXiv ↗</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2023 -->
+    <div class="pub-year-group" data-year="2023">
+      <div class="pub-year-label">2023</div>
+      <div class="pub-list">
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">8</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title"><a href="https://www.sciencedirect.com/science/article/pii/S1568494623003666" target="_blank">NCC: Neural Concept Compression for Multilingual Document Recommendation</a></div>
+            <div class="pub-row-authors">Tashu, T. M., Lenz, M. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">Applied Soft Computing · Vol. 142, 110348 · Elsevier · 2023</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Journal Article</span><span class="tag tag-teal">Multilingual NLP</span><span class="tag tag-muted">Recommendation</span></div>
+          </div>
+          <a href="https://www.sciencedirect.com/science/article/pii/S1568494623003666" target="_blank" class="pub-row-link">Paper ↗</a>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">9</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title"><a href="https://ieeexplore.ieee.org/abstract/document/10386515" target="_blank">Course Review Sentiment Analysis: A Comparative Study of Machine Learning and Deep Learning Methods</a></div>
+            <div class="pub-row-authors">Fergan, E. &amp; Tashu, T. M.</div>
+            <div class="pub-row-venue">BESC 2023 · IEEE · pp. 1–7</div>
+            <div class="pub-row-tags"><span class="tag tag-teal">Sentiment Analysis</span><span class="tag tag-muted">Education</span><span class="tag tag-gold">Deep Learning</span></div>
+          </div>
+          <a href="https://ieeexplore.ieee.org/abstract/document/10386515" target="_blank" class="pub-row-link">IEEE ↗</a>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">10</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Pattern Recognition and Context Prediction of COVID-19 Cases in European Countries</div>
+            <div class="pub-row-authors">Tosayeva, A., Birihanu, E. &amp; Tashu, T. M.</div>
+            <div class="pub-row-venue">ITAT 2023 · pp. 50–57</div>
+            <div class="pub-row-tags"><span class="tag tag-teal">Pattern Recognition</span><span class="tag tag-muted">Epidemiology · AI</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2022 -->
+    <div class="pub-year-group" data-year="2022">
+      <div class="pub-year-label">2022</div>
+      <div class="pub-list">
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">11</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Synonym-Based Essay Generation and Augmentation for Robust Automatic Essay Scoring</div>
+            <div class="pub-row-authors">Tashu, T. M. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">IDEAL 2022 · pp. 12–21</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Essay Scoring</span><span class="tag tag-teal">Data Augmentation</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">12</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title"><a href="https://arxiv.org/abs/2206.08232" target="_blank">Deep Learning Architecture for Automatic Essay Scoring</a></div>
+            <div class="pub-row-authors">Tashu, T. M., Maurya, C. K. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">arXiv · CoRR abs/2206.08232 · 2022</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Essay Scoring</span><span class="tag tag-teal">Deep Learning</span><span class="tag tag-muted">NLP for Education</span></div>
+          </div>
+          <a href="https://arxiv.org/abs/2206.08232" target="_blank" class="pub-row-link">arXiv ↗</a>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">13</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Multimodal Feature Extraction for Memes Sentiment Classification</div>
+            <div class="pub-row-authors">Ouaari, S., Tashu, T. M. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">arXiv · CoRR abs/2207.03317 · 2022</div>
+            <div class="pub-row-tags"><span class="tag tag-teal">Sentiment Analysis</span><span class="tag tag-muted">Multimodal</span></div>
+          </div>
+          <a href="https://arxiv.org/abs/2207.03317" target="_blank" class="pub-row-link">arXiv ↗</a>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">14</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Multimodal E-Commerce Product Classification Using Hierarchical Fusion</div>
+            <div class="pub-row-authors">Tashu, T. M., Fattouh, S., Kiss, P. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">2022</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Multimodal</span><span class="tag tag-teal">Classification</span><span class="tag tag-muted">E-Commerce</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2021 -->
+    <div class="pub-year-group" data-year="2021">
+      <div class="pub-year-label">2021</div>
+      <div class="pub-list">
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">15</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title"><a href="https://www.mdpi.com/2313-433X/7/8/157" target="_blank">Multimodal Emotion Recognition from Art Using Sequential Co-Attention</a></div>
+            <div class="pub-row-authors">Tashu, T. M., Hajiyeva, S. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">Journal of Imaging · Vol. 7(8), Art. 157 · MDPI · 2021</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Journal Article</span><span class="tag tag-teal">Emotion Recognition</span><span class="tag tag-muted">Multimodal</span></div>
+          </div>
+          <a href="https://www.mdpi.com/2313-433X/7/8/157" target="_blank" class="pub-row-link">Paper ↗</a>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">16</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Attention-Based Multi-modal Emotion Recognition from Art</div>
+            <div class="pub-row-authors">Tashu, T. M. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">2021</div>
+            <div class="pub-row-tags"><span class="tag tag-teal">Emotion Recognition</span><span class="tag tag-muted">Attention · Multimodal</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">17</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Linear Concept Approximation for Multilingual Document Recommendation</div>
+            <div class="pub-row-authors">Salamon, V. T., Tashu, T. M. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">IDEAL 2021 · pp. 147–156</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Multilingual NLP</span><span class="tag tag-teal">Recommendation</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">18</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Learning Inter-Lingual Document Representations via Concept Compression</div>
+            <div class="pub-row-authors">Lenz, M., Tashu, T. M. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">IDEAL 2021 · pp. 268–276</div>
+            <div class="pub-row-tags"><span class="tag tag-teal">Cross-lingual</span><span class="tag tag-muted">Concept Compression</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">19</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Semantic-based Automatic Short Essay Evaluation and Recommendation System</div>
+            <div class="pub-row-authors">Tashu, T. M.</div>
+            <div class="pub-row-venue">PhD Thesis · Eötvös Loránd University, Hungary · 2021</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">PhD Thesis</span><span class="tag tag-teal">Essay Evaluation</span><span class="tag tag-muted">NLP for Education</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2020 -->
+    <div class="pub-year-group" data-year="2020">
+      <div class="pub-year-label">2020</div>
+      <div class="pub-list">
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">20</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Abstractive Text Summarization using Transfer Learning</div>
+            <div class="pub-row-authors">Zolotareva, E., Tashu, T. M. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">ITAT 2020 · pp. 75–80</div>
+            <div class="pub-row-tags"><span class="tag tag-teal">Text Summarization</span><span class="tag tag-muted">Transfer Learning</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">21</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">SmartScore — Short Answer Scoring Made Easy Using Sem-LSH</div>
+            <div class="pub-row-authors">Tashu, T. M. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">ICSC 2020 · pp. 145–149</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Essay Scoring</span><span class="tag tag-teal">Semantic Hashing</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">22</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Off-Topic Essay Detection Using C-BGRU Siamese</div>
+            <div class="pub-row-authors">Tashu, T. M.</div>
+            <div class="pub-row-venue">ICSC 2020 · pp. 221–225</div>
+            <div class="pub-row-tags"><span class="tag tag-teal">Essay Scoring</span><span class="tag tag-muted">Siamese Networks</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2019 -->
+    <div class="pub-year-group" data-year="2019">
+      <div class="pub-year-label">2019</div>
+      <div class="pub-list">
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">23</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Swarm Intelligence Techniques in Recommender Systems — A Review of Recent Research</div>
+            <div class="pub-row-authors">Peska, L., Tashu, T. M. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">Swarm and Evolutionary Computation · Vol. 48, pp. 201–219 · Elsevier · 2019</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Journal Article</span><span class="tag tag-teal">Recommendation</span><span class="tag tag-muted">Swarm Intelligence</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">24</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Semantic-Based Feedback Recommendation for Automatic Essay Evaluation</div>
+            <div class="pub-row-authors">Tashu, T. M. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">IntelliSys 2019 · Vol. 2, pp. 334–346</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Essay Scoring</span><span class="tag tag-teal">Feedback Generation</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">25</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Intelligent On-line Exam Management and Evaluation System</div>
+            <div class="pub-row-authors">Tashu, T. M., Esclamado, J. P. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">ITS 2019 · pp. 105–111</div>
+            <div class="pub-row-tags"><span class="tag tag-teal">NLP for Education</span><span class="tag tag-muted">Exam Management</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">26</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Reducing Annotation Effort in Automatic Essay Evaluation Using Locality Sensitive Hashing</div>
+            <div class="pub-row-authors">Tashu, T. M., Szabó, D. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">2019</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Essay Scoring</span><span class="tag tag-teal">LSH</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2018 -->
+    <div class="pub-year-group" data-year="2018">
+      <div class="pub-year-label">2018</div>
+      <div class="pub-list">
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">27</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">Pair-Wise: Automatic Essay Evaluation using Word Mover's Distance</div>
+            <div class="pub-row-authors">Tashu, T. M. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">CSEDU 2018 · Vol. 1, pp. 59–66</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Essay Scoring</span><span class="tag tag-teal">Word Embeddings</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+        <div class="pub-card-row">
+          <div class="pub-row-num">28</div>
+          <div class="pub-row-body">
+            <div class="pub-row-title">A Layered Approach to Automatic Essay Evaluation Using Word-Embedding</div>
+            <div class="pub-row-authors">Tashu, T. M. &amp; Horváth, T.</div>
+            <div class="pub-row-venue">CSEDU 2018 (Selected Papers) · pp. 77–94</div>
+            <div class="pub-row-tags"><span class="tag tag-gold">Essay Scoring</span><span class="tag tag-teal">Word Embeddings</span><span class="tag tag-muted">Deep Learning</span></div>
+          </div>
+          <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Research Interests -->
+    <div class="interests-section">
+      <div class="interests-grid">
+        <div class="interest-item">
+          <div class="interest-icon">🌐</div>
+          <div class="interest-title">Multilingual & Cross-lingual NLP</div>
+          <div class="interest-desc">
+            Investigating how language models generalise across languages, with focus on 
+            low-resource languages and cross-lingual transfer for affective computing tasks.
+          </div>
+        </div>
+        <div class="interest-item">
+          <div class="interest-icon">💡</div>
+          <div class="interest-title">Emotion Recognition & Affective AI</div>
+          <div class="interest-desc">
+            Advancing computational methods for detecting and classifying human emotion 
+            in text, particularly through multilingual LLMs and fine-grained emotion taxonomies.
+          </div>
+        </div>
+        <div class="interest-item">
+          <div class="interest-icon">🎓</div>
+          <div class="interest-title">NLP for Education</div>
+          <div class="interest-desc">
+            Designing AI-powered educational tools and evidence-based curricula that make 
+            NLP research accessible and applicable to students across levels and disciplines.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TEACHING ── -->
+  <section id="courses">
+    <div class="section-label">Teaching</div>
+    <h2 class="section-title">Courses &amp;<br><em>Course Materials</em></h2>
+
+    <div class="courses-grid">
+      <!-- Course 1 -->
+      <div class="course-card">
+        <div class="course-header">
+          <div class="course-icon">🔤</div>
+          <div class="course-meta">
+            <div class="course-code">BSc AI · University of Groningen</div>
+            <div class="course-title">Language Technology Practicals</div>
+          </div>
+        </div>
+        <div class="course-body">
+          <p class="course-desc">
+            A hands-on practical course for BSc Artificial Intelligence students covering the full 
+            NLP pipeline: from text representation and vector semantics to RNNs, transformers, 
+            dialogue systems, and RAG-based QA systems. Structured around PBL projects with 
+            milestone-based timelines and peer code review.
+          </p>
+          <div class="course-info">
+            <span class="course-info-item">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Full Semester
+            </span>
+            <span class="course-info-item">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              BSc Level
+            </span>
+            <span class="course-info-item">🐍 Python · PyTorch · HuggingFace</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course 2 -->
+      <div class="course-card">
+        <div class="course-header">
+          <div class="course-icon">🤖</div>
+          <div class="course-meta">
+            <div class="course-code">Advanced · University of Groningen</div>
+            <div class="course-title">Large Language Models & Applications</div>
+          </div>
+        </div>
+        <div class="course-body">
+          <p class="course-desc">
+            Deep dive into transformer architectures, instruction fine-tuning, RLHF, retrieval-augmented 
+            generation, and multi-agent systems. Covers both the theoretical foundations of modern LLMs 
+            and their practical deployment in real-world NLP applications. Lecture materials available.
+          </p>
+          <div class="course-info">
+            <span class="course-info-item">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Full Semester
+            </span>
+            <span class="course-info-item">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              Advanced Level
+            </span>
+            <span class="course-info-item">🔗 <a href="llm.html" style="color:var(--teal);text-decoration:none;">View Materials ↗</a></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course 3 -->
+      <div class="course-card">
+        <div class="course-header">
+          <div class="course-icon">🧠</div>
+          <div class="course-meta">
+            <div class="course-code">Lecture Series · University of Groningen</div>
+            <div class="course-title">NLP Fundamentals: Vectors, RNNs &amp; Transformers</div>
+          </div>
+        </div>
+        <div class="course-body">
+          <p class="course-desc">
+            Lecture modules covering vector semantics and embeddings, recurrent neural networks 
+            (sequence modelling, LSTMs), and the transformer architecture. Developed for the 
+            Language Technology Practicals series with custom slide decks and coding notebooks.
+          </p>
+          <div class="course-info">
+            <span class="course-info-item">📊 Slides &amp; Notebooks</span>
+            <span class="course-info-item">🔗 <a href="NLP.html" style="color:var(--teal);text-decoration:none;">View Materials ↗</a></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course 4 -->
+      <div class="course-card">
+        <div class="course-header">
+          <div class="course-icon">🎓</div>
+          <div class="course-meta">
+            <div class="course-code">BUas · Graduation Projects</div>
+            <div class="course-title">Bachelor's Project Coordination &amp; Supervision</div>
+          </div>
+        </div>
+        <div class="course-body">
+          <p class="course-desc">
+            Academic supervision of graduation projects at Breda University of Applied Sciences, 
+            spanning AI, NLP, and applied data science. Developed comprehensive Teacher and Student 
+            Guide documents using BUas branding and PBL methodology for structured project delivery.
+          </p>
+          <div class="course-info">
+            <span class="course-info-item">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              BUas Students
+            </span>
+            <span class="course-info-item">📋 Project Supervision</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LLM Highlight Card -->
+    <div class="llm-section">
+      <div class="llm-card">
+        <div class="llm-inner">
+          <div>
+            <div class="section-label">Course Highlight</div>
+            <div class="llm-title">RAG-Based QA Assistant<br><em>Student Project Tracks</em></div>
+            <p class="llm-desc">
+              The capstone project for Language Technology Practicals challenges students 
+              to build production-quality QA systems. Four specialisation tracks allow 
+              students to focus on their area of interest.
+            </p>
+            <ul class="llm-topics">
+              <li>Conversational RAG System</li>
+              <li>Educational Tutor Agent</li>
+              <li>Safety-Aware Advisory Assistant</li>
+              <li>Multi-Agent Research Assistant</li>
+            </ul>
+          </div>
+          <div class="terminal">
+            <div class="terminal-bar">
+              <div class="terminal-dot" style="background:#c0614a;"></div>
+              <div class="terminal-dot" style="background:#d4a853;"></div>
+              <div class="terminal-dot" style="background:#4ba89a;"></div>
+              <span style="font-size:0.62rem;color:var(--muted);margin-left:0.5rem;">rag_pipeline.py</span>
+            </div>
+            <div class="terminal-body">
+              <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd">python rag_pipeline.py</span></div>
+              <div class="t-blank"></div>
+              <div class="t-line"><span class="t-out">Initialising retriever...</span></div>
+              <div class="t-line"><span class="t-out t-gold">✓ Vector store loaded (2,841 chunks)</span></div>
+              <div class="t-line"><span class="t-out">Loading LLM backbone...</span></div>
+              <div class="t-line"><span class="t-out t-gold">✓ mistral-7b-instruct ready</span></div>
+              <div class="t-blank"></div>
+              <div class="t-line"><span class="t-prompt">›</span><span class="t-cmd" style="color:var(--teal);">Query: "What is attention?"</span></div>
+              <div class="t-blank"></div>
+              <div class="t-line"><span class="t-out">Retrieving top-5 contexts...</span></div>
+              <div class="t-line"><span class="t-out t-gold">✓ Generated response (312 tokens)</span></div>
+              <div class="t-blank"></div>
+              <div class="t-line"><span class="t-out" style="color:var(--text);font-style:italic;">"Attention is a mechanism that allows</span></div>
+              <div class="t-line"><span class="t-out" style="color:var(--text);font-style:italic;"> models to weigh input relevance..."</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">Get in<br><em>Touch</em></h2>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-intro">
+          I welcome collaborations on multilingual NLP research, AI education projects, 
+          and cross-institutional curriculum innovation. Feel free to reach out via email 
+          or connect on GitHub.
+        </p>
+        <div class="contact-items">
+          <a href="/cdn-cgi/l/email-protection#3b4f1556154f5a48534e7b494e5c155557" class="contact-item">
+            <div class="contact-item-icon">✉</div>
+            <div>
+              <div class="contact-item-label">Email</div>
+              <div class="contact-item-value"><span class="__cf_email__" data-cfemail="c5b1eba8ebb1a4b6adb085b7b0a2ebaba9">[email&#160;protected]</span></div>
+            </div>
+          </a>
+          <a href="https://github.com/Tsegaye-misikir" target="_blank" class="contact-item">
+            <div class="contact-item-icon">⌥</div>
+            <div>
+              <div class="contact-item-label">GitHub</div>
+              <div class="contact-item-value">github.com/Tsegaye-misikir</div>
+            </div>
+          </a>
+          <div class="contact-item" style="cursor:default;">
+            <div class="contact-item-icon" style="background:var(--teal-dim);border-color:rgba(75,168,154,0.2);">🏛</div>
+            <div>
+              <div class="contact-item-label">University of Groningen</div>
+              <div class="contact-item-value">Faculty of Science &amp; Engineering</div>
+            </div>
+          </div>
+          <div class="contact-item" style="cursor:default;">
+            <div class="contact-item-icon" style="background:var(--teal-dim);border-color:rgba(75,168,154,0.2);">🎓</div>
+            <div>
+              <div class="contact-item-label">BUas</div>
+              <div class="contact-item-value">Breda University of Applied Sciences</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-note">
+        <p style="font-family:var(--serif);font-size:1.1rem;margin-bottom:1rem;color:var(--text);">Collaboration Interests</p>
+        <p style="margin-bottom:0.75rem;">I am particularly interested in:</p>
+        <ul style="padding-left:1.25rem;color:var(--muted);font-size:0.85rem;line-height:2;list-style:none;">
+          <li>→ Multilingual NLP &amp; low-resource language research</li>
+          <li>→ Cross-lingual emotion recognition</li>
+          <li>→ AI-powered assessment &amp; educational tools</li>
+          <li>→ PBL curriculum co-design for AI programmes</li>
+          <li>→ LLM evaluation &amp; benchmarking</li>
+        </ul>
+        <div style="margin-top:1.5rem;">
+          <a href="/cdn-cgi/l/email-protection#85f1abe8abf1e4f6edf0c5f7f0e2abebe9" class="btn btn-primary" style="font-size:0.68rem;">Send Email ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-copy">© 2025 Tsegaye M. Tashu · University of Groningen</div>
+    <div class="footer-links">
+      <a href="/cdn-cgi/l/email-protection#64104a094a1005170c11241611034a0a08">Email</a>
+      <a href="https://github.com/Tsegaye-misikir" target="_blank">GitHub</a>
+      <a href="#research">Research</a>
+      <a href="#courses">Teaching</a>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Mobile nav
+    function toggleMobileNav() {
+      const nav = document.getElementById('mobileNav');
+      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    }
+    function closeMobile() {
+      document.getElementById('mobileNav').style.display = 'none';
+    }
+
+    // Scroll-triggered fade-ins
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.pub-card, .course-card, .stat-card, .interest-item, .contact-item').forEach(el => {
+      el.classList.add('fade-in');
+      observer.observe(el);
+    });
+
+    // Publication year filter
+    function filterPubs(year, btn) {
+      document.querySelectorAll('.pub-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const groups = document.querySelectorAll('.pub-year-group');
+      let count = 0;
+      groups.forEach(g => {
+        if (year === 'all' || g.dataset.year === year) {
+          g.style.display = '';
+          count += g.querySelectorAll('.pub-card-row').length;
+        } else {
+          g.style.display = 'none';
+        }
+      });
+      document.getElementById('pubNum').textContent = count;
+    }
+
+    // Active nav highlight
+    const sections = document.querySelectorAll('section');
+    const navLinks =
