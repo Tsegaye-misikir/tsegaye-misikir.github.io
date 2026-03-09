@@ -1,392 +1,1096 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Course Plan: Large Language Models</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: The SPA is designed with a non-linear, modular structure to facilitate user-driven exploration. A persistent vertical navigation sidebar allows users to jump to any key section (Intro, Prerequisites, Objectives, Curriculum, etc.) at any time. The main content area dynamically displays the selected section. The 'Curriculum' is the core interactive component, presented as a timeline or accordion where users can click on a week/module to expand it and view detailed topics, readings, and activities. This structure was chosen over a linear scroll because a course syllabus is often used as a reference document; users frequently need to access specific information (e.g., "What are the prerequisites?" or "What's covered in Week 7?") quickly. An interactive, navigable structure is far more usable for this purpose than a static, multi-page document. -->
-    <!-- Visualization & Content Choices: 
-        - Prerequisites: Report Info -> A table of required skills. Goal -> To clearly and quickly communicate the necessary background for potential students. Viz/Presentation Method -> An interactive radar chart (Chart.js) to visually represent the required proficiency levels across different skill categories. Interaction -> Hovering over a point on the chart reveals the specific skill and required level. Justification -> A visual chart is more engaging and allows for quicker comprehension of skill distribution than a simple table. It highlights the interdisciplinary nature of the required skills. Library/Method -> Chart.js (Canvas).
-        - Curriculum/Schedule: Report Info -> A 17-week schedule with topics, readings, and assignments. Goal -> To allow users to explore the course flow and details of each week. Viz/Presentation Method -> An interactive, collapsible accordion/timeline built with HTML/Tailwind/JS. Interaction -> Users click on a week's header to expand/collapse its detailed content. A filter/search bar could allow users to find weeks covering specific keywords (e.g., "RAG", "Ethics"). Justification -> An accordion prevents information overload by hiding details by default. It encourages active exploration and makes finding specific weekly content easy without extensive scrolling. Library/Method -> HTML/CSS/JS.
-        - Learning Objectives & Applications: Report Info -> Lists of learning outcomes and industry use cases. Goal -> To showcase the value and practical takeaways of the course. Viz/Presentation Method -> Styled, interactive cards using HTML/Tailwind. Interaction -> Clicking on a card could reveal more detailed examples or related case studies (though for this SPA, it will be a simple visual element). Justification -> Cards break up long lists into digestible, visually appealing chunks, improving readability. Library/Method -> HTML/Tailwind CSS.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fdfcfb;
-            color: #3f3c3a;
-        }
-        .sidebar-link {
-            transition: all 0.2s ease-in-out;
-        }
-        .sidebar-link.active, .sidebar-link:hover {
-            background-color: #f2e9e4;
-            color: #c9ada7;
-            border-right: 4px solid #c9ada7;
-        }
-        .content-section {
-            display: none;
-        }
-        .content-section.active {
-            display: block;
-        }
-        .accordion-header {
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .accordion-header:hover {
-            background-color: #f2e9e4;
-        }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LLM Course — Tsegaye M. Tashu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1520;
+      --bg2:       #111d2e;
+      --bg3:       #162034;
+      --bg4:       #0a1119;
+      --line:      rgba(255,255,255,0.07);
+      --text:      #e8e2d6;
+      --muted:     #7a8699;
+      --gold:      #d4a853;
+      --gold-dim:  rgba(212,168,83,0.13);
+      --teal:      #4ba89a;
+      --teal-dim:  rgba(75,168,154,0.11);
+      --red:       #c0614a;
+      --red-dim:   rgba(192,97,74,0.12);
+      --serif:     'DM Serif Display', Georgia, serif;
+      --sans:      'Sora', sans-serif;
+      --mono:      'JetBrains Mono', monospace;
+      --ease:      cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+    /* ── NOISE ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: 0.35;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem); height: 64px;
+      background: rgba(13,21,32,0.9); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-logo { font-family: var(--serif); font-size: 1.1rem; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+      color: var(--muted); text-decoration: none; letter-spacing: 0.08em;
+      text-transform: uppercase; transition: color 0.2s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--gold);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.25s var(--ease);
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+
+    /* ── LAYOUT ── */
+    .section { padding: 6rem clamp(1.5rem, 8vw, 6rem); }
+    .section:nth-child(even) { background: var(--bg2); }
+    .container { max-width: 1100px; }
+
+    .section-label {
+      font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .section-label::after { content: ''; display: inline-block; width: 36px; height: 1px; background: var(--gold); opacity: 0.5; }
+
+    h2.section-title {
+      font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400; line-height: 1.15; color: var(--text); margin-bottom: 2.5rem;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; padding-top: 64px;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-left: clamp(1.5rem, 8vw, 6rem); padding-right: clamp(1.5rem, 8vw, 6rem);
+      position: relative; overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse at 60% 50%, black 10%, transparent 65%);
+    }
+    .hero-glow {
+      position: absolute; width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(75,168,154,0.07) 0%, transparent 70%);
+      top: -150px; right: -200px; pointer-events: none;
+    }
+    .hero-glow2 {
+      position: absolute; width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,168,83,0.05) 0%, transparent 70%);
+      bottom: -100px; left: -100px; pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5rem; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--teal);
+      border: 1px solid rgba(75,168,154,0.25); padding: 0.35rem 0.85rem;
+      margin-bottom: 1.5rem; background: var(--teal-dim);
+    }
+    .hero-badge::before { content: '●'; font-size: 0.5rem; animation: blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    h1.hero-title {
+      font-family: var(--serif); font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 400; line-height: 1.05; color: var(--text); margin-bottom: 0.5rem;
+    }
+    h1.hero-title em { font-style: italic; color: var(--gold); }
+
+    .hero-subtitle {
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.3rem); color: var(--muted); margin-bottom: 1.75rem;
+    }
+    .hero-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.85; max-width: 460px; margin-bottom: 2rem; }
+
+    .hero-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .tag {
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.07em;
+      padding: 0.28rem 0.8rem; border-radius: 2px; border: 1px solid;
+    }
+    .tag-gold  { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+    .tag-teal  { border-color: var(--teal); color: var(--teal); background: var(--teal-dim); }
+    .tag-muted { border-color: rgba(255,255,255,0.12); color: var(--muted); }
+
+    .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.6rem; font-family: var(--mono); font-size: 0.7rem;
+      font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px; transition: all 0.22s var(--ease); cursor: pointer;
+    }
+    .btn-primary { background: var(--gold); color: var(--bg); border: 1px solid var(--gold); }
+    .btn-primary:hover { background: transparent; color: var(--gold); }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--line); }
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+      border: 1px solid var(--line); background: var(--line);
+    }
+    .hero-stat {
+      background: var(--bg3); padding: 1.25rem 1.5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-stat::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s var(--ease);
+    }
+    .hero-stat:hover::before { transform: scaleX(1); }
+    .hero-stat-num { font-family: var(--serif); font-size: 2rem; color: var(--gold); line-height: 1; }
+    .hero-stat-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem; }
+
+    /* ── PREREQUISITES ── */
+    .prereqs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .prereqs-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.5rem; }
+
+    .skill-bars { display: flex; flex-direction: column; gap: 1.1rem; }
+    .skill-bar-item {}
+    .skill-bar-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+    .skill-bar-name { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--text); }
+    .skill-bar-level { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
+    .skill-bar-track { height: 4px; background: var(--line); position: relative; overflow: hidden; }
+    .skill-bar-fill {
+      position: absolute; top: 0; left: 0; height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--gold));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 1s var(--ease);
+    }
+
+    .radar-wrap { position: relative; max-width: 380px; margin: 0 auto; }
+
+    /* ── OBJECTIVES ── */
+    .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .obj-card {
+      background: var(--bg3); padding: 2rem 1.75rem;
+      position: relative; overflow: hidden; transition: background 0.2s;
+    }
+    .obj-card:hover { background: var(--bg2); }
+    .obj-num {
+      font-family: var(--serif); font-size: 3rem; color: rgba(75,168,154,0.1);
+      line-height: 1; position: absolute; top: 1rem; right: 1.25rem;
+    }
+    .obj-icon { font-size: 1.4rem; margin-bottom: 1rem; }
+    .obj-title { font-family: var(--serif); font-size: 1rem; line-height: 1.35; margin-bottom: 0.6rem; }
+    .obj-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── CURRICULUM ── */
+    .curriculum-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .curriculum-hint { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; }
+
+    .week-group { margin-bottom: 0.6rem; }
+    .week-btn {
+      width: 100%; background: var(--bg3); border: 1px solid var(--line);
+      padding: 0; cursor: pointer; text-align: left;
+      transition: border-color 0.2s; display: block;
+    }
+    .week-btn:hover { border-color: rgba(75,168,154,0.3); }
+    .week-btn.open { border-color: rgba(75,168,154,0.4); }
+
+    .week-btn-inner {
+      display: grid; grid-template-columns: 3rem 1fr auto;
+      align-items: center; padding: 1.1rem 1.5rem; gap: 1.25rem;
+    }
+    .week-num {
+      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+      color: var(--teal); text-transform: uppercase;
+    }
+    .week-title { font-family: var(--serif); font-size: 1rem; color: var(--text); }
+    .week-tags-inline { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.25rem; }
+
+    .week-chevron {
+      color: var(--muted); font-size: 0.8rem; transition: transform 0.25s var(--ease);
+      font-family: var(--mono);
+    }
+    .week-btn.open .week-chevron { transform: rotate(180deg); color: var(--teal); }
+
+    .week-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s var(--ease), opacity 0.3s;
+      opacity: 0; border-top: 0px solid var(--line);
+    }
+    .week-body.open { max-height: 600px; opacity: 1; border-top: 1px solid var(--line); }
+
+    .week-body-inner { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
+    .week-col { padding: 1.5rem 1.75rem; border-right: 1px solid var(--line); }
+    .week-col:last-child { border-right: none; }
+    .week-col-label {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem;
+    }
+    .week-col ul { list-style: none; }
+    .week-col ul li {
+      font-size: 0.82rem; color: var(--muted); padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      display: flex; align-items: flex-start; gap: 0.5rem;
+    }
+    .week-col ul li::before { content: '→'; color: var(--teal); flex-shrink: 0; font-family: var(--mono); font-size: 0.7rem; margin-top: 0.1rem; }
+    .week-col ul li:last-child { border-bottom: none; }
+    .week-col-reading { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── APPLICATIONS ── */
+    .apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .app-card {
+      border: 1px solid var(--line); background: var(--bg3);
+      padding: 1.75rem; position: relative; overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .app-card:hover { border-color: rgba(75,168,154,0.35); transform: translateY(-3px); }
+    .app-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: linear-gradient(90deg, var(--teal), transparent);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s var(--ease);
+    }
+    .app-card:hover::after { transform: scaleX(1); }
+    .app-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+    .app-title { font-family: var(--serif); font-size: 1rem; margin-bottom: 0.6rem; }
+    .app-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── ETHICS ── */
+    .ethics-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .ethics-intro { font-size: 0.95rem; color: var(--muted); line-height: 1.85; margin-bottom: 2rem; }
+    .ethics-items { display: flex; flex-direction: column; gap: 1px; }
+    .ethics-item {
+      border: 1px solid var(--line); background: var(--bg3);
+      padding: 1.5rem 1.75rem; margin-bottom: 0; transition: border-color 0.2s;
+    }
+    .ethics-item + .ethics-item { margin-top: 1px; }
+    .ethics-item:hover { border-color: rgba(192,97,74,0.3); }
+    .ethics-item-header { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 0.6rem; }
+    .ethics-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .ethics-title { font-family: var(--serif); font-size: 1rem; }
+    .ethics-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; padding-left: 2.2rem; }
+
+    .ethics-visual {
+      border: 1px solid var(--line); background: var(--bg4); padding: 2rem;
+      position: sticky; top: 80px;
+    }
+    .ev-title { font-family: var(--serif); font-size: 1rem; margin-bottom: 1.5rem; color: var(--text); }
+    .ev-ring-wrap { display: flex; flex-direction: column; gap: 1rem; }
+    .ev-principle {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.85rem 1rem; background: var(--bg3); border-left: 2px solid var(--teal);
+    }
+    .ev-principle-icon { font-size: 1rem; flex-shrink: 0; }
+    .ev-principle-title { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+    .ev-principle-desc { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem clamp(1.5rem, 8vw, 6rem);
+      border-top: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-inner, .prereqs-grid, .ethics-layout { grid-template-columns: 1fr; }
+      .objectives-grid { grid-template-columns: 1fr 1fr; }
+      .apps-grid { grid-template-columns: 1fr 1fr; }
+      .week-body-inner { grid-template-columns: 1fr; }
+      .week-col { border-right: none; border-bottom: 1px solid var(--line); }
+      .week-col:last-child { border-bottom: none; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 580px) {
+      .objectives-grid, .apps-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-<body class="flex flex-col md:flex-row min-h-screen">
+<body>
 
-    <!-- Sidebar Navigation -->
-    <aside class="w-full md:w-64 bg-[#f4f1ee] border-r border-gray-200 p-4 md:p-6 md:fixed md:h-full">
-        <h1 class="text-2xl font-bold text-[#4a4e69] mb-8">LLM Course</h1>
-        <nav id="sidebarNav" class="flex flex-row md:flex-col gap-2 md:gap-1 overflow-x-auto pb-4 md:pb-0">
-            <a href="#introduction" class="sidebar-link active text-lg font-medium p-3 rounded-lg whitespace-nowrap">Introduction</a>
-            <a href="#prerequisites" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Prerequisites</a>
-            <a href="#objectives" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Objectives</a>
-            <a href="#curriculum" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Curriculum</a>
-            <a href="#applications" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Applications</a>
-            <a href="#ethics" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Ethics</a>
-            <a href="#assessment" class="sidebar-link text-lg font-medium p-3 rounded-lg whitespace-nowrap">Assessment</a>
-        </nav>
-    </aside>
+<!-- ── NAV ── -->
+<nav>
+  <a href="index.html" class="nav-logo">T.M.<span>Tashu</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#research">Research</a></li>
+    <li><a href="NLP.html">NLP Course</a></li>
+    <li><a href="llm.html" class="active">LLM Course</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
 
-    <!-- Main Content -->
-    <main class="flex-1 md:ml-64 p-6 md:p-10">
-        
-        <!-- Introduction Section -->
-        <section id="introduction" class="content-section active">
-            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Foundations to Advanced Systems</h2>
-            <p class="text-lg text-gray-600 mb-6">
-                This interactive guide outlines a comprehensive, expert-level course for Large Language Models (LLMs). It is designed to equip you with a deep theoretical understanding and the practical skills for developing, deploying, and optimizing LLM-powered applications. Explore the curriculum to see how it progresses from foundational concepts to the cutting edge of AI.
-            </p>
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 class="text-2xl font-semibold text-[#4a4e69] mb-3">What are LLMs?</h3>
-                <p class="text-gray-700 leading-relaxed">
-                    Large Language Models represent a powerful subset of Natural Language Processing (NLP) models, distinguished by their immense scale and extensive training data. At their core, LLMs are sophisticated algorithms designed to predict sequences of words based on intricate patterns learned from vast datasets. This inherent flexibility allows a single LLM to perform diverse functions, including answering complex questions, summarizing documents, translating languages, and even generating creative content, demonstrating significant potential to revolutionize how we interact with information and technology.
-                </p>
-                <div class="mt-4">
-                    <a href="https://tsegaye-misikir.github.io/course.html" target="_blank" rel="noopener noreferrer" class="inline-block bg-[#c9ada7] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#a98f86] transition-colors">
-                        View this Course Page in a New Tab
-                    </a>
-                </div>
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">Advanced NLP · BSc Level</div>
+      <h1 class="hero-title">Large<br>Language<br><em>Models</em></h1>
+      <p class="hero-subtitle">Foundations to Advanced Systems</p>
+      <p class="hero-desc">
+        An expert-level course covering the full LLM stack — from Transformer architecture
+        and pretraining through fine-tuning, RAG, agentic systems, and responsible
+        deployment at scale. Designed for advanced students and practitioners building
+        real-world AI systems.
+      </p>
+      <div class="hero-meta">
+        <span class="tag tag-gold">7 Weeks</span>
+        <span class="tag tag-teal">Python · PyTorch · HuggingFace</span>
+        <span class="tag tag-muted">Advanced Level</span>
+        <span class="tag tag-teal">Project-Based</span>
+      </div>
+      <div class="hero-actions">
+        <a href="#curriculum" class="btn btn-primary">Explore Curriculum ↓</a>
+        <a href="index.html#contact" class="btn btn-outline">Contact Instructor</a>
+      </div>
+    </div>
+    <div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">7</div>
+          <div class="hero-stat-label">Weeks</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">6</div>
+          <div class="hero-stat-label">Core Objectives</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">4</div>
+          <div class="hero-stat-label">Application Domains</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">LLM</div>
+          <div class="hero-stat-label">Primary Domain</div>
+        </div>
+      </div>
+
+      <!-- quick-nav -->
+      <div style="margin-top:1.25rem; border:1px solid var(--line); background:var(--bg3); padding:1.25rem 1.5rem;">
+        <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem;">Jump to section</div>
+        <div style="display:flex;flex-direction:column;gap:0.35rem;">
+          <a href="#prerequisites" style="font-size:0.82rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid var(--line);transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'"><span style="font-family:var(--mono);color:var(--gold);font-size:0.65rem;">01</span> Prerequisites &amp; Skills</a>
+          <a href="#objectives" style="font-size:0.82rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid var(--line);transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'"><span style="font-family:var(--mono);color:var(--gold);font-size:0.65rem;">02</span> Learning Objectives</a>
+          <a href="#curriculum" style="font-size:0.82rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid var(--line);transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'"><span style="font-family:var(--mono);color:var(--gold);font-size:0.65rem;">03</span> Weekly Curriculum</a>
+          <a href="#applications" style="font-size:0.82rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid var(--line);transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'"><span style="font-family:var(--mono);color:var(--gold);font-size:0.65rem;">04</span> Real-World Applications</a>
+          <a href="#ethics" style="font-size:0.82rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'"><span style="font-family:var(--mono);color:var(--gold);font-size:0.65rem;">05</span> Ethics &amp; Societal Impact</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PREREQUISITES ── -->
+<section id="prerequisites" class="section">
+  <div class="container">
+    <div class="section-label">01 — Prerequisites</div>
+    <h2 class="section-title">Skills &amp;<br><em>Prior Knowledge</em></h2>
+    <div class="prereqs-grid">
+      <div>
+        <p class="prereqs-desc">
+          This course assumes a strong technical foundation. Students should arrive
+          comfortable with deep learning, NLP fundamentals, and Python at an advanced
+          level. The bars below indicate the expected entry-level proficiency — this is
+          a fast-paced, graduate-level course with no ramp-up on basics.
+        </p>
+        <div class="skill-bars" id="skillBars">
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Python &amp; PyTorch</span>
+              <span class="skill-bar-level">Advanced</span>
             </div>
-        </section>
-
-        <!-- Prerequisites Section -->
-        <section id="prerequisites" class="content-section">
-            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Prerequisites & Skills</h2>
-             <p class="text-lg text-gray-600 mb-8">
-                Success in this course requires a robust technical background. The following chart visualizes the recommended proficiency levels across key domains. This course is designed for professionals and advanced students who are committed to a rigorous pace of study. Hover over the points in the chart to see the specific skill areas.
-            </p>
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <div class="chart-container">
-                    <canvas id="prerequisitesChart"></canvas>
-                </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:0.90"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Deep Learning Fundamentals</span>
+              <span class="skill-bar-level">Advanced</span>
             </div>
-        </section>
-
-        <!-- Objectives Section -->
-        <section id="objectives" class="content-section">
-            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Core Learning Objectives</h2>
-             <p class="text-lg text-gray-600 mb-8">
-                Upon successful completion of this course, you will have mastered a wide range of theoretical concepts and practical skills. The key objectives are designed to make you a proficient practitioner in the field of Large Language Models, capable of building, optimizing, and critically evaluating complex AI systems.
-            </p>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Master Transformer Architecture</h3>
-                    <p class="text-gray-700">Gain a deep understanding of the self-attention mechanism, multi-head attention, and positional encoding that power modern LLMs.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Implement Advanced Techniques</h3>
-                    <p class="text-gray-700">Learn to apply Retrieval-Augmented Generation (RAG) for factual accuracy and methods like LoRA for efficient fine-tuning.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Optimize for Scale</h3>
-                    <p class="text-gray-700">Comprehend system-level optimizations for training and serving, including distributed training and model quantization.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Build Agentic Frameworks</h3>
-                    <p class="text-gray-700">Design and deploy agentic LLMs that can utilize external tools and APIs to perform complex tasks.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Develop Real-World Applications</h3>
-                    <p class="text-gray-700">Integrate AI-driven solutions in diverse domains, from customer service chatbots to intelligent code generation systems.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-bold text-xl mb-2 text-[#4a4e69]">Analyze Ethical Implications</h3>
-                    <p class="text-gray-700">Critically assess and mitigate issues of bias, fairness, data privacy, and the societal impact of LLMs.</p>
-                </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:0.85"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">NLP Foundations (from NLP course)</span>
+              <span class="skill-bar-level">Intermediate–Advanced</span>
             </div>
-        </section>
-
-        <!-- Curriculum Section -->
-        <section id="curriculum" class="content-section">
-            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Weekly Curriculum</h2>
-            <p class="text-lg text-gray-600 mb-8">
-                The course is structured into a comprehensive 17-week program, progressing from foundational principles to advanced, state-of-the-art topics. Click on each week to expand and view the detailed topics, key readings, and planned activities. This structure ensures a deep, scaffolded learning experience.
-            </p>
-            <div id="accordion-container" class="space-y-2">
-                <!-- Accordion items will be injected here by JavaScript -->
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:0.80"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Linear Algebra &amp; Probability</span>
+              <span class="skill-bar-level">Advanced</span>
             </div>
-        </section>
-
-        <!-- Applications Section -->
-        <section id="applications" class="content-section">
-            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Real-World Applications</h2>
-            <p class="text-lg text-gray-600 mb-8">LLMs are not just a research topic; they are a transformative technology with a vast and diverse range of practical applications across numerous industries. From enhancing creative workflows to revolutionizing data analysis and customer interaction, the impact of LLMs is already being felt. Below are some of the key areas where these models are making a difference.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Content Creation & Generation</h3>
-                    <p class="text-gray-700">Automating the creation of articles, marketing copy, social media posts, and even short stories. LLMs act as powerful assistants for writers and marketers.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Customer Service & Support</h3>
-                    <p class="text-gray-700">Powering intelligent chatbots and virtual assistants that can provide immediate, 24/7 support and answer complex customer queries in natural language.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Code Generation & Assistance</h3>
-                    <p class="text-gray-700">Helping developers write, debug, and understand code more efficiently. Tools like GitHub Copilot can suggest lines of code or entire functions in real-time.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Specialized Industry Solutions</h3>
-                    <p class="text-gray-700">From assisting in clinical diagnoses in healthcare to mapping cybersecurity regulations to policies and controls and expediting financial claims processing, LLMs are being tailored for high-impact, domain-specific tasks.</p>
-                </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:0.82"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Transformer Architecture</span>
+              <span class="skill-bar-level">Intermediate</span>
             </div>
-        </section>
-
-        <!-- Ethics Section -->
-        <section id="ethics" class="content-section">
-            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Ethics & Societal Impact</h2>
-            <p class="text-lg text-gray-600 mb-8">The power of Large Language Models comes with significant responsibility. A core part of this curriculum is dedicated to critically examining the ethical dimensions of developing and deploying these technologies. Understanding these challenges is essential for building AI that is safe, fair, and beneficial for society.</p>
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-4">
-                <div>
-                    <h3 class="font-semibold text-xl text-[#4a4e69]">Bias and Fairness</h3>
-                    <p class="text-gray-700">LLMs can inherit and amplify biases present in their training data. We explore how to detect these biases and strategies for creating more equitable models.</p>
-                </div>
-                <hr>
-                <div>
-                    <h3 class="font-semibold text-xl text-[#4a4e69]">Data Privacy and Consent</h3>
-                    <p class="text-gray-700">The use of massive datasets raises critical questions about data privacy and user consent. This module covers the importance of ethical data sourcing and compliance with privacy regulations.</p>
-                </div>
-                 <hr>
-                <div>
-                    <h3 class="font-semibold text-xl text-[#4a4e69]">Hallucination and Misinformation</h3>
-                    <p class="text-gray-700">LLMs can sometimes generate confident but incorrect information, a phenomenon known as "hallucination." We analyze the risks and discuss techniques like RAG to ground models in factual data.</p>
-                </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:0.65"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top">
+              <span class="skill-bar-name">Git, CLI &amp; Cloud Computing</span>
+              <span class="skill-bar-level">Intermediate</span>
             </div>
-        </section>
-        
-        <!-- Assessment Section -->
-        <section id="assessment" class="content-section">
-            <h2 class="text-4xl font-bold text-[#4a4e69] mb-4">Assessment & Evaluation</h2>
-            <p class="text-lg text-gray-600 mb-8">Our multi-faceted assessment strategy is designed to evaluate both theoretical understanding and practical application skills, ensuring a comprehensive measure of mastery. The approach emphasizes hands-on work and critical analysis, preparing you for real-world challenges.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Continuous Assignments</h3>
-                    <p class="text-gray-700">Regular homework, including coding exercises and theoretical questions, reinforces core concepts and provides ongoing practical experience.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Midterm Report</h3>
-                    <p class="text-gray-700">A comprehensive report assesses your grasp of the foundational concepts covered in the first half of the course, ensuring you're ready for more advanced topics.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Final Project</h3>
-                    <p class="text-gray-700">The cornerstone of the evaluation is a substantial final project, requiring a proposal, a final presentation, and a detailed written report documenting your work.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="font-semibold text-xl text-[#4a4e69] mb-2">Class Participation</h3>
-                    <p class="text-gray-700">Active engagement in discussions and collaborative activities is encouraged to foster a dynamic and critical learning environment.</p>
-                </div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:0.70"></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="radar-wrap">
+          <canvas id="radarChart" width="380" height="380"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OBJECTIVES ── -->
+<section id="objectives" class="section">
+  <div class="container">
+    <div class="section-label">02 — Objectives</div>
+    <h2 class="section-title">Core Learning<br><em>Outcomes</em></h2>
+    <div class="objectives-grid">
+      <div class="obj-card">
+        <div class="obj-num">01</div>
+        <div class="obj-icon">🔩</div>
+        <div class="obj-title">Master Transformer Architecture</div>
+        <div class="obj-desc">Gain deep understanding of self-attention, multi-head attention, positional encoding, and the design choices that make modern LLMs work at scale.</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">02</div>
+        <div class="obj-icon">🔬</div>
+        <div class="obj-title">Implement Advanced Techniques</div>
+        <div class="obj-desc">Apply Retrieval-Augmented Generation (RAG) for factual grounding and parameter-efficient fine-tuning methods like LoRA, QLoRA, and instruction tuning.</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">03</div>
+        <div class="obj-icon">⚡</div>
+        <div class="obj-title">Optimise for Scale</div>
+        <div class="obj-desc">Understand system-level optimisations for training and serving: distributed training, gradient checkpointing, model quantisation, and efficient inference.</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">04</div>
+        <div class="obj-icon">🤖</div>
+        <div class="obj-title">Build Agentic Frameworks</div>
+        <div class="obj-desc">Design and deploy agentic LLMs that leverage tool use, function calling, memory systems, and multi-agent orchestration for complex task completion.</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">05</div>
+        <div class="obj-icon">🚀</div>
+        <div class="obj-title">Develop Real-World Applications</div>
+        <div class="obj-desc">Integrate LLM-powered solutions across domains — from enterprise chatbots and code assistants to domain-specific RAG systems and multimodal pipelines.</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">06</div>
+        <div class="obj-icon">⚖️</div>
+        <div class="obj-title">Analyse Ethical Implications</div>
+        <div class="obj-desc">Critically assess and mitigate bias, hallucination, data privacy risks, and the broader societal impact of deploying large-scale AI language systems.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CURRICULUM ── -->
+<section id="curriculum" class="section">
+  <div class="container">
+    <div class="curriculum-header">
+      <div>
+        <div class="section-label">03 — Curriculum</div>
+        <h2 class="section-title" style="margin-bottom:0">7-Week<br><em>Course Plan</em></h2>
+      </div>
+      <div class="curriculum-hint">Click any week to expand ↓</div>
+    </div>
+
+    <!-- W01 -->
+    <div class="week-group">
+      <button class="week-btn" onclick="toggleWeek(this)">
+        <div class="week-btn-inner">
+          <div class="week-num">W01</div>
+          <div>
+            <div class="week-title">Introduction to Large Language Models</div>
+            <div class="week-tags-inline"><span class="tag tag-teal">Foundations</span><span class="tag tag-muted">Emergent Capabilities</span></div>
+          </div>
+          <div class="week-chevron">▼</div>
+        </div>
+      </button>
+      <div class="week-body">
+        <div class="week-body-inner">
+          <div class="week-col">
+            <div class="week-col-label">Lecture Topics</div>
+            <ul>
+              <li>Evolution of LMs: statistical → neural → Transformers → LLMs</li>
+              <li>Emergent capabilities of LLMs</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Lab / Deliverable</div>
+            <ul>
+              <li>Interact with an LLM (GPT, LLaMA, etc.) across multiple tasks</li>
+              <li>Write a reflection: "Where does the model excel? Where does it fail?"</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Key Readings</div>
+            <div class="week-col-reading">
+              Jurafsky &amp; Martin, <em>Speech and Language Processing</em> — LLM overview<br><br>
+              Bender et al. (2021), <em>On the Dangers of Stochastic Parrots</em>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    </main>
+    <!-- W02 -->
+    <div class="week-group">
+      <button class="week-btn" onclick="toggleWeek(this)">
+        <div class="week-btn-inner">
+          <div class="week-num">W02</div>
+          <div>
+            <div class="week-title">LLM Architectures, Engineering &amp; Scaling Laws</div>
+            <div class="week-tags-inline"><span class="tag tag-gold">Transformers · MoE · Mamba</span><span class="tag tag-muted">Scaling Laws</span></div>
+          </div>
+          <div class="week-chevron">▼</div>
+        </div>
+      </button>
+      <div class="week-body">
+        <div class="week-body-inner">
+          <div class="week-col">
+            <div class="week-col-label">Lecture Topics</div>
+            <ul>
+              <li>Transformer architecture: attention, positional encoding, feedforward layers</li>
+              <li>Model scaling laws: data, parameters, compute</li>
+              <li>Advances beyond vanilla Transformers: MoE, Mamba, RWKV, RAG</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Lab / Deliverable</div>
+            <ul>
+              <li>Implement scaled dot-product attention in PyTorch</li>
+              <li>Compare inference speed of small vs. medium pre-trained models</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Key Readings</div>
+            <div class="week-col-reading">
+              Vaswani et al. (2017), <em>Attention Is All You Need</em><br><br>
+              Kaplan et al. (2020), <em>Scaling Laws for Neural Language Models</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <script>
-        const curriculumData = [
-            { week: 1, module: "Module 1: Foundations", topic: "Introduction to LLMs and NLP Fundamentals", readings: "Intro slides, NLTK docs", activities: "HW1 out, Python setup" },
-            { week: 2, module: "Module 2: Core Concepts", topic: "Deep Learning Fundamentals and Neural Networks", readings: "GPU Programming texts, Auto Diff survey", activities: "Implement simple NN" },
-            { week: 3, module: "Module 2: Core Concepts", topic: "The Transformer Architecture Explained", readings: "'Attention is all you need'", activities: "Transformer block implementation" },
-            { week: 4, module: "Module 2: Core Concepts", topic: "Pre-trained LLMs and Model Paradigms", readings: "LLaMA, GPT3 papers", activities: "HW1 due/HW2 out, Use Hugging Face" },
-            { week: 5, module: "Module 3: Training & Deployment", topic: "Data Preparation and Training Objectives", readings: "Hugging Face Datasets/Tokenizers docs", activities: "Data cleaning exercises" },
-            { week: 6, module: "Module 3: Training & Deployment", topic: "Scaling and Efficiency in LLM Training", readings: "DDP, Megatron-LM, ZeRO papers", activities: "HW2 due/HW3 out, Setup distributed training" },
-            { week: 7, module: "Module 3: Training & Deployment", topic: "Distributed Model Training II; App Stack and Model Serving", readings: "GPipe, Triton, LightLLM, Orca papers", activities: "Project proposal due" },
-            { week: 8, module: "Module 4: Advanced Systems", topic: "Spring Break", readings: "N/A", activities: "N/A" },
-            { week: 9, module: "Module 4: Advanced Systems", topic: "Model Quantization and Compression; Efficient Fine-tuning", readings: "GPTQ, LORA, QLoRA papers", activities: "Implement LoRA fine-tuning" },
-            { week: 10, module: "Module 4: Advanced Systems", topic: "Communication Efficient Training; Advanced Serving", readings: "ZeRO, Orca papers", activities: "HW3 due/HW4 out, Benchmark serving" },
-            { week: 11, module: "Module 4: Advanced Systems", topic: "PageAttention; GPU just-in-time compilation", readings: "vLLM, JAX papers", activities: "Explore vLLM" },
-            { week: 12, module: "Module 4: Advanced Systems", topic: "Mixture-of-Expert; Memory Optimization", readings: "DeepSpeed-MOE, FlashAttention papers", activities: "HW4 due" },
-            { week: 13, module: "Module 4: Advanced Systems", topic: "Long Context; Streaming with Attention Sinks", readings: "RMT, Attention Sink papers", activities: "Mid-term report due" },
-            { week: 14, module: "Module 4: Advanced Systems", topic: "Speculative Decoding; Retrieval-augmented (RAG)", readings: "Speculative Decoding, RAG papers", activities: "Build a simple RAG system" },
-            { week: 15, module: "Module 5: Applications & Ethics", topic: "Nearest Vector Search; Multimodal LLMs", readings: "HNSW, Flamingo papers", activities: "Explore multimodal concepts" },
-            { week: 16, module: "Final Project & Review", topic: "Final project presentation", readings: "N/A", activities: "Present final projects" },
-            { week: 17, module: "Final Project & Review", topic: "Final Report Submission", readings: "N/A", activities: "Final report due" }
-        ];
+    <!-- W03 -->
+    <div class="week-group">
+      <button class="week-btn" onclick="toggleWeek(this)">
+        <div class="week-btn-inner">
+          <div class="week-num">W03</div>
+          <div>
+            <div class="week-title">Training LLMs: Pretraining, Fine-tuning &amp; RLHF</div>
+            <div class="week-tags-inline"><span class="tag tag-teal">SFT · RLHF · Tokenisation</span></div>
+          </div>
+          <div class="week-chevron">▼</div>
+        </div>
+      </button>
+      <div class="week-body">
+        <div class="week-body-inner">
+          <div class="week-col">
+            <div class="week-col-label">Lecture Topics</div>
+            <ul>
+              <li>Tokenisation: BPE, WordPiece, SentencePiece</li>
+              <li>Pre-training objectives: masked LM, next-token prediction</li>
+              <li>Fine-tuning strategies: supervised fine-tuning (SFT), domain adaptation</li>
+              <li>RLHF: reward modelling, preference optimisation</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Lab / Deliverable</div>
+            <ul>
+              <li>Fine-tune a small pre-trained model on a custom task</li>
+              <li>Experiment with prompt-tuning vs. fine-tuning; compare results</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Key Readings</div>
+            <div class="week-col-reading">
+              Raffel et al. (2020), <em>T5: Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer</em><br><br>
+              Ouyang et al. (2022), <em>Training language models to follow instructions with human feedback</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const sidebarNav = document.getElementById('sidebarNav');
-            const sections = document.querySelectorAll('.content-section');
-            const links = document.querySelectorAll('.sidebar-link');
+    <!-- W04 -->
+    <div class="week-group">
+      <button class="week-btn" onclick="toggleWeek(this)">
+        <div class="week-btn-inner">
+          <div class="week-num">W04</div>
+          <div>
+            <div class="week-title">Efficiency in LLMs</div>
+            <div class="week-tags-inline"><span class="tag tag-gold">LoRA · Quantisation · Distillation</span></div>
+          </div>
+          <div class="week-chevron">▼</div>
+        </div>
+      </button>
+      <div class="week-body">
+        <div class="week-body-inner">
+          <div class="week-col">
+            <div class="week-col-label">Lecture Topics</div>
+            <ul>
+              <li>Challenges: cost, latency, memory</li>
+              <li>Model compression: quantisation, pruning, distillation</li>
+              <li>Parameter-efficient tuning: LoRA, adapters, PEFT</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Lab / Deliverable</div>
+            <ul>
+              <li>Apply quantisation on a small model</li>
+              <li>Compare memory use and speed before vs. after LoRA tuning</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Key Readings</div>
+            <div class="week-col-reading">
+              Hu et al. (2021), <em>LoRA: Low-Rank Adaptation for Large Language Models</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            const accordionContainer = document.getElementById('accordion-container');
-            curriculumData.forEach(item => {
-                const div = document.createElement('div');
-                div.classList.add('bg-white', 'rounded-xl', 'shadow-sm', 'border', 'border-gray-100');
-                div.innerHTML = `
-                    <div class="accordion-header flex justify-between items-center p-4">
-                        <span class="font-semibold text-lg text-[#4a4e69]">Week ${item.week}: ${item.topic}</span>
-                        <span class="transform transition-transform duration-300">
-                            <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </span>
-                    </div>
-                    <div class="accordion-content px-4 pb-4">
-                        <p class="text-gray-600 mb-2"><strong>Module:</strong> ${item.module}</p>
-                        <p class="text-gray-600 mb-2"><strong>Readings:</strong> ${item.readings}</p>
-                        <p class="text-gray-600"><strong>Activities:</strong> ${item.activities}</p>
-                    </div>
-                `;
-                accordionContainer.appendChild(div);
-            });
+    <!-- W05 -->
+    <div class="week-group">
+      <button class="week-btn" onclick="toggleWeek(this)">
+        <div class="week-btn-inner">
+          <div class="week-num">W05</div>
+          <div>
+            <div class="week-title">Prompt Engineering</div>
+            <div class="week-tags-inline"><span class="tag tag-teal">Zero-shot · Few-shot · CoT</span><span class="tag tag-muted">Self-Consistency · ToT</span></div>
+          </div>
+          <div class="week-chevron">▼</div>
+        </div>
+      </button>
+      <div class="week-body">
+        <div class="week-body-inner">
+          <div class="week-col">
+            <div class="week-col-label">Lecture Topics</div>
+            <ul>
+              <li>Prompting strategies: zero-shot, one-shot, few-shot</li>
+              <li>Advanced prompting: Chain-of-Thought, Self-Consistency, Tree-of-Thoughts</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Lab / Deliverable</div>
+            <ul>
+              <li>Design prompts for reasoning, summarisation, and creative writing</li>
+              <li>Evaluate prompt effectiveness across models systematically</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Key Readings</div>
+            <div class="week-col-reading">
+              Wei et al. (2022), <em>Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            const accordionHeaders = document.querySelectorAll('.accordion-header');
-            accordionHeaders.forEach(header => {
-                header.addEventListener('click', () => {
-                    const content = header.nextElementSibling;
-                    const icon = header.querySelector('svg').parentElement;
-                    
-                    if (content.style.maxHeight) {
-                        content.style.maxHeight = null;
-                        icon.style.transform = 'rotate(0deg)';
-                    } else {
-                        document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
-                        document.querySelectorAll('.accordion-header svg').forEach(i => i.parentElement.style.transform = 'rotate(0deg)');
-                        content.style.maxHeight = content.scrollHeight + "px";
-                        icon.style.transform = 'rotate(180deg)';
-                    }
-                });
-            });
+    <!-- W06 -->
+    <div class="week-group">
+      <button class="week-btn" onclick="toggleWeek(this)">
+        <div class="week-btn-inner">
+          <div class="week-num">W06</div>
+          <div>
+            <div class="week-title">Knowledge and Reasoning in LLMs</div>
+            <div class="week-tags-inline"><span class="tag tag-gold">RAG · External Tools</span><span class="tag tag-muted">Reasoning · MRKL</span></div>
+          </div>
+          <div class="week-chevron">▼</div>
+        </div>
+      </button>
+      <div class="week-body">
+        <div class="week-body-inner">
+          <div class="week-col">
+            <div class="week-col-label">Lecture Topics</div>
+            <ul>
+              <li>What knowledge LLMs store vs. what they infer</li>
+              <li>Logical, mathematical, and commonsense reasoning</li>
+              <li>Augmenting reasoning: retrieval-augmented generation (RAG), external tools</li>
+              <li>Evaluation of reasoning abilities</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Lab / Deliverable</div>
+            <ul>
+              <li>Build a retrieval-augmented QA pipeline</li>
+              <li>Compare LLM-only vs. LLM + retrieval performance</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Key Readings</div>
+            <div class="week-col-reading">
+              Karpas et al. (2022), <em>MRKL Systems: A modular, neuro-symbolic architecture</em><br><br>
+              Lewis et al. (2020), <em>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            function updateActiveLink(targetId) {
-                 links.forEach(link => {
-                    link.classList.remove('active');
-                    if(link.getAttribute('href') === `#${targetId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-            
-            sidebarNav.addEventListener('click', (e) => {
-                if(e.target.tagName === 'A') {
-                    const targetId = e.target.getAttribute('href').substring(1);
-                    sections.forEach(section => {
-                        section.classList.remove('active');
-                        if (section.id === targetId) {
-                            section.classList.add('active');
-                        }
-                    });
-                    updateActiveLink(targetId);
-                }
-            });
+    <!-- W07 -->
+    <div class="week-group">
+      <button class="week-btn" onclick="toggleWeek(this)">
+        <div class="week-btn-inner">
+          <div class="week-num">W07</div>
+          <div>
+            <div class="week-title">Multimodal LLMs &amp; Future Directions</div>
+            <div class="week-tags-inline"><span class="tag tag-teal">CLIP · Flamingo · GPT-4V</span><span class="tag tag-muted">Speech · Video · Code</span></div>
+          </div>
+          <div class="week-chevron">▼</div>
+        </div>
+      </button>
+      <div class="week-body">
+        <div class="week-body-inner">
+          <div class="week-col">
+            <div class="week-col-label">Lecture Topics</div>
+            <ul>
+              <li>Text + Vision: CLIP, Flamingo, GPT-4V</li>
+              <li>Speech + Text: Whisper, AudioLM</li>
+              <li>Video, code, and beyond: multimodal reasoning</li>
+              <li>Emerging research directions &amp; open challenges</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Lab / Deliverable</div>
+            <ul>
+              <li>Run inference with a vision-language model on visual QA tasks</li>
+              <li>Explore multimodal reasoning: image + text prompting</li>
+            </ul>
+          </div>
+          <div class="week-col">
+            <div class="week-col-label">Key Readings</div>
+            <div class="week-col-reading">
+              Radford et al. (2021), <em>Learning Transferable Visual Models From Natural Language Supervision</em> (CLIP)<br><br>
+              Alayrac et al. (2022), <em>Flamingo: a Visual Language Model for Few-Shot Learning</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            // Prerequisites Chart
-            const ctx = document.getElementById('prerequisitesChart').getContext('2d');
-            const prerequisitesChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: [
-                        'Python Programming',
-                        'AI / ML Concepts',
-                        'NLP Principles',
-                        'Neural Networks',
-                        'API Experience',
-                        'Math Foundations'
-                    ],
-                    datasets: [{
-                        label: 'Required Proficiency',
-                        data: [5, 4, 4, 3, 3, 3], // 5: Essential, 4: Highly Recommended, 3: Advantageous
-                        backgroundColor: 'rgba(201, 173, 167, 0.2)',
-                        borderColor: 'rgba(201, 173, 167, 1)',
-                        pointBackgroundColor: 'rgba(201, 173, 167, 1)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(201, 173, 167, 1)'
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: {
-                                color: '#e2e8f0'
-                            },
-                            grid: {
-                                color: '#e2e8f0'
-                            },
-                            pointLabels: {
-                                font: {
-                                    size: 14,
-                                },
-                                color: '#4a4e69'
-                            },
-                            ticks: {
-                                beginAtZero: true,
-                                max: 5,
-                                stepSize: 1,
-                                display: false
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let level;
-                                    switch(context.raw) {
-                                        case 5: level = 'Essential'; break;
-                                        case 4: level = 'Highly Recommended'; break;
-                                        case 3: level = 'Advantageous'; break;
-                                        default: level = 'Helpful';
-                                    }
-                                    return `${context.dataset.label}: ${level}`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+  </div>
+</section>
+
+<!-- ── APPLICATIONS ── -->
+<section id="applications" class="section">
+  <div class="container">
+    <div class="section-label">04 — Applications</div>
+    <h2 class="section-title">Real-World<br><em>LLM Applications</em></h2>
+    <div class="apps-grid">
+      <div class="app-card">
+        <div class="app-icon">✍️</div>
+        <div class="app-title">Content Creation &amp; Generation</div>
+        <div class="app-desc">Automating articles, marketing copy, social media posts, and creative writing. LLMs serve as powerful co-authors — accelerating ideation, drafting, and editing workflows at scale.</div>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">🎧</div>
+        <div class="app-title">Customer Service &amp; Support</div>
+        <div class="app-desc">Intelligent chatbots and virtual assistants delivering 24/7 support, resolving complex queries in natural language, and routing escalations — dramatically reducing response times and costs.</div>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">💻</div>
+        <div class="app-title">Code Generation &amp; Assistance</div>
+        <div class="app-desc">Helping developers write, debug, review, and document code more efficiently. Tools like GitHub Copilot and Cursor suggest completions, explain unfamiliar codebases, and generate test suites.</div>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">🔬</div>
+        <div class="app-title">Scientific &amp; Medical Research</div>
+        <div class="app-desc">Accelerating literature review, hypothesis generation, and clinical decision support. Domain-specific LLMs (Med-PaLM, BioGPT) are transforming how researchers navigate vast knowledge bases.</div>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">📊</div>
+        <div class="app-title">Enterprise Knowledge Management</div>
+        <div class="app-desc">RAG-powered internal search, document Q&amp;A, and knowledge base assistants that let employees query company documents, policies, and reports in natural language — without hallucination.</div>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">🌐</div>
+        <div class="app-title">Multilingual &amp; Cross-lingual AI</div>
+        <div class="app-desc">Breaking language barriers through machine translation, cross-lingual retrieval, and multilingual chatbots. Modern LLMs enable fluent communication and information access across dozens of languages.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ETHICS ── -->
+<section id="ethics" class="section">
+  <div class="container">
+    <div class="section-label">05 — Ethics</div>
+    <h2 class="section-title">Responsible LLMs &amp;<br><em>Societal Impact</em></h2>
+    <div class="ethics-layout">
+      <div>
+        <p class="ethics-intro">
+          The power of large language models comes with serious responsibility. This course
+          treats ethics not as an afterthought but as a core technical and intellectual
+          discipline — integrated across the curriculum, with a dedicated final module on
+          responsible deployment at scale.
+        </p>
+        <div class="ethics-items">
+          <div class="ethics-item reveal">
+            <div class="ethics-item-header">
+              <div class="ethics-icon">⚠️</div>
+              <div class="ethics-title">Bias and Fairness</div>
+            </div>
+            <div class="ethics-desc">
+              LLMs inherit and can amplify biases embedded in pretraining data — affecting
+              hiring tools, medical advice systems, and content moderation. We study detection
+              methods, de-biasing techniques at the data, training, and inference levels,
+              and the structural limits of purely technical fixes.
+            </div>
+          </div>
+          <div class="ethics-item reveal">
+            <div class="ethics-item-header">
+              <div class="ethics-icon">🔒</div>
+              <div class="ethics-title">Data Privacy and Consent</div>
+            </div>
+            <div class="ethics-desc">
+              LLMs trained on web-scale data raise critical questions about data privacy,
+              memorisation of personal information, and extraction attacks. We cover GDPR
+              compliance, ethical data sourcing, differential privacy, and the risks of
+              training data regurgitation.
+            </div>
+          </div>
+          <div class="ethics-item reveal">
+            <div class="ethics-item-header">
+              <div class="ethics-icon">🎭</div>
+              <div class="ethics-title">Hallucination and Misinformation</div>
+            </div>
+            <div class="ethics-desc">
+              LLMs can generate confident but factually incorrect outputs — a phenomenon
+              with serious consequences in medical, legal, and educational contexts.
+              We analyse hallucination causes, grounding techniques (RAG, RLHF), and
+              evaluation frameworks for factual accuracy.
+            </div>
+          </div>
+          <div class="ethics-item reveal">
+            <div class="ethics-item-header">
+              <div class="ethics-icon">🌱</div>
+              <div class="ethics-title">Environmental Sustainability</div>
+            </div>
+            <div class="ethics-desc">
+              Training and serving frontier LLMs carries enormous computational and carbon
+              costs. We discuss efficiency research (PEFT, distillation, quantisation),
+              responsible compute reporting, and the imperative for sustainable scaling
+              practices in both academia and industry.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="ethics-visual">
+          <div class="ev-title">Responsible AI Framework</div>
+          <div class="ev-ring-wrap">
+            <div class="ev-principle">
+              <div class="ev-principle-icon">⚖️</div>
+              <div class="ev-principle-text">
+                <div class="ev-principle-title">Fairness</div>
+                <div class="ev-principle-desc">Equitable outputs across demographic groups and languages</div>
+              </div>
+            </div>
+            <div class="ev-principle" style="border-left-color:var(--gold);">
+              <div class="ev-principle-icon">🔍</div>
+              <div class="ev-principle-text">
+                <div class="ev-principle-title" style="color:var(--gold);">Transparency</div>
+                <div class="ev-principle-desc">Model cards, datasheets, and explainable decisions</div>
+              </div>
+            </div>
+            <div class="ev-principle" style="border-left-color:#7a8699;">
+              <div class="ev-principle-icon">🛡️</div>
+              <div class="ev-principle-text">
+                <div class="ev-principle-title" style="color:#aab;">Privacy</div>
+                <div class="ev-principle-desc">Data minimisation, anonymisation, GDPR compliance</div>
+              </div>
+            </div>
+            <div class="ev-principle" style="border-left-color:var(--red);">
+              <div class="ev-principle-icon">🎯</div>
+              <div class="ev-principle-text">
+                <div class="ev-principle-title" style="color:var(--red);">Accountability</div>
+                <div class="ev-principle-desc">Clear responsibility chains for AI system outcomes</div>
+              </div>
+            </div>
+            <div class="ev-principle" style="border-left-color:var(--teal);">
+              <div class="ev-principle-icon">🌍</div>
+              <div class="ev-principle-text">
+                <div class="ev-principle-title">Societal Benefit</div>
+                <div class="ev-principle-desc">Designing LLM systems that advance human welfare equitably</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--line);">
+            <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem;">Relevant Frameworks</div>
+            <div style="font-size:0.78rem;color:var(--muted);line-height:1.8;">
+              EU AI Act · IEEE Ethically Aligned Design ·
+              ACM FAccT · Anthropic AUP · Montreal Declaration
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-copy">© 2025 Tsegaye M. Tashu · University of Groningen</div>
+  <div class="footer-links">
+    <a href="index.html">Portfolio</a>
+    <a href="NLP.html">NLP Course</a>
+    <a href="index.html#research">Research</a>
+    <a href="/cdn-cgi/l/email-protection#84f0aae9aaf0e5f7ecf1c4f6f1e3aaeae8">Email</a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ── ACCORDION ──
+  function toggleWeek(btn) {
+    const body = btn.nextElementSibling;
+    const isOpen = btn.classList.contains('open');
+    document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.week-body').forEach(b => b.classList.remove('open'));
+    if (!isOpen) {
+      btn.classList.add('open');
+      body.classList.add('open');
+    }
+  }
+
+  // ── RADAR CHART ──
+  const ctx = document.getElementById('radarChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: ['Python / PyTorch', 'Deep Learning', 'NLP Foundations', 'Linear Algebra', 'Transformers', 'Git / Cloud'],
+      datasets: [
+        {
+          label: 'Recommended Entry Level',
+          data: [90, 85, 80, 82, 65, 70],
+          backgroundColor: 'rgba(75,168,154,0.1)',
+          borderColor: 'rgba(75,168,154,0.7)',
+          pointBackgroundColor: '#4ba89a',
+          pointBorderColor: 'transparent',
+          pointRadius: 4,
+          borderWidth: 1.5,
+        },
+        {
+          label: 'Expected Exit Level',
+          data: [97, 95, 95, 90, 95, 88],
+          backgroundColor: 'rgba(212,168,83,0.07)',
+          borderColor: 'rgba(212,168,83,0.6)',
+          pointBackgroundColor: '#d4a853',
+          pointBorderColor: 'transparent',
+          pointRadius: 4,
+          borderWidth: 1.5,
+          borderDash: [4, 3],
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: '#7a8699',
+            font: { family: "'JetBrains Mono', monospace", size: 10 },
+            boxWidth: 12,
+          }
+        }
+      },
+      scales: {
+        r: {
+          min: 0, max: 100,
+          ticks: { stepSize: 25, display: false },
+          grid: { color: 'rgba(255,255,255,0.07)' },
+          angleLines: { color: 'rgba(255,255,255,0.07)' },
+          pointLabels: {
+            color: '#7a8699',
+            font: { family: "'JetBrains Mono', monospace", size: 10 }
+          }
+        }
+      }
+    }
+  });
+
+  // ── SKILL BARS ──
+  const barObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('.skill-bar-fill').forEach(fill => {
+        const w = parseFloat(fill.style.getPropertyValue('--w') || 0.7);
+        fill.style.transform = `scaleX(${w})`;
+      });
+      barObserver.disconnect();
+    }
+  }, { threshold: 0.3 });
+  barObserver.observe(document.getElementById('skillBars'));
+
+  // ── SCROLL REVEAL (ethics items only) ──
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
