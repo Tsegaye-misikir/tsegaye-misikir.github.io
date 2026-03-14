@@ -477,18 +477,6 @@
     }
     .pub-row-link:hover { border-color: var(--gold); color: var(--gold); }
 
-    .interests-section { margin-top: 4rem; max-width: 1100px; }
-    .interests-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; border: 1px solid var(--line); }
-    .interest-item {
-      padding: 2rem;
-      background: var(--bg3);
-      border-right: 1px solid var(--line);
-    }
-    .interest-item:last-child { border-right: none; }
-    .interest-icon { font-size: 1.75rem; margin-bottom: 1rem; }
-    .interest-title { font-family: var(--serif); font-size: 1.05rem; margin-bottom: 0.5rem; }
-    .interest-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
-
     /* ── COURSES ── */
     #courses { min-height: auto; }
     .courses-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1100px; }
@@ -583,6 +571,252 @@
     .t-gold { color: var(--gold); }
     .t-blank { height: 0.4rem; }
 
+    /* ── NEWS SECTION ── */
+    #news { min-height: auto; }
+    .news-list { max-width: 1100px; display: flex; flex-direction: column; }
+
+    .news-item {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--line);
+      transition: background 0.2s;
+    }
+    .news-item:first-child { border-top: 1px solid var(--line); }
+
+    .news-date {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding-top: 0.15rem;
+      text-transform: uppercase;
+    }
+    .news-date .nd-month { display: block; color: var(--gold); font-weight: 500; margin-bottom: 0.1rem; }
+    .news-date .nd-year  { display: block; }
+
+    .news-body { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .news-badge {
+      display: inline-flex; align-items: center;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.65rem;
+      border: 1px solid;
+      border-radius: 2px;
+      width: fit-content;
+    }
+    .badge-paper   { border-color: rgba(212,168,83,0.4);  color: var(--gold); background: var(--gold-dim); }
+    .badge-preprint{ border-color: rgba(212,168,83,0.25); color: #b8935e;     background: rgba(212,168,83,0.08); }
+    .badge-teaching{ border-color: rgba(75,168,154,0.4);  color: var(--teal); background: var(--teal-dim); }
+    .badge-award   { border-color: rgba(192,97,74,0.4);   color: #c0614a;     background: rgba(192,97,74,0.1); }
+    .badge-service { border-color: rgba(255,255,255,0.15);color: var(--muted);background: transparent; }
+
+    .news-title {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .news-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── MENTEES SECTION ── */
+    #mentees { min-height: auto; }
+
+    .mentees-sublabel {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .mentees-sublabel::after {
+      content: ''; flex: 1; height: 1px; background: var(--line);
+    }
+
+    .mentees-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      max-width: 1100px;
+      margin-bottom: 3rem;
+    }
+
+    .mentee-card {
+      border: 1px solid var(--line);
+      background: var(--bg3);
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .mentee-card:hover { border-color: rgba(212,168,83,0.3); transform: translateY(-2px); }
+    .mentee-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s var(--ease);
+    }
+    .mentee-card:hover::after { transform: scaleX(1); }
+
+    .mentee-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif); font-size: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid;
+    }
+    .av-gold { background: var(--gold-dim); border-color: rgba(212,168,83,0.3); color: var(--gold); }
+    .av-teal { background: var(--teal-dim); border-color: rgba(75,168,154,0.3); color: var(--teal); }
+    .av-dim  { background: rgba(255,255,255,0.04); border-color: var(--line); color: var(--muted); }
+
+    .mentee-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+      line-height: 1.3;
+    }
+    .mentee-role {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.75rem;
+    }
+    .mentee-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.75rem; }
+
+    .mentee-outcome {
+      font-size: 0.78rem;
+      color: var(--muted);
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--line);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .mentee-outcome::before { content: '→'; color: var(--gold); font-family: var(--mono); font-size: 0.7rem; }
+
+    .mentee-thesis {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.55;
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .mentees-cta {
+      max-width: 1100px;
+      padding: 1.5rem 2rem;
+      border: 1px solid var(--line);
+      background: var(--bg3);
+      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .mentees-cta-text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .mentees-cta-text strong { color: var(--text); font-weight: 500; }
+
+    /* ── PROJECTS ── */
+    #projects { min-height: auto; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+    }
+
+    .project-card {
+      border: 1px solid var(--line);
+      background: var(--bg3);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .project-card:hover { border-color: rgba(212,168,83,0.35); transform: translateY(-3px); }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--teal));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s var(--ease);
+    }
+    .project-card:hover::before { transform: scaleX(1); }
+
+    .project-header {
+      padding: 1.5rem 1.75rem 1.25rem;
+      border-bottom: 1px solid var(--line);
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+    }
+    .project-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      background: var(--gold-dim);
+      border: 1px solid rgba(212,168,83,0.2);
+    }
+    .project-status {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.65rem;
+      border: 1px solid;
+      border-radius: 2px;
+      white-space: nowrap;
+      align-self: flex-start;
+    }
+    .status-active   { border-color: rgba(75,168,154,0.4);  color: var(--teal); background: var(--teal-dim); }
+    .status-ongoing  { border-color: rgba(212,168,83,0.4);  color: var(--gold); background: var(--gold-dim); }
+    .status-complete { border-color: rgba(255,255,255,0.1); color: var(--muted); background: transparent; }
+
+    .project-body { padding: 1.5rem 1.75rem; flex: 1; display: flex; flex-direction: column; gap: 0.75rem; }
+    .project-title { font-family: var(--serif); font-size: 1.05rem; line-height: 1.35; color: var(--text); }
+    .project-desc  { font-size: 0.82rem; color: var(--muted); line-height: 1.7; flex: 1; }
+    .project-tags  { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+    .project-footer {
+      padding: 1rem 1.75rem;
+      border-top: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .project-collab {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .project-links { display: flex; gap: 0.5rem; }
+    .project-link {
+      font-family: var(--mono); font-size: 0.6rem;
+      letter-spacing: 0.06em; color: var(--muted);
+      text-decoration: none;
+      padding: 0.25rem 0.65rem;
+      border: 1px solid var(--line);
+      transition: all 0.2s;
+    }
+    .project-link:hover { border-color: var(--gold); color: var(--gold); }
+    .project-link.primary { border-color: rgba(212,168,83,0.35); color: var(--gold); }
+    .project-link.primary:hover { background: var(--gold-dim); }
+
     /* ── CONTACT ── */
     #contact { min-height: auto; }
     .contact-grid {
@@ -647,10 +881,14 @@
       .hero-grid, .about-grid, .contact-grid, .llm-inner { grid-template-columns: 1fr; }
       .hero-visual { display: none; }
       .research-grid, .courses-grid { grid-template-columns: 1fr; }
-      .interests-grid { grid-template-columns: 1fr; }
-      .interest-item { border-right: none; border-bottom: 1px solid var(--line); }
       .nav-links { display: none; }
       .nav-toggle { display: block; }
+      .news-item { grid-template-columns: 70px 1fr; gap: 1rem; }
+      .mentees-grid { grid-template-columns: 1fr 1fr; }
+      .mentees-cta { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 500px) {
+      .mentees-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -662,8 +900,11 @@
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
       <li><a href="#research">Research</a></li>
       <li><a href="#courses">Teaching</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#mentees">Mentees</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Menu">☰</button>
@@ -671,11 +912,14 @@
 
   <!-- Mobile Nav Overlay -->
   <div id="mobileNav" style="display:none; position:fixed; inset:0; z-index:99; background:rgba(13,21,32,0.97); backdrop-filter:blur(16px); flex-direction:column; align-items:center; justify-content:center; gap:2.5rem;">
-    <a href="#home" onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Home</a>
-    <a href="#about" onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">About</a>
+    <a href="#home"     onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Home</a>
+    <a href="#about"    onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">About</a>
+    <a href="#projects" onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Projects</a>
     <a href="#research" onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Research</a>
-    <a href="#courses" onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Teaching</a>
-    <a href="#contact" onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Contact</a>
+    <a href="#courses"  onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Teaching</a>
+    <a href="#news"     onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">News</a>
+    <a href="#mentees"  onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Mentees</a>
+    <a href="#contact"  onclick="closeMobile()" style="font-family:var(--serif);font-size:2rem;color:var(--text);text-decoration:none;">Contact</a>
     <button onclick="closeMobile()" style="font-family:var(--mono);font-size:0.8rem;color:var(--muted);background:none;border:1px solid var(--line);padding:0.5rem 1.5rem;cursor:pointer;color:var(--text);">Close</button>
   </div>
 
@@ -716,15 +960,11 @@
             <span class="dot"></span>
             University of Groningen
           </div>
-          <div class="hc-affil">
-            <span class="dot teal"></span>
-            Breda University of Applied Sciences
-          </div>
           <div class="hc-divider"></div>
           <div style="font-family:var(--mono);font-size:0.62rem;color:var(--muted);letter-spacing:0.06em;margin-bottom:0.5rem;">RESEARCH FOCUS</div>
           <div style="font-size:0.8rem;color:var(--muted);">Multilingual LLMs · Emotion AI · PBL Curriculum Innovation</div>
           <div class="hc-links">
-            <a class="hc-link" href="/cdn-cgi/l/email-protection#2652084b085247554e536654534108484a">Email ↗</a>
+            <a class="hc-link" href="mailto:t.m.tashu@rug.nl">Email ↗</a>
             <a class="hc-link" href="https://github.com/Tsegaye-misikir" target="_blank">GitHub ↗</a>
             <a class="hc-link" href="#research">Publications ↓</a>
           </div>
@@ -740,32 +980,31 @@
     <div class="about-grid">
       <div class="about-body">
         <p>
-          I am an Assistant Professor in Natural Language Processing, with a strong background in machine learning, multilingual NLP, 
-          and AI for education. My work focuses on developing human-centered intelligent systems that address real-world challenges in learning, 
-          communication, and language technology. My research particularly emphasizes multilingual representation learning, emotion recognition, 
+          I am an Assistant Professor in Natural Language Processing, with a strong background in machine learning, multilingual NLP,
+          and AI for education. My work focuses on developing human-centered intelligent systems that address real-world challenges in learning,
+          communication, and language technology. My research particularly emphasizes multilingual representation learning, emotion recognition,
           and the use of generative AI to support inclusive and personalized educational applications.
         </p>
         <p>
-         I have extensive experience in teaching, curriculum development, and supervising student research across a wide range of subjects, 
-          including Natural Language Processing, Machine Learning, Data Science, Language Technology, and Large Language Models. 
-          Over the years, I have taught at multiple institutions and have contributed to the design and delivery of 
+          I have extensive experience in teaching, curriculum development, and supervising student research across a wide range of subjects,
+          including Natural Language Processing, Machine Learning, Data Science, Language Technology, and Large Language Models.
+          Over the years, I have taught at multiple institutions and have contributed to the design and delivery of
           courses that integrate theoretical foundations with practical applications.
         </p>
         <p>
-          My broader research vision centers on building scalable, interpretable, and socially meaningful AI systems. 
-          I am particularly interested in advancing NLP for low-resource languages, developing emotionally intelligent 
-          conversational technologies, and designing AI-driven educational tools that enhance student engagement and learning outcomes. 
+          My broader research vision centers on building scalable, interpretable, and socially meaningful AI systems.
+          I am particularly interested in advancing NLP for low-resource languages, developing emotionally intelligent
+          conversational technologies, and designing AI-driven educational tools that enhance student engagement and learning outcomes.
           Alongside my teaching and research, I am committed to mentoring students and junior academics, contributing to applied research initiatives, and fostering interdisciplinary collaboration.
         </p>
-      
         <div style="margin-top:2rem;">
-          <a href="/cdn-cgi/l/email-protection#e490ca89ca9085978c91a4969183ca8a88" class="btn btn-primary" style="font-size:0.68rem;">Contact Me ↗</a>
+          <a href="mailto:t.m.tashu@rug.nl" class="btn btn-primary" style="font-size:0.68rem;">Contact Me ↗</a>
         </div>
       </div>
       <div class="about-stats">
         <div class="stat-card">
-          <div class="stat-number">2</div>
-          <div class="stat-label">Academic Affiliations</div>
+          <div class="stat-number">1</div>
+          <div class="stat-label">Academic Affiliation</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">33</div>
@@ -783,12 +1022,186 @@
     </div>
   </section>
 
-  <!-- ── RESEARCH ── -->
-  <section id="research">
+  <!-- ══════════════════════════════════════════
+       ── PROJECTS ──
+  ══════════════════════════════════════════ -->
+  <section id="projects">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title">Research &amp;<br><em>Open Projects</em></h2>
+
+    <div class="projects-grid">
+
+      <!-- PROJECT 1 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🌐</div>
+          <span class="project-status status-active">Active</span>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Cross-Lingual Emotion Recognition with Multilingual LLMs</div>
+          <div class="project-desc">
+            Investigating fine-grained emotion detection across low-resource language pairs using multilingual
+            transformer models. Focuses on cross-lingual transfer without parallel corpora, with applications
+            in affective computing and human-centred AI systems.
+          </div>
+          <div class="project-tags">
+            <span class="tag tag-gold">Multilingual NLP</span>
+            <span class="tag tag-teal">Emotion AI</span>
+            <span class="tag tag-muted">LLMs</span>
+            <span class="tag tag-muted">Zero-shot Transfer</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <div class="project-collab">University of Groningen</div>
+          <div class="project-links">
+            <a href="#contact" class="project-link primary">Collaborate ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 2 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🎓</div>
+          <span class="project-status status-active">Active</span>
+        </div>
+        <div class="project-body">
+          <div class="project-title">RAG-Powered Educational QA Systems</div>
+          <div class="project-desc">
+            Designing and evaluating retrieval-augmented generation pipelines for intelligent tutoring.
+            Explores how LLMs can deliver accurate, curriculum-aligned feedback to students in real-time,
+            with a focus on safety, hallucination mitigation, and personalisation.
+          </div>
+          <div class="project-tags">
+            <span class="tag tag-gold">RAG</span>
+            <span class="tag tag-teal">NLP for Education</span>
+            <span class="tag tag-muted">LLM Evaluation</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <div class="project-collab">LTP Course · UG</div>
+          <div class="project-links">
+            <a href="LTP.html" class="project-link">Materials ↗</a>
+            <a href="#contact" class="project-link primary">Collaborate ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 3 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">📝</div>
+          <span class="project-status status-ongoing">Ongoing</span>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Bias-Robust Automatic Essay Scoring</div>
+          <div class="project-desc">
+            Developing adversarial training strategies to reduce demographic and topical bias in
+            neural essay scoring models. Includes phrase-level augmentation methods and evaluation
+            frameworks for fairness-aware NLP assessment tools.
+          </div>
+          <div class="project-tags">
+            <span class="tag tag-teal">Essay Scoring</span>
+            <span class="tag tag-gold">Bias Mitigation</span>
+            <span class="tag tag-muted">Adversarial Training</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <div class="project-collab">w/ H. Philip · UG</div>
+          <div class="project-links">
+            <a href="https://arxiv.org/abs/2409.04795" target="_blank" class="project-link primary">arXiv ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 4 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🗺️</div>
+          <span class="project-status status-ongoing">Ongoing</span>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Sentence Representation Mapping for Low-Resource Language Pairs</div>
+          <div class="project-desc">
+            Exploring alignment techniques — linear and non-linear mapping — to bridge sentence
+            embedding spaces for low-resource language pairs. Evaluates cross-lingual retrieval and
+            classification performance using mBERT and XLM-R backbones.
+          </div>
+          <div class="project-tags">
+            <span class="tag tag-gold">Low-Resource NLP</span>
+            <span class="tag tag-teal">Cross-lingual</span>
+            <span class="tag tag-muted">mBERT · XLM-R</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <div class="project-collab">w/ A. Tudor · UG</div>
+          <div class="project-links">
+            <a href="https://aclanthology.org/2025.loreslm-1.20/" target="_blank" class="project-link primary">Paper ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 5 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🤖</div>
+          <span class="project-status status-ongoing">Ongoing</span>
+        </div>
+        <div class="project-body">
+          <div class="project-title">LLM Confidence Calibration &amp; Uncertainty Quantification</div>
+          <div class="project-desc">
+            Studying how well large language models express calibrated confidence on NLP tasks such
+            as entity matching and question answering. Proposes methods to surface uncertainty estimates
+            that practitioners can trust in high-stakes applications.
+          </div>
+          <div class="project-tags">
+            <span class="tag tag-gold">LLMs</span>
+            <span class="tag tag-teal">Uncertainty</span>
+            <span class="tag tag-muted">Trustworthy AI</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <div class="project-collab">w/ Valdenegro-Toro · UG</div>
+          <div class="project-links">
+            <a href="https://aclanthology.org/2025.uncertainlp-main.12/" target="_blank" class="project-link primary">Paper ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 6 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">📚</div>
+          <span class="project-status status-complete">Complete</span>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Neural Concept Compression for Multilingual Document Recommendation</div>
+          <div class="project-desc">
+            Proposed NCC — a neural architecture that compresses multilingual document representations
+            into shared concept spaces, enabling language-agnostic document retrieval and recommendation
+            without translation. Published in Applied Soft Computing (Elsevier, 2023).
+          </div>
+          <div class="project-tags">
+            <span class="tag tag-teal">Multilingual NLP</span>
+            <span class="tag tag-gold">Recommendation</span>
+            <span class="tag tag-muted">Journal Article</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <div class="project-collab">w/ Lenz &amp; Horváth</div>
+          <div class="project-links">
+            <a href="https://www.sciencedirect.com/science/article/pii/S1568494623003666" target="_blank" class="project-link primary">Paper ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── RESEARCH ── -->  <section id="research">
     <div class="section-label">Research</div>
     <h2 class="section-title">Publications &amp;<br><em>Research Interests</em></h2>
 
-    <!-- Filter bar -->
     <div class="pub-filters">
       <button class="pub-filter-btn active" onclick="filterPubs('all', this)">All</button>
       <button class="pub-filter-btn" onclick="filterPubs('2025', this)">2025</button>
@@ -806,7 +1219,6 @@
     <div class="pub-year-group" data-year="2025">
       <div class="pub-year-label">2025</div>
       <div class="pub-list">
-
         <div class="pub-card-row">
           <div class="pub-row-num">1</div>
           <div class="pub-row-body">
@@ -817,7 +1229,6 @@
           </div>
           <a href="https://aclanthology.org/2025.trustnlp-main.24/" target="_blank" class="pub-row-link">PDF ↗</a>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">2</div>
           <div class="pub-row-body">
@@ -828,7 +1239,6 @@
           </div>
           <a href="https://aclanthology.org/2025.uncertainlp-main.12/" target="_blank" class="pub-row-link">PDF ↗</a>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">3</div>
           <div class="pub-row-body">
@@ -839,7 +1249,6 @@
           </div>
           <a href="https://aclanthology.org/2025.sumeval-2.4/" target="_blank" class="pub-row-link">PDF ↗</a>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">4</div>
           <div class="pub-row-body">
@@ -850,7 +1259,6 @@
           </div>
           <a href="https://aclanthology.org/2025.loreslm-1.20/" target="_blank" class="pub-row-link">PDF ↗</a>
         </div>
-
       </div>
     </div>
 
@@ -858,7 +1266,6 @@
     <div class="pub-year-group" data-year="2024">
       <div class="pub-year-label">2024</div>
       <div class="pub-list">
-
         <div class="pub-card-row">
           <div class="pub-row-num">5</div>
           <div class="pub-row-body">
@@ -869,7 +1276,6 @@
           </div>
           <a href="https://arxiv.org/abs/2409.04795" target="_blank" class="pub-row-link">arXiv ↗</a>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">6</div>
           <div class="pub-row-body">
@@ -880,7 +1286,6 @@
           </div>
           <a href="https://ceur-ws.org/Vol-3792/paper3.pdf" target="_blank" class="pub-row-link">PDF ↗</a>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">7</div>
           <div class="pub-row-body">
@@ -891,7 +1296,6 @@
           </div>
           <a href="https://arxiv.org/abs/2401.06583" target="_blank" class="pub-row-link">arXiv ↗</a>
         </div>
-
       </div>
     </div>
 
@@ -899,7 +1303,6 @@
     <div class="pub-year-group" data-year="2023">
       <div class="pub-year-label">2023</div>
       <div class="pub-list">
-
         <div class="pub-card-row">
           <div class="pub-row-num">8</div>
           <div class="pub-row-body">
@@ -910,7 +1313,6 @@
           </div>
           <a href="https://www.sciencedirect.com/science/article/pii/S1568494623003666" target="_blank" class="pub-row-link">Paper ↗</a>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">9</div>
           <div class="pub-row-body">
@@ -921,7 +1323,6 @@
           </div>
           <a href="https://ieeexplore.ieee.org/abstract/document/10386515" target="_blank" class="pub-row-link">IEEE ↗</a>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">10</div>
           <div class="pub-row-body">
@@ -932,7 +1333,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
       </div>
     </div>
 
@@ -940,7 +1340,6 @@
     <div class="pub-year-group" data-year="2022">
       <div class="pub-year-label">2022</div>
       <div class="pub-list">
-
         <div class="pub-card-row">
           <div class="pub-row-num">11</div>
           <div class="pub-row-body">
@@ -951,7 +1350,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">12</div>
           <div class="pub-row-body">
@@ -962,7 +1360,6 @@
           </div>
           <a href="https://arxiv.org/abs/2206.08232" target="_blank" class="pub-row-link">arXiv ↗</a>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">13</div>
           <div class="pub-row-body">
@@ -973,7 +1370,6 @@
           </div>
           <a href="https://arxiv.org/abs/2207.03317" target="_blank" class="pub-row-link">arXiv ↗</a>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">14</div>
           <div class="pub-row-body">
@@ -984,7 +1380,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
       </div>
     </div>
 
@@ -992,7 +1387,6 @@
     <div class="pub-year-group" data-year="2021">
       <div class="pub-year-label">2021</div>
       <div class="pub-list">
-
         <div class="pub-card-row">
           <div class="pub-row-num">15</div>
           <div class="pub-row-body">
@@ -1003,7 +1397,6 @@
           </div>
           <a href="https://www.mdpi.com/2313-433X/7/8/157" target="_blank" class="pub-row-link">Paper ↗</a>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">16</div>
           <div class="pub-row-body">
@@ -1014,7 +1407,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">17</div>
           <div class="pub-row-body">
@@ -1025,7 +1417,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">18</div>
           <div class="pub-row-body">
@@ -1036,7 +1427,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">19</div>
           <div class="pub-row-body">
@@ -1047,7 +1437,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
       </div>
     </div>
 
@@ -1055,7 +1444,6 @@
     <div class="pub-year-group" data-year="2020">
       <div class="pub-year-label">2020</div>
       <div class="pub-list">
-
         <div class="pub-card-row">
           <div class="pub-row-num">20</div>
           <div class="pub-row-body">
@@ -1066,7 +1454,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">21</div>
           <div class="pub-row-body">
@@ -1077,7 +1464,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">22</div>
           <div class="pub-row-body">
@@ -1088,7 +1474,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
       </div>
     </div>
 
@@ -1096,7 +1481,6 @@
     <div class="pub-year-group" data-year="2019">
       <div class="pub-year-label">2019</div>
       <div class="pub-list">
-
         <div class="pub-card-row">
           <div class="pub-row-num">23</div>
           <div class="pub-row-body">
@@ -1107,7 +1491,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">24</div>
           <div class="pub-row-body">
@@ -1118,7 +1501,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">25</div>
           <div class="pub-row-body">
@@ -1129,7 +1511,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">26</div>
           <div class="pub-row-body">
@@ -1140,7 +1521,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
       </div>
     </div>
 
@@ -1148,7 +1528,6 @@
     <div class="pub-year-group" data-year="2018">
       <div class="pub-year-label">2018</div>
       <div class="pub-list">
-
         <div class="pub-card-row">
           <div class="pub-row-num">27</div>
           <div class="pub-row-body">
@@ -1159,7 +1538,6 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
         <div class="pub-card-row">
           <div class="pub-row-num">28</div>
           <div class="pub-row-body">
@@ -1170,37 +1548,58 @@
           </div>
           <span class="pub-row-link" style="cursor:default;opacity:0.4;">–</span>
         </div>
-
       </div>
     </div>
 
     <!-- Research Interests -->
     <div class="interests-section">
-      <div class="interests-grid">
-        <div class="interest-item">
-          <div class="interest-icon">🌐</div>
-          <div class="interest-title">Multilingual & Cross-lingual NLP</div>
-          <div class="interest-desc">
-            Investigating how language models generalise across languages, with focus on 
-            low-resource languages and cross-lingual transfer for affective computing tasks.
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-icon">🌐</div>
+          </div>
+          <div class="project-body">
+            <div class="project-title">Multilingual &amp; Cross-lingual NLP</div>
+            <div class="project-desc">Investigating how language models generalise across languages, with focus on low-resource languages and cross-lingual transfer for affective computing tasks.</div>
+            <div class="project-tags">
+              <span class="tag tag-gold">Low-Resource NLP</span>
+              <span class="tag tag-teal">Cross-lingual Transfer</span>
+              <span class="tag tag-muted">mBERT · XLM-R</span>
+            </div>
           </div>
         </div>
-        <div class="interest-item">
-          <div class="interest-icon">💡</div>
-          <div class="interest-title">Emotion Recognition & Affective AI</div>
-          <div class="interest-desc">
-            Advancing computational methods for detecting and classifying human emotion 
-            in text, particularly through multilingual LLMs and fine-grained emotion taxonomies.
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-icon">💡</div>
+          </div>
+          <div class="project-body">
+            <div class="project-title">Emotion Recognition &amp; Affective AI</div>
+            <div class="project-desc">Advancing computational methods for detecting and classifying human emotion in text, particularly through multilingual LLMs and fine-grained emotion taxonomies.</div>
+            <div class="project-tags">
+              <span class="tag tag-gold">Affective Computing</span>
+              <span class="tag tag-teal">Fine-grained Emotion</span>
+              <span class="tag tag-muted">LLMs</span>
+            </div>
           </div>
         </div>
-        <div class="interest-item">
-          <div class="interest-icon">🎓</div>
-          <div class="interest-title">NLP for Education</div>
-          <div class="interest-desc">
-            Designing AI-powered educational tools and evidence-based curricula that make 
-            NLP research accessible and applicable to students across levels and disciplines.
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-icon">🎓</div>
+          </div>
+          <div class="project-body">
+            <div class="project-title">NLP for Education</div>
+            <div class="project-desc">Designing AI-powered educational tools and evidence-based curricula that make NLP research accessible and applicable to students across levels and disciplines.</div>
+            <div class="project-tags">
+              <span class="tag tag-gold">AI Assessment</span>
+              <span class="tag tag-teal">Intelligent Tutoring</span>
+              <span class="tag tag-muted">PBL Curriculum</span>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -1211,7 +1610,6 @@
     <h2 class="section-title">Courses &amp;<br><em>Course Materials</em></h2>
 
     <div class="courses-grid">
-      <!-- Course 1 -->
       <div class="course-card">
         <div class="course-header">
           <div class="course-icon">🔤</div>
@@ -1221,20 +1619,13 @@
           </div>
         </div>
         <div class="course-body">
-          <p class="course-desc">
-            A hands-on practical course for BSc Artificial Intelligence students covering the full 
-            NLP pipeline: from text representation and vector semantics to RNNs, transformers, 
-            dialogue systems, and RAG-based QA systems. Structured around PBL projects with 
-            milestone-based timelines and peer code review.
-          </p>
+          <p class="course-desc">A hands-on practical course for BSc Artificial Intelligence students covering the full NLP pipeline: from text representation and vector semantics to RNNs, transformers, dialogue systems, and RAG-based QA systems. Structured around PBL projects with milestone-based timelines and peer code review.</p>
           <div class="course-info">
-             <span class="course-info-item">📊 Slides &amp; Notebooks</span>
-             <span class="course-info-item">🔗 <a href="LTP.html" style="color:var(--teal);text-decoration:none;">View Materials ↗</a></span>
+            <span class="course-info-item">📊 Slides &amp; Notebooks</span>
+            <span class="course-info-item">🔗 <a href="LTP.html" style="color:var(--teal);text-decoration:none;">View Materials ↗</a></span>
           </div>
         </div>
       </div>
-
-      <!-- Course 2 -->
       <div class="course-card">
         <div class="course-header">
           <div class="course-icon">🤖</div>
@@ -1244,19 +1635,13 @@
           </div>
         </div>
         <div class="course-body">
-          <p class="course-desc">
-            Deep dive into transformer architectures, instruction fine-tuning, RLHF, retrieval-augmented 
-            generation, and multi-agent systems. Covers both the theoretical foundations of modern LLMs 
-            and their practical deployment in real-world NLP applications. Lecture materials available.
-          </p>
+          <p class="course-desc">Deep dive into transformer architectures, instruction fine-tuning, RLHF, retrieval-augmented generation, and multi-agent systems. Covers both the theoretical foundations of modern LLMs and their practical deployment in real-world NLP applications. Lecture materials available.</p>
           <div class="course-info">
             <span class="course-info-item">📊 Slides &amp; Notebooks</span>
             <span class="course-info-item">🔗 <a href="llm.html" style="color:var(--teal);text-decoration:none;">View Materials ↗</a></span>
           </div>
         </div>
       </div>
-
-      <!-- Course 3 -->
       <div class="course-card">
         <div class="course-header">
           <div class="course-icon">🧠</div>
@@ -1266,56 +1651,22 @@
           </div>
         </div>
         <div class="course-body">
-          <p class="course-desc">
-            Lecture modules covering vector semantics and embeddings, recurrent neural networks 
-            (sequence modelling, LSTMs), and the transformer architecture. Developed for the 
-            Language Technology Practicals series with custom slide decks and coding notebooks.
-          </p>
+          <p class="course-desc">Lecture modules covering vector semantics and embeddings, recurrent neural networks (sequence modelling, LSTMs), and the transformer architecture. Developed for the Language Technology Practicals series with custom slide decks and coding notebooks.</p>
           <div class="course-info">
             <span class="course-info-item">📊 Slides &amp; Notebooks</span>
             <span class="course-info-item">🔗 <a href="NLP.html" style="color:var(--teal);text-decoration:none;">View Materials ↗</a></span>
           </div>
         </div>
       </div>
-
-      <!-- Course 4 -->
-      <div class="course-card">
-        <div class="course-header">
-          <div class="course-icon">🎓</div>
-          <div class="course-meta">
-            <div class="course-code">BUas · Graduation Projects</div>
-            <div class="course-title">Bachelor's Project Coordination &amp; Supervision</div>
-          </div>
-        </div>
-        <div class="course-body">
-          <p class="course-desc">
-            Academic supervision of graduation projects at Breda University of Applied Sciences, 
-            spanning AI, NLP, and applied data science. Developed comprehensive Teacher and Student 
-            Guide documents using BUas branding and PBL methodology for structured project delivery.
-          </p>
-          <div class="course-info">
-            <span class="course-info-item">
-              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-              BUas Students
-            </span>
-            <span class="course-info-item">📋 Project Supervision</span>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <!-- LLM Highlight Card -->
     <div class="llm-section">
       <div class="llm-card">
         <div class="llm-inner">
           <div>
             <div class="section-label">Course Highlight</div>
             <div class="llm-title">RAG-Based QA Assistant<br><em>Student Project Tracks</em></div>
-            <p class="llm-desc">
-              The capstone project for Language Technology Practicals challenges students 
-              to build production-quality QA systems. Four specialisation tracks allow 
-              students to focus on their area of interest.
-            </p>
+            <p class="llm-desc">The capstone project for Language Technology Practicals challenges students to build production-quality QA systems. Four specialisation tracks allow students to focus on their area of interest.</p>
             <ul class="llm-topics">
               <li>Conversational RAG System</li>
               <li>Educational Tutor Agent</li>
@@ -1352,6 +1703,272 @@
     </div>
   </section>
 
+  <!-- ══════════════════════════════════════════
+       ── NEWS & UPDATES (NEW SECTION) ──
+  ══════════════════════════════════════════ -->
+  <section id="news">
+    <div class="section-label">Latest</div>
+    <h2 class="section-title">News &amp;<br><em>Updates</em></h2>
+
+    <div class="news-list">
+
+      <!-- ADD NEW ITEMS AT THE TOP -->
+
+      <div class="news-item">
+        <div class="news-date">
+          <span class="nd-month">Mar</span>
+          <span class="nd-year">2025</span>
+        </div>
+        <div class="news-body">
+          <span class="news-badge badge-paper">Paper</span>
+          <div class="news-title">Two papers accepted at ACL 2025 workshops</div>
+          <div class="news-desc">Work on difficulty estimation in NLP tasks and confidence calibration in LLM-based entity matching accepted at TrustNLP and UncertaiNLP workshops.</div>
+        </div>
+      </div>
+
+      <div class="news-item">
+        <div class="news-date">
+          <span class="nd-month">Jan</span>
+          <span class="nd-year">2025</span>
+        </div>
+        <div class="news-body">
+          <span class="news-badge badge-paper">Paper</span>
+          <div class="news-title">Cross-lingual document recommendations paper at SUMEVAL 2025</div>
+          <div class="news-desc">New results on multilingual transformer representations for document recommendation, in collaboration with University of Groningen.</div>
+        </div>
+      </div>
+
+      <div class="news-item">
+        <div class="news-date">
+          <span class="nd-month">Jan</span>
+          <span class="nd-year">2025</span>
+        </div>
+        <div class="news-body">
+          <span class="news-badge badge-paper">Paper</span>
+          <div class="news-title">Low-resource cross-lingual NLP paper presented at LoResLM 2025 · Abu Dhabi</div>
+          <div class="news-desc">Mapping cross-lingual sentence representations for low-resource language pairs using pre-trained language models.</div>
+        </div>
+      </div>
+
+      <div class="news-item">
+        <div class="news-date">
+          <span class="nd-month">Sep</span>
+          <span class="nd-year">2024</span>
+        </div>
+        <div class="news-body">
+          <span class="news-badge badge-preprint">Preprint</span>
+          <div class="news-title">New preprint on adversarial bias mitigation in automatic essay scoring</div>
+          <div class="news-desc">Phrase-level adversarial training to reduce demographic bias in neural AES models — arXiv:2409.04795.</div>
+        </div>
+      </div>
+
+      <div class="news-item">
+        <div class="news-date">
+          <span class="nd-month">Sep</span>
+          <span class="nd-year">2024</span>
+        </div>
+        <div class="news-body">
+          <span class="news-badge badge-teaching">Teaching</span>
+          <div class="news-title">Advanced LLM course launched at University of Groningen</div>
+          <div class="news-desc">New postgraduate course on Large Language Models &amp; Applications now running, covering RLHF, RAG pipelines, and multi-agent systems.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ── STUDENTS & MENTEES (NEW SECTION) ──
+  ══════════════════════════════════════════ -->
+  <section id="mentees">
+    <div class="section-label">Supervision</div>
+    <h2 class="section-title">Students &amp;<br><em>Mentees</em></h2>
+
+    <!-- PhD -->
+    <div class="mentees-sublabel" style="max-width:1100px;">PhD · University of Groningen</div>
+    <div class="mentees-grid">
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-gold">PK</div>
+        <div class="mentee-name">Putu Kussa Laksana Utama</div>
+        <div class="mentee-role">PhD · 2025–2029</div>
+        <div class="mentee-tags">
+          <span class="tag tag-gold">Emotion Recognition</span>
+          <span class="tag tag-teal">Multilingual NLP</span>
+        </div>
+        <div class="mentee-thesis">Multilingual human emotion recognition</div>
+      </div>
+
+    </div>
+
+    <!-- MSc -->
+    <div class="mentees-sublabel" style="max-width:1100px;">M.Sc. · University of Groningen</div>
+    <div class="mentees-grid">
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-teal">AZ</div>
+        <div class="mentee-name">Aylar Ziad Alizadeh</div>
+        <div class="mentee-role">MSc · University of Groningen</div>
+        <div class="mentee-tags">
+          <span class="tag tag-gold">Multi-Agent LLMs</span>
+          <span class="tag tag-teal">Question Answering</span>
+        </div>
+        <div class="mentee-thesis">Don't Focus on your Weakness, Use your Strengths: A Multi-Agent Approach in Multi-Hop QA for LLMs</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-gold">TL</div>
+        <div class="mentee-name">Thijs Lukkien</div>
+        <div class="mentee-role">MSc · University of Groningen</div>
+        <div class="mentee-tags">
+          <span class="tag tag-teal">Quantization</span>
+          <span class="tag tag-gold">Multi-Agent LLMs</span>
+        </div>
+        <div class="mentee-thesis">The effect of four-bit quantization on multi-agent LLM coding performance</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-teal">IK</div>
+        <div class="mentee-name">Iris Kamsteeg</div>
+        <div class="mentee-role">MSc · University of Groningen</div>
+        <div class="mentee-tags">
+          <span class="tag tag-gold">Uncertainty</span>
+          <span class="tag tag-teal">Entity Matching</span>
+        </div>
+        <div class="mentee-thesis">Uncertainty Quantification for Transformer Models in Entity Resolution for Law Enforcement</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-gold">DS</div>
+        <div class="mentee-name">Daniel Skala</div>
+        <div class="mentee-role">MSc · University of Groningen</div>
+        <div class="mentee-tags">
+          <span class="tag tag-teal">Anonymization</span>
+          <span class="tag tag-muted">NLP · Slido</span>
+        </div>
+        <div class="mentee-thesis">Question Anonymization in Slido: Striving for Non-Attributability in Audience Interactions</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-teal">AD</div>
+        <div class="mentee-name">Alina Dima</div>
+        <div class="mentee-role">MSc · University of Groningen</div>
+        <div class="mentee-tags">
+          <span class="tag tag-gold">Low-Resource NLP</span>
+          <span class="tag tag-teal">Language Modelling</span>
+        </div>
+        <div class="mentee-thesis">Next-Word Prediction in the Hrusso Aka Language</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-gold">RM</div>
+        <div class="mentee-name">Ruhi Mahadeshwar</div>
+        <div class="mentee-role">MSc · University of Groningen</div>
+        <div class="mentee-tags">
+          <span class="tag tag-teal">Speech · LLMs</span>
+          <span class="tag tag-muted">Clinical NLP</span>
+        </div>
+        <div class="mentee-thesis">Reconstructing non-fluent aphasic speech using large language models</div>
+      </div>
+
+    </div>
+
+    <!-- BSc -->
+    <div class="mentees-sublabel" style="max-width:1100px;">B.Sc. · University of Groningen</div>
+    <div class="mentees-grid">
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-dim">IH</div>
+        <div class="mentee-name">Ivan Hegeman</div>
+        <div class="mentee-role">BSc · University of Groningen</div>
+        <div class="mentee-tags"><span class="tag tag-muted">Speech · Aphasia</span></div>
+        <div class="mentee-thesis">Exploring Combinations of Self-Supervised Speech Embeddings and Classifiers for Aphasia Subtype Classification</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-dim">AA</div>
+        <div class="mentee-name">Aleksandar Angelov</div>
+        <div class="mentee-role">BSc · University of Groningen</div>
+        <div class="mentee-tags"><span class="tag tag-muted">Trustworthy NLP</span></div>
+        <div class="mentee-thesis">Difficulty Estimation in Natural Language Tasks with Action Scores</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-dim">VS</div>
+        <div class="mentee-name">Victorita Nicoleta Simion</div>
+        <div class="mentee-role">BSc · University of Groningen</div>
+        <div class="mentee-tags"><span class="tag tag-muted">Multimodal · Sentiment</span></div>
+        <div class="mentee-thesis">Multimodal Sentiment Analysis in Conversational Speech</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-dim">MV</div>
+        <div class="mentee-name">Matei Visan</div>
+        <div class="mentee-role">BSc · University of Groningen</div>
+        <div class="mentee-tags"><span class="tag tag-muted">ASR · Aphasia</span></div>
+        <div class="mentee-thesis">Utilizing ASR for the Detection of Speech Errors to Classify Aphasia Types</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-dim">AC</div>
+        <div class="mentee-name">Andreas Chitos</div>
+        <div class="mentee-role">BSc · University of Groningen</div>
+        <div class="mentee-tags"><span class="tag tag-muted">Clinical NLP · Greek</span></div>
+        <div class="mentee-thesis">Modeling Aphasia Type in Greek Speaking Patients Utilizing Deep Neural Networks</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-dim">EK</div>
+        <div class="mentee-name">Eduard Kontos</div>
+        <div class="mentee-role">BSc · University of Groningen</div>
+        <div class="mentee-tags"><span class="tag tag-muted">Cross-lingual · Embeddings</span></div>
+        <div class="mentee-thesis">Mapping Transformer Leveraged Embeddings for Cross-Lingual Document Representation</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-dim">EF</div>
+        <div class="mentee-name">Ekin Fergan</div>
+        <div class="mentee-role">BSc · University of Groningen</div>
+        <div class="mentee-tags"><span class="tag tag-muted">Sentiment Analysis</span></div>
+        <div class="mentee-thesis">Course Review Sentiment Analysis: A Comparative Study of ML and Deep Learning Models</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-dim">HB</div>
+        <div class="mentee-name">Henrich Balaj</div>
+        <div class="mentee-role">BSc · University of Groningen</div>
+        <div class="mentee-tags"><span class="tag tag-muted">Mental Health NLP</span></div>
+        <div class="mentee-thesis">Detecting Signs of Depression from Social Media Text</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-dim">MB</div>
+        <div class="mentee-name">Mikko Brandon</div>
+        <div class="mentee-role">BSc · University of Groningen</div>
+        <div class="mentee-tags"><span class="tag tag-muted">Emotion AI · XAI</span></div>
+        <div class="mentee-thesis">Making Emotion Classification of Social Media Text by Neural Networks Explainable</div>
+      </div>
+
+      <div class="mentee-card">
+        <div class="mentee-avatar av-dim">ZM</div>
+        <div class="mentee-name">Zeyneb Metin</div>
+        <div class="mentee-role">BSc · University of Groningen</div>
+        <div class="mentee-tags"><span class="tag tag-muted">Transfer Learning · Education</span></div>
+        <div class="mentee-thesis">A Comparative Study on Transfer Learning for Educational Question Generation</div>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="mentees-cta">
+      <div class="mentees-cta-text">
+        <strong>Interested in doing research under my supervision?</strong><br>
+        I welcome motivated students working on multilingual NLP, affective AI, or NLP for education — at both BSc and MSc level.
+      </div>
+      <a href="mailto:t.m.tashu@rug.nl" class="btn btn-primary" style="font-size:0.68rem;white-space:nowrap;">Get in Touch ↗</a>
+    </div>
+  </section>
+
   <!-- ── CONTACT ── -->
   <section id="contact">
     <div class="section-label">Contact</div>
@@ -1359,16 +1976,16 @@
     <div class="contact-grid">
       <div>
         <p class="contact-intro">
-          I welcome collaborations on multilingual NLP research, AI education projects, 
-          and cross-institutional curriculum innovation. Feel free to reach out via email 
+          I welcome collaborations on multilingual NLP research, AI education projects,
+          and cross-institutional curriculum innovation. Feel free to reach out via email
           or connect on GitHub.
         </p>
         <div class="contact-items">
-          <a href="/cdn-cgi/l/email-protection#3b4f1556154f5a48534e7b494e5c155557" class="contact-item">
+          <a href="mailto:t.m.tashu@rug.nl" class="contact-item">
             <div class="contact-item-icon">✉</div>
             <div>
               <div class="contact-item-label">Email</div>
-              <div class="contact-item-value"><span class="__cf_email__" data-cfemail="c5b1eba8ebb1a4b6adb085b7b0a2ebaba9">[email&#160;protected]</span></div>
+              <div class="contact-item-value">t.m.tashu@rug.nl</div>
             </div>
           </a>
           <a href="https://github.com/Tsegaye-misikir" target="_blank" class="contact-item">
@@ -1385,13 +2002,6 @@
               <div class="contact-item-value">Faculty of Science &amp; Engineering</div>
             </div>
           </div>
-          <div class="contact-item" style="cursor:default;">
-            <div class="contact-item-icon" style="background:var(--teal-dim);border-color:rgba(75,168,154,0.2);">🎓</div>
-            <div>
-              <div class="contact-item-label">BUas</div>
-              <div class="contact-item-value">Breda University of Applied Sciences</div>
-            </div>
-          </div>
         </div>
       </div>
       <div class="contact-form-note">
@@ -1405,7 +2015,7 @@
           <li>→ LLM evaluation &amp; benchmarking</li>
         </ul>
         <div style="margin-top:1.5rem;">
-          <a href="/cdn-cgi/l/email-protection#85f1abe8abf1e4f6edf0c5f7f0e2abebe9" class="btn btn-primary" style="font-size:0.68rem;">Send Email ↗</a>
+          <a href="mailto:t.m.tashu@rug.nl" class="btn btn-primary" style="font-size:0.68rem;">Send Email ↗</a>
         </div>
       </div>
     </div>
@@ -1415,15 +2025,17 @@
   <footer>
     <div class="footer-copy">© 2025 Tsegaye M. Tashu · University of Groningen</div>
     <div class="footer-links">
-      <a href="/cdn-cgi/l/email-protection#64104a094a1005170c11241611034a0a08">Email</a>
+      <a href="mailto:t.m.tashu@rug.nl">Email</a>
       <a href="https://github.com/Tsegaye-misikir" target="_blank">GitHub</a>
       <a href="#research">Research</a>
       <a href="#courses">Teaching</a>
+      <a href="#news">News</a>
+      <a href="#mentees">Mentees</a>
+      <a href="#projects">Projects</a>
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Mobile nav
+  <script>
     function toggleMobileNav() {
       const nav = document.getElementById('mobileNav');
       nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
@@ -1439,7 +2051,7 @@
       });
     }, { threshold: 0.12 });
 
-    document.querySelectorAll('.pub-card, .course-card, .stat-card, .interest-item, .contact-item').forEach(el => {
+    document.querySelectorAll('.pub-card, .course-card, .stat-card, .contact-item, .mentee-card, .news-item, .project-card').forEach(el => {
       el.classList.add('fade-in');
       observer.observe(el);
     });
@@ -1461,6 +2073,18 @@
       document.getElementById('pubNum').textContent = count;
     }
 
-    // Active nav highlight
+    // Active nav highlight on scroll
     const sections = document.querySelectorAll('section');
-    const navLinks =
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+      });
+    });
+  </script>
+</body>
+</html>
