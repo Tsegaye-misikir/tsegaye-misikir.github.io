@@ -1,1 +1,3 @@
 # tsegaye-misikir.github.io
+
+Personal academic website of Tsegaye M. Tashu (University of Groningen), served by GitHub Pages at <https://tsegaye-misikir.github.io/>. The site is hand-written static HTML: `index.html` (profile, research, publications, teaching, news), and the course pages `NLP.html`, `llm.html` and `LTP.html`, plus `404.html`, `robots.txt` and `sitemap.xml`. To update the publication list, edit the `#research` section of `index.html` (each paper is a `.pub-card-row` entry grouped by year; keep the year filter buttons and publication count in step), and update `<lastmod>` in `sitemap.xml` when a page changes.

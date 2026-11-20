@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tsegaye-misikir.github.io/sitemap.xml
