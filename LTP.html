@@ -4,9 +4,20 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Language Technology Practical — Tsegaye M. Tashu</title>
+  <meta name="description" content="Language Technology Practical (WBAI027-05, 5 ECTS, BSc Artificial Intelligence, University of Groningen): a 6-week project-based course on question answering, RAG, evaluation, task-oriented dialogue and multi-agent systems.">
+  <link rel="canonical" href="https://tsegaye-misikir.github.io/LTP.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Language Technology Practical — Tsegaye M. Tashu">
+  <meta property="og:description" content="Language Technology Practical (WBAI027-05, 5 ECTS, BSc Artificial Intelligence, University of Groningen): a 6-week project-based course on question answering, RAG, evaluation, task-oriented dialogue and multi-agent systems.">
+  <meta property="og:url" content="https://tsegaye-misikir.github.io/LTP.html">
+  <meta property="og:site_name" content="Tsegaye M. Tashu">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.png" type="image/png" sizes="180x180">
+  <link rel="apple-touch-icon" href="favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=Sora:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,12 +28,12 @@
       --bg4:       #0a1119;
       --line:      rgba(255,255,255,0.07);
       --text:      #e8e2d6;
-      --muted:     #7a8699;
+      --muted:     #8a96a9;
       --gold:      #d4a853;
       --gold-dim:  rgba(212,168,83,0.13);
       --teal:      #4ba89a;
       --teal-dim:  rgba(75,168,154,0.11);
-      --red:       #c0614a;
+      --red:       #d9785f;
       --serif:     'DM Serif Display', Georgia, serif;
       --sans:      'Sora', sans-serif;
       --mono:      'JetBrains Mono', monospace;
@@ -39,6 +50,7 @@
     body::before {
       content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: 0.35;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
     }
 
     /* ── NAV ── */
@@ -67,7 +79,7 @@
 
     /* ── LAYOUT ── */
     .section { padding: 6rem clamp(1.5rem, 8vw, 6rem); }
-    .section:nth-child(even) { background: var(--bg2); }
+    main > .section:nth-child(odd) { background: var(--bg2); }
     .container { max-width: 1100px; }
 
     .section-label {
@@ -115,13 +127,16 @@
       border: 1px solid rgba(212,168,83,0.25); padding: 0.35rem 0.85rem;
       margin-bottom: 1.5rem; background: var(--gold-dim);
     }
-    .hero-badge::before { content: '●'; font-size: 0.5rem; animation: blink 2s infinite; }
+    .hero-badge::before { content: '●'; font-size: 0.5rem; animation: blink 2s 3; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
     h1.hero-title { font-family: var(--serif); font-size: clamp(2.6rem, 5.5vw, 4.8rem); font-weight: 400; line-height: 1.05; color: var(--text); margin-bottom: 0.5rem; }
     h1.hero-title em { font-style: italic; color: var(--gold); }
     .hero-subtitle { font-family: var(--serif); font-style: italic; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--muted); margin-bottom: 1.75rem; }
     .hero-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.85; max-width: 460px; margin-bottom: 2rem; }
+    .hero-note { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em; color: var(--muted); margin: -0.75rem 0 2rem; line-height: 1.6; }
+    .hero-note a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
+    .hero-note a:hover { color: var(--text); }
     .hero-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
 
     .tag { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.07em; padding: 0.28rem 0.8rem; border-radius: 2px; border: 1px solid; }
@@ -145,14 +160,16 @@
 
     /* ── PREREQUISITES ── */
     .prereqs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .prereqs-grid > * { min-width: 0; }
     .prereqs-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.5rem; }
     .skill-bars { display: flex; flex-direction: column; gap: 1.1rem; }
     .skill-bar-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
     .skill-bar-name { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--text); }
     .skill-bar-level { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
     .skill-bar-track { height: 4px; background: var(--line); position: relative; overflow: hidden; }
-    .skill-bar-fill { position: absolute; top: 0; left: 0; height: 100%; background: linear-gradient(90deg, var(--gold), var(--teal)); transform: scaleX(0); transform-origin: left; transition: transform 1s var(--ease); }
-    .radar-wrap { position: relative; max-width: 380px; margin: 0 auto; }
+    .skill-bar-fill { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--teal)); transform: scaleX(0); transform-origin: left; transition: transform 1s var(--ease); }
+    .radar-wrap { position: relative; width: 100%; max-width: 380px; margin: 0 auto; }
+    #radarChart { display: block; max-width: 100%; height: auto; }
 
     /* ── OBJECTIVES ── */
     .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
@@ -168,19 +185,20 @@
     .curriculum-hint { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; }
 
     .week-group { margin-bottom: 0.6rem; }
-    .week-btn { width: 100%; background: var(--bg3); border: 1px solid var(--line); padding: 0; cursor: pointer; text-align: left; transition: border-color 0.2s; display: block; }
+    .week-btn { width: 100%; background: var(--bg3); border: 1px solid var(--line); padding: 0; cursor: pointer; text-align: left; transition: border-color 0.2s; display: block; font: inherit; color: inherit; }
     .week-btn:hover { border-color: rgba(212,168,83,0.3); }
     .week-btn.open { border-color: rgba(212,168,83,0.4); }
-    .week-btn-inner { display: grid; grid-template-columns: 3rem 1fr auto; align-items: center; padding: 1.1rem 1.5rem; gap: 1.25rem; }
+    .week-btn-inner { display: grid; grid-template-columns: 3rem minmax(0,1fr) auto; align-items: center; padding: 1.1rem 1.5rem; gap: 1.25rem; }
     .week-num { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--gold); text-transform: uppercase; }
-    .week-title { font-family: var(--serif); font-size: 1rem; color: var(--text); }
+    .week-head { display: block; min-width: 0; }
+    .week-title { display: block; font-family: var(--serif); font-size: 1rem; color: var(--text); }
     .week-tags-inline { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.25rem; }
     .week-chevron { color: var(--muted); font-size: 0.8rem; transition: transform 0.25s var(--ease); font-family: var(--mono); }
     .week-btn.open .week-chevron { transform: rotate(180deg); color: var(--gold); }
     .week-body { max-height: 0; overflow: hidden; transition: max-height 0.4s var(--ease), opacity 0.3s; opacity: 0; border-top: 0px solid var(--line); }
-    .week-body.open { max-height: 700px; opacity: 1; border-top: 1px solid var(--line); }
+    .week-body.open { opacity: 1; border-top: 1px solid var(--line); } /* max-height set from scrollHeight in JS */
     .week-body-inner { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
-    .week-col { padding: 1.5rem 1.75rem; border-right: 1px solid var(--line); }
+    .week-col { padding: 1.5rem 1.75rem; border-right: 1px solid var(--line); min-width: 0; }
     .week-col:last-child { border-right: none; }
     .week-col-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
     .week-col ul { list-style: none; }
@@ -192,13 +210,14 @@
 
     /* ── PROJECT TIMELINE ── */
     .timeline { display: flex; flex-direction: column; gap: 0; max-width: 900px; }
-    .timeline-item { display: grid; grid-template-columns: 5rem 1fr; gap: 2rem; position: relative; }
+    .timeline-item { display: grid; grid-template-columns: 5rem minmax(0,1fr); gap: 2rem; position: relative; }
     .timeline-item::before { content: ''; position: absolute; left: 2.4rem; top: 2.4rem; bottom: -1px; width: 1px; background: var(--line); }
     .timeline-item:last-child::before { display: none; }
     .timeline-left { display: flex; flex-direction: column; align-items: center; padding-top: 1.4rem; }
     .timeline-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--gold); border: 2px solid var(--bg); flex-shrink: 0; }
     .timeline-week { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); margin-top: 0.4rem; text-align: center; }
-    .timeline-right { border: 1px solid var(--line); background: var(--bg3); padding: 1.5rem 1.75rem; margin-bottom: 0.6rem; transition: border-color 0.2s; }
+    .timeline-right { border: 1px solid var(--line); background: var(--bg3); padding: 1.5rem 1.75rem; margin-bottom: 0.6rem; transition: border-color 0.2s; min-width: 0; }
+    .timeline-deliverable code, .week-col code { overflow-wrap: anywhere; }
     .timeline-right:hover { border-color: rgba(212,168,83,0.3); }
     .timeline-title { font-family: var(--serif); font-size: 1rem; margin-bottom: 0.4rem; }
     .timeline-deliverable { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
@@ -210,7 +229,7 @@
     .ethics-items { display: flex; flex-direction: column; gap: 1px; }
     .ethics-item { border: 1px solid var(--line); background: var(--bg3); padding: 1.5rem 1.75rem; transition: border-color 0.2s; }
     .ethics-item + .ethics-item { margin-top: 1px; }
-    .ethics-item:hover { border-color: rgba(192,97,74,0.3); }
+    .ethics-item:hover { border-color: rgba(217,120,95,0.3); }
     .ethics-item-header { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 0.6rem; }
     .ethics-icon { font-size: 1.2rem; flex-shrink: 0; }
     .ethics-title { font-family: var(--serif); font-size: 1rem; }
@@ -230,48 +249,87 @@
     /* ── FOOTER ── */
     footer { padding: 2rem clamp(1.5rem, 8vw, 6rem); border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
     .footer-copy { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; }
-    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; }
     .footer-links a { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); text-decoration: none; }
     .footer-links a:hover { color: var(--gold); }
 
+    /* ── ACCESSIBILITY ── */
+    .skip-link { position: absolute; left: -9999px; top: 0; }
+    .skip-link:focus {
+      left: 1rem; top: 1rem; z-index: 1001;
+      background: var(--gold); color: var(--bg); padding: .5rem 1rem;
+      font-family: var(--mono); font-size: .8rem; text-decoration: none;
+    }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+    /* ── MOBILE NAV TOGGLE ── */
+    .nav-toggle { display: none; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .hero-inner, .prereqs-grid, .ethics-layout { grid-template-columns: 1fr; }
+      .hero-inner, .prereqs-grid, .ethics-layout { grid-template-columns: minmax(0,1fr); }
       .objectives-grid { grid-template-columns: 1fr 1fr; }
       .week-body-inner { grid-template-columns: 1fr; }
       .week-col { border-right: none; border-bottom: 1px solid var(--line); }
       .week-col:last-child { border-bottom: none; }
       .nav-links { display: none; }
+      .nav-toggle {
+        display: inline-flex; align-items: center; justify-content: center;
+        min-width: 44px; min-height: 44px; font-size: 1.4rem; line-height: 1;
+        background: none; border: 1px solid var(--line); color: var(--text); cursor: pointer;
+      }
+      nav.open .nav-links {
+        display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0;
+        background: rgba(13,21,32,0.97); padding: 1rem clamp(1.5rem,5vw,4rem) 1.5rem;
+        gap: 1rem; border-bottom: 1px solid var(--line);
+      }
     }
     @media (max-width: 580px) {
       .objectives-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 3rem minmax(0,1fr); gap: 1rem; }
+      .timeline-item::before { left: 1.45rem; }
+      .timeline-right { padding: 1.25rem 1.25rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .fade-in, .reveal { opacity: 1 !important; transform: none !important; }
     }
   </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <!-- ── NAV ── -->
 <nav>
   <a href="index.html" class="nav-logo">T.M.<span>Tashu</span></a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#about">About</a></li>
     <li><a href="index.html#research">Research</a></li>
     <li><a href="NLP.html">NLP Course</a></li>
     <li><a href="llm.html">LLM Course</a></li>
-    <li><a href="ltp.html" class="active">LT Practical</a></li>
+    <li><a href="LTP.html" class="active" aria-current="page">LT Practical</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
+  <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button>
 </nav>
+
+<main id="main">
 
 <!-- ── HERO ── -->
 <section id="hero">
-  <div class="hero-grid-bg"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-glow2" aria-hidden="true"></div>
   <div class="hero-inner">
     <div>
-      <div class="hero-badge">Language Technology Practicals · BSc AI</div>
+      <div class="hero-badge">Language Technology Practical · BSc AI</div>
       <h1 class="hero-title">QA &amp;<br>Conversational<br><em>Systems</em></h1>
       <p class="hero-subtitle">A Practical Course Guide</p>
       <p class="hero-desc">
@@ -286,7 +344,9 @@
         <span class="tag tag-teal">Python · PyTorch · HuggingFace</span>
         <span class="tag tag-muted">BSc AI · UGroningen</span>
         <span class="tag tag-teal">Project-Based</span>
+        <span class="tag tag-muted">WBAI027-05 · 5 ECTS</span>
       </div>
+      <p class="hero-note">Not offered in 2026–2027 · <a href="https://ocasys.rug.nl/current/catalog/course/WBAI027-05" target="_blank" rel="noopener noreferrer">Course catalogue entry (Ocasys)</a></p>
       <div class="hero-actions">
         <a href="#curriculum" class="btn btn-primary">Explore Curriculum ↓</a>
         <a href="index.html#contact" class="btn btn-outline">Contact Instructor</a>
@@ -299,7 +359,7 @@
           <div class="hero-stat-label">Weeks</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-num">4</div>
+          <div class="hero-stat-num">6</div>
           <div class="hero-stat-label">Core Objectives</div>
         </div>
         <div class="hero-stat">
@@ -335,7 +395,7 @@
     <div class="prereqs-grid">
       <div>
         <p class="prereqs-desc">
-          Students enter this practical having completed the NLP lecture series.
+          Students enter this practical having completed the NLP or LLM course.
           A working knowledge of transformer models, Python, and PyTorch is assumed.
           The bars below show the recommended entry-level proficiency — the practical
           builds directly on top of these foundations rather than re-teaching them.
@@ -369,7 +429,7 @@
       </div>
       <div>
         <div class="radar-wrap">
-          <canvas id="radarChart" width="380" height="380"></canvas>
+          <canvas id="radarChart" width="380" height="380" role="img" aria-label="Radar chart of recommended entry level versus expected exit level, out of 100: Python / PyTorch 88 to 92, Transformers 72 to 88, HuggingFace 68 to 90, Evaluation metrics 55 to 88, Git / Reproducibility 65 to 82, Technical writing 50 to 80.">Recommended entry level versus expected exit level (out of 100): Python / PyTorch 88 → 92; Transformers 72 → 88; HuggingFace 68 → 90; Evaluation metrics 55 → 88; Git / Reproducibility 65 → 82; Technical writing 50 → 80.</canvas>
         </div>
       </div>
     </div>
@@ -383,38 +443,38 @@
     <h2 class="section-title">Core Learning<br><em>Outcomes</em></h2>
     <div class="objectives-grid">
       <div class="obj-card">
-        <div class="obj-num">01</div>
-        <div class="obj-icon">🔍</div>
+        <div class="obj-num" aria-hidden="true">01</div>
+        <div class="obj-icon" aria-hidden="true">🔍</div>
         <div class="obj-title">Build &amp; Evaluate QA Systems</div>
         <div class="obj-desc">Implement extractive and generative QA models, benchmark them on SQuAD using EM/F1, and perform rigorous qualitative error analysis.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num">02</div>
-        <div class="obj-icon">📚</div>
+        <div class="obj-num" aria-hidden="true">02</div>
+        <div class="obj-icon" aria-hidden="true">📚</div>
         <div class="obj-title">Design RAG Pipelines</div>
         <div class="obj-desc">Build retriever + generator pipelines using FAISS and SentenceTransformers, evaluate retrieval quality, and ground answers in external corpora.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num">03</div>
-        <div class="obj-icon">💬</div>
+        <div class="obj-num" aria-hidden="true">03</div>
+        <div class="obj-icon" aria-hidden="true">💬</div>
         <div class="obj-title">Implement Dialogue Systems</div>
         <div class="obj-desc">Develop task-oriented dialogue systems covering NLU, DST, policy, and NLG components; evaluate slot-filling accuracy and task success rates.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num">04</div>
-        <div class="obj-icon">🤖</div>
+        <div class="obj-num" aria-hidden="true">04</div>
+        <div class="obj-icon" aria-hidden="true">🤖</div>
         <div class="obj-title">Apply Multi-Agent Architectures</div>
         <div class="obj-desc">Extend single-agent systems to planner/solver/critic multi-agent designs with loop-guarding, cost tracking, and systematic comparative evaluation.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num">05</div>
-        <div class="obj-icon">📏</div>
+        <div class="obj-num" aria-hidden="true">05</div>
+        <div class="obj-icon" aria-hidden="true">📏</div>
         <div class="obj-title">Master NLP Evaluation</div>
         <div class="obj-desc">Move beyond lexical metrics (EM/F1) to semantic evaluation using BERTScore, RAGAS faithfulness scores, and structured error classification frameworks.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num">06</div>
-        <div class="obj-icon">📝</div>
+        <div class="obj-num" aria-hidden="true">06</div>
+        <div class="obj-icon" aria-hidden="true">📝</div>
         <div class="obj-title">Communicate Technical Work</div>
         <div class="obj-desc">Write clear technical reports documenting system architecture, experimental results, error analysis, and design decisions — building core research communication skills.</div>
       </div>
@@ -435,17 +495,17 @@
 
     <!-- W01 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W01</div>
-          <div>
-            <div class="week-title">Transformers &amp; Tooling Refresher</div>
-            <div class="week-tags-inline"><span class="tag tag-gold">Foundations</span><span class="tag tag-muted">HuggingFace · SQuAD</span></div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+      <button class="week-btn" type="button" id="w1-btn" aria-expanded="false" aria-controls="w1-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W01</span>
+          <span class="week-head">
+            <span class="week-title">Transformers &amp; Tooling Refresher</span>
+            <span class="week-tags-inline"><span class="tag tag-gold">Foundations</span><span class="tag tag-muted">HuggingFace · SQuAD</span></span>
+          </span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w1-body" role="region" aria-labelledby="w1-btn" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Topic Summary</div>
@@ -459,7 +519,7 @@
             <div class="week-col-label">Lab &amp; Project Tasks</div>
             <ul>
               <li>Set up environment: Python, PyTorch, HuggingFace Transformers</li>
-              <li>Run a pretrained QA model (<code>bert-base-uncased</code>, <code>distilbert-base-uncased-distilled-squad</code>) on SQuAD</li>
+              <li>Run a pretrained QA model (<code>deepset/bert-base-uncased-squad2</code>, <code>distilbert-base-uncased-distilled-squad</code>) on SQuAD</li>
               <li>Report EM/F1 and describe the preprocessing pipeline</li>
             </ul>
           </div>
@@ -476,17 +536,17 @@
 
     <!-- W02 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W02</div>
-          <div>
-            <div class="week-title">Question Answering: Tasks, Datasets &amp; Baselines</div>
-            <div class="week-tags-inline"><span class="tag tag-teal">Extractive QA · Generative QA</span><span class="tag tag-muted">EM/F1 · SQuAD</span></div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+      <button class="week-btn" type="button" id="w2-btn" aria-expanded="false" aria-controls="w2-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W02</span>
+          <span class="week-head">
+            <span class="week-title">Question Answering: Tasks, Datasets &amp; Baselines</span>
+            <span class="week-tags-inline"><span class="tag tag-teal">Extractive QA · Generative QA</span><span class="tag tag-muted">EM/F1 · SQuAD</span></span>
+          </span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w2-body" role="region" aria-labelledby="w2-btn" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Topic Summary</div>
@@ -517,17 +577,17 @@
 
     <!-- W03 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W03</div>
-          <div>
-            <div class="week-title">Retrieval-Augmented Generation (RAG) for QA</div>
-            <div class="week-tags-inline"><span class="tag tag-gold">RAG · FAISS</span><span class="tag tag-muted">SentenceTransformers · Dense Retrieval</span></div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+      <button class="week-btn" type="button" id="w3-btn" aria-expanded="false" aria-controls="w3-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W03</span>
+          <span class="week-head">
+            <span class="week-title">Retrieval-Augmented Generation (RAG) for QA</span>
+            <span class="week-tags-inline"><span class="tag tag-gold">RAG · FAISS</span><span class="tag tag-muted">SentenceTransformers · Dense Retrieval</span></span>
+          </span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w3-body" role="region" aria-labelledby="w3-btn" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Topic Summary</div>
@@ -557,17 +617,17 @@
 
     <!-- W04 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W04</div>
-          <div>
-            <div class="week-title">Evaluating QA &amp; RAG Systems</div>
-            <div class="week-tags-inline"><span class="tag tag-teal">BERTScore · RAGAS</span><span class="tag tag-muted">Faithfulness · Error Analysis</span></div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+      <button class="week-btn" type="button" id="w4-btn" aria-expanded="false" aria-controls="w4-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W04</span>
+          <span class="week-head">
+            <span class="week-title">Evaluating QA &amp; RAG Systems</span>
+            <span class="week-tags-inline"><span class="tag tag-teal">BERTScore · RAGAS</span><span class="tag tag-muted">Faithfulness · Error Analysis</span></span>
+          </span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w4-body" role="region" aria-labelledby="w4-btn" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Topic Summary</div>
@@ -598,17 +658,17 @@
 
     <!-- W05 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W05</div>
-          <div>
-            <div class="week-title">Conversational Systems: Pipeline &amp; End-to-End</div>
-            <div class="week-tags-inline"><span class="tag tag-gold">Task-Oriented Dialogue</span><span class="tag tag-muted">Rasa · ConvLab-3 · DST</span></div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+      <button class="week-btn" type="button" id="w5-btn" aria-expanded="false" aria-controls="w5-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W05</span>
+          <span class="week-head">
+            <span class="week-title">Conversational Systems: Pipeline &amp; End-to-End</span>
+            <span class="week-tags-inline"><span class="tag tag-gold">Task-Oriented Dialogue</span><span class="tag tag-muted">Rasa · ConvLab-3 · DST</span></span>
+          </span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w5-body" role="region" aria-labelledby="w5-btn" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Topic Summary</div>
@@ -640,17 +700,17 @@
 
     <!-- W06 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W06</div>
-          <div>
-            <div class="week-title">Multi-Agent Patterns for QA &amp; Dialogue</div>
-            <div class="week-tags-inline"><span class="tag tag-teal">Planner · Solver · Critic</span><span class="tag tag-muted">Loop-Guarding · Cost Tracking</span></div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+      <button class="week-btn" type="button" id="w6-btn" aria-expanded="false" aria-controls="w6-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W06</span>
+          <span class="week-head">
+            <span class="week-title">Multi-Agent Patterns for QA &amp; Dialogue</span>
+            <span class="week-tags-inline"><span class="tag tag-teal">Planner · Solver · Critic</span><span class="tag tag-muted">Loop-Guarding · Cost Tracking</span></span>
+          </span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w6-body" role="region" aria-labelledby="w6-btn" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Topic Summary</div>
@@ -697,19 +757,19 @@
 
       <div class="timeline-item">
         <div class="timeline-left">
-          <div class="timeline-dot"></div>
+          <div class="timeline-dot" aria-hidden="true"></div>
           <div class="timeline-week">W01</div>
         </div>
         <div class="timeline-right">
           <div class="timeline-title">Environment &amp; Baseline QA</div>
-          <div class="timeline-deliverable">Set up the full project environment. Run a pretrained QA model on SQuAD and report EM/F1. Describe the preprocessing pipeline clearly.</div>
+          <div class="timeline-deliverable">Set up the full project environment. Run a pretrained, SQuAD-fine-tuned QA model on SQuAD and report EM/F1. Describe the preprocessing pipeline clearly.</div>
           <div class="timeline-tags"><span class="tag tag-muted">Environment</span><span class="tag tag-gold">EM/F1 Baseline</span></div>
         </div>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-left">
-          <div class="timeline-dot" style="background:var(--teal)"></div>
+          <div class="timeline-dot" aria-hidden="true" style="background:var(--teal)"></div>
           <div class="timeline-week">W02</div>
         </div>
         <div class="timeline-right">
@@ -721,7 +781,7 @@
 
       <div class="timeline-item">
         <div class="timeline-left">
-          <div class="timeline-dot"></div>
+          <div class="timeline-dot" aria-hidden="true"></div>
           <div class="timeline-week">W03</div>
         </div>
         <div class="timeline-right">
@@ -733,7 +793,7 @@
 
       <div class="timeline-item">
         <div class="timeline-left">
-          <div class="timeline-dot" style="background:var(--teal)"></div>
+          <div class="timeline-dot" aria-hidden="true" style="background:var(--teal)"></div>
           <div class="timeline-week">W04</div>
         </div>
         <div class="timeline-right">
@@ -745,7 +805,7 @@
 
       <div class="timeline-item">
         <div class="timeline-left">
-          <div class="timeline-dot"></div>
+          <div class="timeline-dot" aria-hidden="true"></div>
           <div class="timeline-week">W05</div>
         </div>
         <div class="timeline-right">
@@ -757,7 +817,7 @@
 
       <div class="timeline-item">
         <div class="timeline-left">
-          <div class="timeline-dot" style="background:var(--teal)"></div>
+          <div class="timeline-dot" aria-hidden="true" style="background:var(--teal)"></div>
           <div class="timeline-week">W06</div>
         </div>
         <div class="timeline-right">
@@ -787,7 +847,7 @@
         <div class="ethics-items">
           <div class="ethics-item reveal">
             <div class="ethics-item-header">
-              <div class="ethics-icon">🎭</div>
+              <div class="ethics-icon" aria-hidden="true">🎭</div>
               <div class="ethics-title">Hallucination &amp; Factual Grounding</div>
             </div>
             <div class="ethics-desc">
@@ -799,7 +859,7 @@
           </div>
           <div class="ethics-item reveal">
             <div class="ethics-item-header">
-              <div class="ethics-icon">⚠️</div>
+              <div class="ethics-icon" aria-hidden="true">⚠️</div>
               <div class="ethics-title">Bias in Retrieved &amp; Generated Content</div>
             </div>
             <div class="ethics-desc">
@@ -811,7 +871,7 @@
           </div>
           <div class="ethics-item reveal">
             <div class="ethics-item-header">
-              <div class="ethics-icon">🔒</div>
+              <div class="ethics-icon" aria-hidden="true">🔒</div>
               <div class="ethics-title">Privacy in Dialogue Systems</div>
             </div>
             <div class="ethics-desc">
@@ -823,7 +883,7 @@
           </div>
           <div class="ethics-item reveal">
             <div class="ethics-item-header">
-              <div class="ethics-icon">🤖</div>
+              <div class="ethics-icon" aria-hidden="true">🤖</div>
               <div class="ethics-title">Safety in Multi-Agent Systems</div>
             </div>
             <div class="ethics-desc">
@@ -839,35 +899,35 @@
         <div class="ethics-visual">
           <div class="ev-title">Responsible System Design Principles</div>
           <div class="ev-principle">
-            <div class="ev-principle-icon">✅</div>
+            <div class="ev-principle-icon" aria-hidden="true">✅</div>
             <div class="ev-principle-text">
               <div class="ev-principle-title">Factual Accuracy</div>
               <div class="ev-principle-desc">Ground answers in verifiable sources; evaluate faithfulness explicitly</div>
             </div>
           </div>
           <div class="ev-principle" style="border-left-color:var(--teal);">
-            <div class="ev-principle-icon">🔍</div>
+            <div class="ev-principle-icon" aria-hidden="true">🔍</div>
             <div class="ev-principle-text">
               <div class="ev-principle-title" style="color:var(--teal);">Transparency</div>
               <div class="ev-principle-desc">Document system architecture, data sources, and known limitations</div>
             </div>
           </div>
-          <div class="ev-principle" style="border-left-color:#7a8699;">
-            <div class="ev-principle-icon">🛡️</div>
+          <div class="ev-principle" style="border-left-color:var(--muted);">
+            <div class="ev-principle-icon" aria-hidden="true">🛡️</div>
             <div class="ev-principle-text">
               <div class="ev-principle-title" style="color:#aab;">Privacy</div>
               <div class="ev-principle-desc">Minimise logging of user inputs; handle dialogue data responsibly</div>
             </div>
           </div>
           <div class="ev-principle" style="border-left-color:var(--red);">
-            <div class="ev-principle-icon">🔁</div>
+            <div class="ev-principle-icon" aria-hidden="true">🔁</div>
             <div class="ev-principle-text">
               <div class="ev-principle-title" style="color:var(--red);">Safety &amp; Control</div>
               <div class="ev-principle-desc">Implement termination conditions and cost limits in agentic systems</div>
             </div>
           </div>
           <div class="ev-principle" style="border-left-color:var(--gold);">
-            <div class="ev-principle-icon">⚖️</div>
+            <div class="ev-principle-icon" aria-hidden="true">⚖️</div>
             <div class="ev-principle-text">
               <div class="ev-principle-title">Fairness</div>
               <div class="ev-principle-desc">Identify and report systematic gaps in system performance across topics</div>
@@ -885,9 +945,11 @@
   </div>
 </section>
 
+</main>
+
 <!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-copy">© 2025 Tsegaye M. Tashu · University of Groningen</div>
+  <div class="footer-copy">© 2026 Tsegaye M. Tashu · University of Groningen</div>
   <div class="footer-links">
     <a href="index.html">Portfolio</a>
     <a href="NLP.html">NLP Course</a>
@@ -896,19 +958,73 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
 <script>
+  // ── MOBILE NAV ──
+  (function () {
+    const nav = document.querySelector('nav');
+    const toggle = nav.querySelector('.nav-toggle');
+    const links = document.getElementById('navLinks');
+    function setOpen(open) {
+      nav.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+    toggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  })();
+
   // ── ACCORDION ──
+  function closeWeekBody(body) {
+    if (body.style.maxHeight === 'none' || body.style.maxHeight === '') {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      void body.offsetHeight; // force reflow so the collapse animates from the real height
+    }
+    body.classList.remove('open');
+    body.style.maxHeight = '0px';
+    body.inert = true;
+  }
+  function openWeekBody(body) {
+    body.inert = false;
+    body.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    // once expanded, drop the cap so content can reflow (e.g. on resize) without clipping
+    const release = () => { if (body.classList.contains('open')) body.style.maxHeight = 'none'; };
+    body.addEventListener('transitionend', function onEnd(e) {
+      if (e.propertyName !== 'max-height') return;
+      body.removeEventListener('transitionend', onEnd);
+      release();
+    });
+    setTimeout(release, 600);
+  }
   function toggleWeek(btn) {
-    const body = btn.nextElementSibling;
+    const body = document.getElementById(btn.getAttribute('aria-controls')) || btn.nextElementSibling;
     const isOpen = btn.classList.contains('open');
-    document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('open'));
-    document.querySelectorAll('.week-body').forEach(b => b.classList.remove('open'));
-    if (!isOpen) { btn.classList.add('open'); body.classList.add('open'); }
+    document.querySelectorAll('.week-btn.open').forEach(b => {
+      b.classList.remove('open');
+      b.setAttribute('aria-expanded', 'false');
+      const other = document.getElementById(b.getAttribute('aria-controls'));
+      if (other) closeWeekBody(other);
+    });
+    if (!isOpen) {
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      openWeekBody(body);
+    }
   }
 
   // ── RADAR CHART ──
-  const ctx = document.getElementById('radarChart').getContext('2d');
-  new Chart(ctx, {
+  // Chart.js is loaded with defer, so it is only guaranteed to exist once the DOM is parsed.
+  document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('radarChart');
+  if (!canvas || typeof Chart === 'undefined') return;
+  new Chart(canvas.getContext('2d'), {
     type: 'radar',
     data: {
       labels: ['Python / PyTorch', 'Transformers', 'HuggingFace', 'Eval Metrics', 'Git / Repro', 'Tech Writing'],
@@ -936,7 +1052,7 @@
     options: {
       responsive: true,
       plugins: {
-        legend: { labels: { color: '#7a8699', font: { family: "'JetBrains Mono', monospace", size: 10 }, boxWidth: 12 } }
+        legend: { labels: { color: '#8a96a9', font: { family: "'JetBrains Mono', monospace", size: 10 }, boxWidth: 12 } }
       },
       scales: {
         r: {
@@ -944,10 +1060,11 @@
           ticks: { stepSize: 25, display: false },
           grid: { color: 'rgba(255,255,255,0.07)' },
           angleLines: { color: 'rgba(255,255,255,0.07)' },
-          pointLabels: { color: '#7a8699', font: { family: "'JetBrains Mono', monospace", size: 10 } }
+          pointLabels: { color: '#8a96a9', font: { family: "'JetBrains Mono', monospace", size: 10 } }
         }
       }
     }
+  });
   });
 
   // ── SKILL BARS ──

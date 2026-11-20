@@ -4,9 +4,21 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NLP Course — Tsegaye M. Tashu</title>
+  <meta name="description" content="Course guide for Natural Language Processing (WBAI059-05, 5 ECTS), an 8-week, 10-lecture BSc Artificial Intelligence course at the University of Groningen: language models, word embeddings, CNNs, LSTMs, Transformers, fine-tuning and RAG, with a continuous hands-on project.">
+  <link rel="canonical" href="https://tsegaye-misikir.github.io/NLP.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Natural Language Processing — Course Guide">
+  <meta property="og:description" content="An 8-week, 10-lecture BSc AI course at the University of Groningen covering the NLP stack from statistical language models to Transformers, fine-tuning and RAG.">
+  <meta property="og:url" content="https://tsegaye-misikir.github.io/NLP.html">
+  <meta property="og:site_name" content="Tsegaye M. Tashu">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.png" type="image/png" sizes="180x180">
+  <link rel="apple-touch-icon" href="favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=Sora:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,12 +29,12 @@
       --bg4:       #0a1119;
       --line:      rgba(255,255,255,0.07);
       --text:      #e8e2d6;
-      --muted:     #7a8699;
+      --muted:     #8a96a9;
       --gold:      #d4a853;
       --gold-dim:  rgba(212,168,83,0.13);
       --teal:      #4ba89a;
       --teal-dim:  rgba(75,168,154,0.11);
-      --red:       #c0614a;
+      --red:       #d9785f;
       --red-dim:   rgba(192,97,74,0.12);
       --serif:     'DM Serif Display', Georgia, serif;
       --sans:      'Sora', sans-serif;
@@ -50,6 +62,7 @@
       content: '';
       position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: 0.35;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
     }
 
     /* ── NAV ── */
@@ -78,7 +91,8 @@
 
     /* ── LAYOUT ── */
     .section { padding: 6rem clamp(1.5rem, 8vw, 6rem); }
-    .section:nth-child(even) { background: var(--bg2); }
+    /* sections now live inside <main>, where the hero is child 1, so odd = the old even */
+    main > .section:nth-child(odd) { background: var(--bg2); }
     .container { max-width: 1100px; }
 
     .section-label {
@@ -132,7 +146,7 @@
       border: 1px solid rgba(75,168,154,0.25); padding: 0.35rem 0.85rem;
       margin-bottom: 1.5rem; background: var(--teal-dim);
     }
-    .hero-badge::before { content: '●'; font-size: 0.5rem; animation: blink 2s infinite; }
+    .hero-badge::before { content: '●'; font-size: 0.5rem; animation: blink 2s 3; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
     h1.hero-title {
@@ -187,7 +201,8 @@
     .hero-stat-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem; }
 
     /* ── PREREQUISITES ── */
-    .prereqs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .prereqs-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 4rem; align-items: start; }
+    .prereqs-grid > * { min-width: 0; }
     .prereqs-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.5rem; }
 
     .skill-bars { display: flex; flex-direction: column; gap: 1.1rem; }
@@ -197,7 +212,7 @@
     .skill-bar-level { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
     .skill-bar-track { height: 4px; background: var(--line); position: relative; overflow: hidden; }
     .skill-bar-fill {
-      position: absolute; top: 0; left: 0; height: 100%;
+      position: absolute; top: 0; left: 0; height: 100%; width: 100%;
       background: linear-gradient(90deg, var(--gold), var(--teal));
       transform: scaleX(0); transform-origin: left;
       transition: transform 1s var(--ease);
@@ -206,6 +221,7 @@
 
     /* radar canvas wrapper */
     .radar-wrap { position: relative; max-width: 380px; margin: 0 auto; }
+    #radarChart { display: block; max-width: 100%; height: auto; }
 
     /* ── OBJECTIVES ── */
     .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
@@ -243,6 +259,7 @@
       display: grid; grid-template-columns: 3rem 1fr auto;
       align-items: center; padding: 1.1rem 1.5rem; gap: 1.25rem;
     }
+    .week-btn-inner > span, .week-title { display: block; }
     .week-num {
       font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
       color: var(--gold); text-transform: uppercase;
@@ -263,7 +280,7 @@
       border-top: 0px solid var(--line);
     }
     .week-body.open {
-      max-height: 600px; opacity: 1;
+      max-height: none; opacity: 1;
       border-top: 1px solid var(--line);
     }
 
@@ -271,6 +288,7 @@
       display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; 
     }
     .week-col {
+      min-width: 0;
       padding: 1.5rem 1.75rem;
       border-right: 1px solid var(--line);
     }
@@ -381,7 +399,7 @@
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
     }
     .footer-copy { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; }
-    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; }
     .footer-links a { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); text-decoration: none; }
     .footer-links a:hover { color: var(--gold); }
 
@@ -392,9 +410,21 @@
     }
     .reveal.visible { opacity: 1; transform: none; }
 
+    /* ── ACCESSIBILITY ── */
+    .skip-link { position: absolute; left: -9999px; top: 0; }
+    .skip-link:focus {
+      left: 1rem; top: 1rem; z-index: 1001;
+      background: var(--gold); color: var(--bg); padding: .5rem 1rem;
+      font-family: var(--mono); font-size: .8rem; text-decoration: none;
+    }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+    /* ── MOBILE NAV TOGGLE ── */
+    .nav-toggle { display: none; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .hero-inner, .prereqs-grid, .ethics-layout { grid-template-columns: 1fr; }
+      .hero-inner, .prereqs-grid, .ethics-layout { grid-template-columns: minmax(0,1fr); }
       .objectives-grid { grid-template-columns: 1fr 1fr; }
       .apps-grid { grid-template-columns: 1fr 1fr; }
       .assessment-grid { grid-template-columns: 1fr; }
@@ -402,26 +432,51 @@
       .week-col { border-right: none; border-bottom: 1px solid var(--line); }
       .week-col:last-child { border-bottom: none; }
       .nav-links { display: none; }
+      .nav-toggle {
+        display: inline-flex; align-items: center; justify-content: center;
+        min-width: 44px; min-height: 44px; font-size: 1.4rem; line-height: 1;
+        background: none; border: 1px solid var(--line); color: var(--text); cursor: pointer;
+      }
+      nav.open .nav-links {
+        display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0;
+        background: rgba(13,21,32,0.97); padding: 1rem clamp(1.5rem,5vw,4rem) 1.5rem;
+        gap: 1rem; border-bottom: 1px solid var(--line);
+      }
     }
     @media (max-width: 580px) {
       .objectives-grid, .apps-grid { grid-template-columns: 1fr; }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .fade-in, .reveal { opacity: 1 !important; transform: none !important; }
+    }
   </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <!-- ── NAV ── -->
 <nav>
   <a href="index.html" class="nav-logo">T.M.<span>Tashu</span></a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#about">About</a></li>
     <li><a href="index.html#research">Research</a></li>
-    <li><a href="NLP.html" class="active">NLP Course</a></li>
+    <li><a href="NLP.html" class="active" aria-current="page">NLP Course</a></li>
     <li><a href="llm.html">LLM Course</a></li>
+    <li><a href="LTP.html">LT Practical</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
+  <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button>
 </nav>
+
+<main id="main">
 
 <!-- ── HERO ── -->
 <section id="hero">
@@ -430,7 +485,7 @@
   <div class="hero-glow2"></div>
   <div class="hero-inner">
     <div>
-      <div class="hero-badge">Natural language Processing · BSc AI</div>
+      <div class="hero-badge">Natural Language Processing · BSc AI</div>
       <h1 class="hero-title">Natural<br>Language<br><em>Processing</em></h1>
       <p class="hero-subtitle">An Interactive Course Guide</p>
       <p class="hero-desc">
@@ -443,6 +498,7 @@
         <span class="tag tag-gold">8 Weeks · 10 Lectures</span>
         <span class="tag tag-teal">Python · PyTorch · HuggingFace</span>
         <span class="tag tag-muted">BSc AI · UGroningen</span>
+        <a class="tag tag-muted" href="https://ocasys.rug.nl/current/catalog/course/WBAI059-05" target="_blank" rel="noopener noreferrer" style="text-decoration:none;" title="Official course description in Ocasys, the University of Groningen course catalogue">WBAI059-05 · 5 ECTS · Ocasys ↗</a>
         <span class="tag tag-teal">Project-Based</span>
       </div>
       <div class="hero-actions">
@@ -545,7 +601,7 @@
       </div>
       <div>
         <div class="radar-wrap">
-          <canvas id="radarChart" width="380" height="380"></canvas>
+          <canvas id="radarChart" width="380" height="380" role="img" aria-label="Radar chart of skill levels on a 0 to 100 scale, recommended entry level versus expected exit level: Python 88 to 95, Linear Algebra 70 to 82, Statistics 65 to 80, ML Fundamentals 65 to 88, Deep Learning 42 to 80, Git and CLI 45 to 72.">Recommended entry level versus expected exit level (0 to 100): Python 88 to 95; Linear Algebra 70 to 82; Statistics 65 to 80; ML Fundamentals 65 to 88; Deep Learning 42 to 80; Git / CLI 45 to 72.</canvas>
         </div>
       </div>
     </div>
@@ -559,38 +615,38 @@
     <h2 class="section-title">Core Learning<br><em>Outcomes</em></h2>
     <div class="objectives-grid">
       <div class="obj-card">
-        <div class="obj-num">01</div>
-        <div class="obj-icon">✂️</div>
+        <div class="obj-num" aria-hidden="true">01</div>
+        <div class="obj-icon" aria-hidden="true">✂️</div>
         <div class="obj-title">Master Text Preprocessing</div>
         <div class="obj-desc">Gain proficiency in tokenization, stemming, lemmatization, and text normalisation techniques for robust NLP pipelines.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num">02</div>
-        <div class="obj-icon">📐</div>
+        <div class="obj-num" aria-hidden="true">02</div>
+        <div class="obj-icon" aria-hidden="true">📐</div>
         <div class="obj-title">Understand Language Models</div>
         <div class="obj-desc">Comprehend the principles behind n-gram models, neural language models, and the probability theory underpinning text generation.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num">03</div>
-        <div class="obj-icon">🏗️</div>
+        <div class="obj-num" aria-hidden="true">03</div>
+        <div class="obj-icon" aria-hidden="true">🏗️</div>
         <div class="obj-title">Implement Core NLP Tasks</div>
         <div class="obj-desc">Build systems for text classification, sentiment analysis, POS tagging, and Named Entity Recognition from scratch.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num">04</div>
-        <div class="obj-icon">🧠</div>
+        <div class="obj-num" aria-hidden="true">04</div>
+        <div class="obj-icon" aria-hidden="true">🧠</div>
         <div class="obj-title">Apply Deep Learning to NLP</div>
         <div class="obj-desc">Implement RNNs, LSTMs, and the Transformer self-attention mechanism for advanced sequence modelling problems.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num">05</div>
-        <div class="obj-icon">🚀</div>
+        <div class="obj-num" aria-hidden="true">05</div>
+        <div class="obj-icon" aria-hidden="true">🚀</div>
         <div class="obj-title">Develop Practical Applications</div>
         <div class="obj-desc">Gain hands-on experience building machine translation, information extraction, and RAG-based question answering systems.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num">06</div>
-        <div class="obj-icon">⚖️</div>
+        <div class="obj-num" aria-hidden="true">06</div>
+        <div class="obj-icon" aria-hidden="true">⚖️</div>
         <div class="obj-title">Analyse Ethical Implications</div>
         <div class="obj-desc">Critically assess and address bias, fairness, privacy, and responsible deployment in NLP systems and their societal impact.</div>
       </div>
@@ -611,20 +667,20 @@
 
     <!-- Week 1 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W01</div>
-          <div>
-            <div class="week-title">Introduction to NLP <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 1</span></div>
-            <div class="week-tags-inline">
+      <button class="week-btn" type="button" id="w1-btn" aria-expanded="false" aria-controls="w1-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W01</span>
+          <span>
+            <span class="week-title">Introduction to NLP <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 1</span></span>
+            <span class="week-tags-inline">
               <span class="tag tag-teal">Foundations</span>
               <span class="tag tag-muted">Experiment Design</span>
-            </div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+            </span>
+          </span>
+          <span class="week-chevron">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w1-body" role="region" aria-labelledby="w1-btn" aria-hidden="true" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -657,20 +713,20 @@
 
     <!-- Week 2 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W02</div>
-          <div>
-            <div class="week-title">N-gram Language Models + Classical Text Classification <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 2</span></div>
-            <div class="week-tags-inline">
+      <button class="week-btn" type="button" id="w2-btn" aria-expanded="false" aria-controls="w2-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W02</span>
+          <span>
+            <span class="week-title">N-gram Language Models + Classical Text Classification <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 2</span></span>
+            <span class="week-tags-inline">
               <span class="tag tag-gold">Statistical LM</span>
               <span class="tag tag-teal">TF-IDF · Logistic Regression</span>
-            </div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+            </span>
+          </span>
+          <span class="week-chevron">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w2-body" role="region" aria-labelledby="w2-btn" aria-hidden="true" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -704,20 +760,20 @@
 
     <!-- Week 3 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W03</div>
-          <div>
-            <div class="week-title">Vector Semantics: TF-IDF → Word Embeddings <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 3</span></div>
-            <div class="week-tags-inline">
+      <button class="week-btn" type="button" id="w3-btn" aria-expanded="false" aria-controls="w3-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W03</span>
+          <span>
+            <span class="week-title">Vector Semantics: TF-IDF → Word Embeddings <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 3</span></span>
+            <span class="week-tags-inline">
               <span class="tag tag-teal">Word2Vec · Dense Embeddings</span>
               <span class="tag tag-muted">Distributional Semantics</span>
-            </div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+            </span>
+          </span>
+          <span class="week-chevron">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w3-body" role="region" aria-labelledby="w3-btn" aria-hidden="true" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -751,20 +807,20 @@
 
     <!-- Week 4 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W04</div>
-          <div>
-            <div class="week-title">Neural NLP I: Feed-Forward Networks &amp; CNNs for Text <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 4</span></div>
-            <div class="week-tags-inline">
+      <button class="week-btn" type="button" id="w4-btn" aria-expanded="false" aria-controls="w4-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W04</span>
+          <span>
+            <span class="week-title">Neural NLP I: Feed-Forward Networks &amp; CNNs for Text <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 4</span></span>
+            <span class="week-tags-inline">
               <span class="tag tag-gold">FFNN · CNN</span>
               <span class="tag tag-teal">Neural Text Classification</span>
-            </div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+            </span>
+          </span>
+          <span class="week-chevron">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w4-body" role="region" aria-labelledby="w4-btn" aria-hidden="true" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -797,20 +853,20 @@
 
     <!-- Week 5 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W05</div>
-          <div>
-            <div class="week-title">Neural NLP II: RNNs, LSTMs &amp; Sequence Encoding <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 5</span></div>
-            <div class="week-tags-inline">
+      <button class="week-btn" type="button" id="w5-btn" aria-expanded="false" aria-controls="w5-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W05</span>
+          <span>
+            <span class="week-title">Neural NLP II: RNNs, LSTMs &amp; Sequence Encoding <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 5</span></span>
+            <span class="week-tags-inline">
               <span class="tag tag-gold">RNN · LSTM · GRU</span>
               <span class="tag tag-teal">Sequential Modelling · PyTorch</span>
-            </div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+            </span>
+          </span>
+          <span class="week-chevron">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w5-body" role="region" aria-labelledby="w5-btn" aria-hidden="true" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -845,20 +901,20 @@
 
     <!-- Week 6 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W06</div>
-          <div>
-            <div class="week-title">Seq2Seq MT + Attention + Decoding Strategies <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lectures 6–7</span></div>
-            <div class="week-tags-inline">
+      <button class="week-btn" type="button" id="w6-btn" aria-expanded="false" aria-controls="w6-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W06</span>
+          <span>
+            <span class="week-title">Seq2Seq MT + Attention + Decoding Strategies <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lectures 6–7</span></span>
+            <span class="week-tags-inline">
               <span class="tag tag-gold">Machine Translation</span>
               <span class="tag tag-teal">Attention · BLEU · Beam Search</span>
-            </div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+            </span>
+          </span>
+          <span class="week-chevron">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w6-body" role="region" aria-labelledby="w6-btn" aria-hidden="true" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -893,20 +949,20 @@
 
     <!-- Week 7 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W07</div>
-          <div>
-            <div class="week-title">Transformers + Pretraining &amp; Fine-tuning <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lectures 8–9</span></div>
-            <div class="week-tags-inline">
+      <button class="week-btn" type="button" id="w7-btn" aria-expanded="false" aria-controls="w7-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W07</span>
+          <span>
+            <span class="week-title">Transformers + Pretraining &amp; Fine-tuning <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lectures 8–9</span></span>
+            <span class="week-tags-inline">
               <span class="tag tag-gold">Self-Attention · BERT · GPT</span>
               <span class="tag tag-teal">Fine-tuning · HuggingFace</span>
-            </div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+            </span>
+          </span>
+          <span class="week-chevron">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w7-body" role="region" aria-labelledby="w7-btn" aria-hidden="true" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -940,20 +996,20 @@
 
     <!-- Week 8 -->
     <div class="week-group">
-      <button class="week-btn" onclick="toggleWeek(this)">
-        <div class="week-btn-inner">
-          <div class="week-num">W08</div>
-          <div>
-            <div class="week-title">Structured Prediction + QA / RAG + Wrap-up <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 10</span></div>
-            <div class="week-tags-inline">
+      <button class="week-btn" type="button" id="w8-btn" aria-expanded="false" aria-controls="w8-body" onclick="toggleWeek(this)">
+        <span class="week-btn-inner">
+          <span class="week-num">W08</span>
+          <span>
+            <span class="week-title">Structured Prediction + QA / RAG + Wrap-up <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 10</span></span>
+            <span class="week-tags-inline">
               <span class="tag tag-teal">NER · CRF</span>
               <span class="tag tag-gold">QA · RAG · Retrieval</span>
-            </div>
-          </div>
-          <div class="week-chevron">▼</div>
-        </div>
+            </span>
+          </span>
+          <span class="week-chevron">▼</span>
+        </span>
       </button>
-      <div class="week-body">
+      <div class="week-body" id="w8-body" role="region" aria-labelledby="w8-btn" aria-hidden="true" inert>
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -994,32 +1050,32 @@
     <h2 class="section-title">Real-World<br><em>NLP Applications</em></h2>
     <div class="apps-grid">
       <div class="app-card">
-        <div class="app-icon">🌐</div>
+        <div class="app-icon" aria-hidden="true">🌐</div>
         <div class="app-title">Machine Translation</div>
         <div class="app-desc">Automatically translating text or speech across languages, breaking down communication barriers. Powered by neural sequence-to-sequence models and multilingual transformers.</div>
       </div>
       <div class="app-card">
-        <div class="app-icon">💬</div>
+        <div class="app-icon" aria-hidden="true">💬</div>
         <div class="app-title">Sentiment Analysis</div>
         <div class="app-desc">Determining the emotional tone of text at scale — used for customer feedback analysis, brand monitoring, and social media intelligence across languages and domains.</div>
       </div>
       <div class="app-card">
-        <div class="app-icon">🤖</div>
+        <div class="app-icon" aria-hidden="true">🤖</div>
         <div class="app-title">Chatbots &amp; Assistants</div>
         <div class="app-desc">Conversational AI systems that understand and respond to natural language queries — from customer service automation to AI tutoring agents and RAG-powered knowledge systems.</div>
       </div>
       <div class="app-card">
-        <div class="app-icon">📋</div>
+        <div class="app-icon" aria-hidden="true">📋</div>
         <div class="app-title">Information Extraction</div>
         <div class="app-desc">Automatically identifying structured information — entities, relations, events — from unstructured text. Core to search engines, biomedical NLP, and financial intelligence.</div>
       </div>
       <div class="app-card">
-        <div class="app-icon">🚫</div>
+        <div class="app-icon" aria-hidden="true">🚫</div>
         <div class="app-title">Spam &amp; Content Filtering</div>
         <div class="app-desc">Identifying and filtering malicious or harmful text content at scale — from email spam detection to hate speech moderation and content safety classification.</div>
       </div>
       <div class="app-card">
-        <div class="app-icon">✏️</div>
+        <div class="app-icon" aria-hidden="true">✏️</div>
         <div class="app-title">Writing Assistance</div>
         <div class="app-desc">Grammar and style checking, text completion, essay evaluation — NLP tools that augment human writing. Includes automated assessment systems for educational settings.</div>
       </div>
@@ -1038,12 +1094,12 @@
           As NLP technologies become more powerful and widely deployed, it is essential to
           engage critically with their societal effects. This course treats ethics not as a
           peripheral concern but as a core technical and intellectual discipline — woven
-          throughout all twelve weeks.
+          throughout all eight weeks.
         </p>
         <div class="ethics-items">
           <div class="ethics-item reveal">
             <div class="ethics-item-header">
-              <div class="ethics-icon">⚠️</div>
+              <div class="ethics-icon" aria-hidden="true">⚠️</div>
               <div class="ethics-title">Algorithmic Bias in Text Data</div>
             </div>
             <div class="ethics-desc">
@@ -1054,7 +1110,7 @@
           </div>
           <div class="ethics-item reveal">
             <div class="ethics-item-header">
-              <div class="ethics-icon">🔒</div>
+              <div class="ethics-icon" aria-hidden="true">🔒</div>
               <div class="ethics-title">Privacy &amp; Data Security</div>
             </div>
             <div class="ethics-desc">
@@ -1065,7 +1121,7 @@
           </div>
           <div class="ethics-item reveal">
             <div class="ethics-item-header">
-              <div class="ethics-icon">🎭</div>
+              <div class="ethics-icon" aria-hidden="true">🎭</div>
               <div class="ethics-title">Misinformation &amp; Synthetic Text</div>
             </div>
             <div class="ethics-desc">
@@ -1076,7 +1132,7 @@
           </div>
           <div class="ethics-item reveal">
             <div class="ethics-item-header">
-              <div class="ethics-icon">🌱</div>
+              <div class="ethics-icon" aria-hidden="true">🌱</div>
               <div class="ethics-title">Environmental Sustainability</div>
             </div>
             <div class="ethics-desc">
@@ -1092,35 +1148,35 @@
           <div class="ev-title">Responsible AI Framework</div>
           <div class="ev-ring-wrap">
             <div class="ev-principle">
-              <div class="ev-principle-icon">⚖️</div>
+              <div class="ev-principle-icon" aria-hidden="true">⚖️</div>
               <div class="ev-principle-text">
                 <div class="ev-principle-title">Fairness</div>
                 <div class="ev-principle-desc">Equitable performance across demographic groups and languages</div>
               </div>
             </div>
             <div class="ev-principle" style="border-left-color:var(--teal);">
-              <div class="ev-principle-icon">🔍</div>
+              <div class="ev-principle-icon" aria-hidden="true">🔍</div>
               <div class="ev-principle-text">
                 <div class="ev-principle-title" style="color:var(--teal);">Transparency</div>
                 <div class="ev-principle-desc">Interpretable decisions, model cards, and datasheets</div>
               </div>
             </div>
-            <div class="ev-principle" style="border-left-color:#7a8699;">
-              <div class="ev-principle-icon">🛡️</div>
+            <div class="ev-principle" style="border-left-color:var(--muted);">
+              <div class="ev-principle-icon" aria-hidden="true">🛡️</div>
               <div class="ev-principle-text">
                 <div class="ev-principle-title" style="color:#aab;">Privacy</div>
                 <div class="ev-principle-desc">Data minimisation, anonymisation, and GDPR compliance</div>
               </div>
             </div>
             <div class="ev-principle" style="border-left-color:var(--red);">
-              <div class="ev-principle-icon">🎯</div>
+              <div class="ev-principle-icon" aria-hidden="true">🎯</div>
               <div class="ev-principle-text">
                 <div class="ev-principle-title" style="color:var(--red);">Accountability</div>
                 <div class="ev-principle-desc">Clear responsibility chains for AI system outcomes</div>
               </div>
             </div>
             <div class="ev-principle" style="border-left-color:var(--gold);">
-              <div class="ev-principle-icon">🌍</div>
+              <div class="ev-principle-icon" aria-hidden="true">🌍</div>
               <div class="ev-principle-text">
                 <div class="ev-principle-title">Societal Benefit</div>
                 <div class="ev-principle-desc">Designing NLP systems that advance human welfare equitably</div>
@@ -1140,88 +1196,150 @@
   </div>
 </section>
 
+</main>
+
 <!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-copy">© 2025 Tsegaye M. Tashu · University of Groningen</div>
+  <div class="footer-copy">© 2026 Tsegaye M. Tashu · University of Groningen</div>
   <div class="footer-links">
     <a href="index.html">Portfolio</a>
     <a href="llm.html">LLM Course</a>
+    <a href="LTP.html">LT Practical</a>
     <a href="index.html#research">Research</a>
-    <a href="/cdn-cgi/l/email-protection#21550f4c0f5540524954615354460f4f4d">Email</a>
+    <a href="mailto:t.m.tashu@rug.nl">Email</a>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+<script>
+  // ── MOBILE NAV ──
+  (function () {
+    const nav = document.querySelector('nav');
+    const toggle = nav.querySelector('.nav-toggle');
+    const links = document.getElementById('navLinks');
+    function setOpen(open) {
+      nav.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+    toggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  })();
+
   // ── ACCORDION ──
+  function closeWeekBody(body) {
+    if (body.style.maxHeight === 'none' || body.style.maxHeight === '') {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      void body.offsetHeight; // force reflow so the collapse animates from the real height
+    }
+    body.classList.remove('open');
+    body.style.maxHeight = '0px';
+    body.setAttribute('aria-hidden', 'true');
+    body.inert = true;
+  }
+  function openWeekBody(body) {
+    body.inert = false;
+    body.removeAttribute('aria-hidden');
+    body.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    // once expanded, drop the cap so content can reflow (e.g. on resize) without clipping
+    const release = () => { if (body.classList.contains('open')) body.style.maxHeight = 'none'; };
+    body.addEventListener('transitionend', function onEnd(e) {
+      if (e.propertyName !== 'max-height') return;
+      body.removeEventListener('transitionend', onEnd);
+      release();
+    });
+    setTimeout(release, 600);
+  }
   function toggleWeek(btn) {
-    const body = btn.nextElementSibling;
+    const body = document.getElementById(btn.getAttribute('aria-controls')) || btn.nextElementSibling;
     const isOpen = btn.classList.contains('open');
     // close all
-    document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('open'));
-    document.querySelectorAll('.week-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.week-btn').forEach(b => {
+      if (b.classList.contains('open')) {
+        b.classList.remove('open');
+        b.setAttribute('aria-expanded', 'false');
+        const other = document.getElementById(b.getAttribute('aria-controls'));
+        if (other) closeWeekBody(other);
+      }
+    });
     if (!isOpen) {
       btn.classList.add('open');
-      body.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      openWeekBody(body);
     }
   }
 
   // ── RADAR CHART ──
-  const ctx = document.getElementById('radarChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'radar',
-    data: {
-      labels: ['Python', 'Linear Algebra', 'Statistics', 'ML Fundamentals', 'Deep Learning', 'Git / CLI'],
-      datasets: [
-        {
-          label: 'Recommended Entry Level',
-          data: [88, 70, 65, 65, 42, 45],
-          backgroundColor: 'rgba(212,168,83,0.1)',
-          borderColor: 'rgba(212,168,83,0.7)',
-          pointBackgroundColor: '#d4a853',
-          pointBorderColor: 'transparent',
-          pointRadius: 4,
-          borderWidth: 1.5,
-        },
-        {
-          label: 'Expected Exit Level',
-          data: [95, 82, 80, 88, 80, 72],
-          backgroundColor: 'rgba(75,168,154,0.08)',
-          borderColor: 'rgba(75,168,154,0.6)',
-          pointBackgroundColor: '#4ba89a',
-          pointBorderColor: 'transparent',
-          pointRadius: 4,
-          borderWidth: 1.5,
-          borderDash: [4, 3],
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          labels: {
-            color: '#7a8699',
-            font: { family: "'JetBrains Mono', monospace", size: 10 },
-            boxWidth: 12,
-          }
-        }
-      },
-      scales: {
-        r: {
-          min: 0, max: 100,
-          ticks: {
-            stepSize: 25,
-            display: false,
+  // Chart.js is loaded with defer, so it is only guaranteed to exist once the DOM is parsed.
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('radarChart');
+    if (!canvas || typeof Chart === 'undefined') return;
+    new Chart(canvas.getContext('2d'), {
+      type: 'radar',
+      data: {
+        labels: ['Python', 'Linear Algebra', 'Statistics', 'ML Fundamentals', 'Deep Learning', 'Git / CLI'],
+        datasets: [
+          {
+            label: 'Recommended Entry Level',
+            data: [88, 70, 65, 65, 42, 45],
+            backgroundColor: 'rgba(212,168,83,0.1)',
+            borderColor: 'rgba(212,168,83,0.7)',
+            pointBackgroundColor: '#d4a853',
+            pointBorderColor: 'transparent',
+            pointRadius: 4,
+            borderWidth: 1.5,
           },
-          grid: { color: 'rgba(255,255,255,0.07)' },
-          angleLines: { color: 'rgba(255,255,255,0.07)' },
-          pointLabels: {
-            color: '#7a8699',
-            font: { family: "'JetBrains Mono', monospace", size: 10 }
+          {
+            label: 'Expected Exit Level',
+            data: [95, 82, 80, 88, 80, 72],
+            backgroundColor: 'rgba(75,168,154,0.08)',
+            borderColor: 'rgba(75,168,154,0.6)',
+            pointBackgroundColor: '#4ba89a',
+            pointBorderColor: 'transparent',
+            pointRadius: 4,
+            borderWidth: 1.5,
+            borderDash: [4, 3],
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 1,
+        animation: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? false : undefined,
+        plugins: {
+          legend: {
+            labels: {
+              color: '#8a96a9',
+              font: { family: "'JetBrains Mono', monospace", size: 10 },
+              boxWidth: 12,
+            }
+          }
+        },
+        scales: {
+          r: {
+            min: 0, max: 100,
+            ticks: {
+              stepSize: 25,
+              display: false,
+            },
+            grid: { color: 'rgba(255,255,255,0.07)' },
+            angleLines: { color: 'rgba(255,255,255,0.07)' },
+            pointLabels: {
+              color: '#8a96a9',
+              font: { family: "'JetBrains Mono', monospace", size: 10 }
+            }
           }
         }
       }
-    }
+    });
   });
 
   // ── SCROLL REVEAL ──
@@ -1229,6 +1347,7 @@
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
         setTimeout(() => e.target.classList.add('visible'), i * 80);
+        revealObserver.unobserve(e.target);
       }
     });
   }, { threshold: 0.1 });
@@ -1245,9 +1364,6 @@
     }
   }, { threshold: 0.3 });
   barObserver.observe(document.getElementById('skillBars'));
-
-  // ── ASSESS BARS ──
-  const assessObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.querySelectorAll('.assess-bar-fill').forEach(b => b.classList.add('animate'));
+</script>
+</body>
+</html>
