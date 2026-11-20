@@ -1,0 +1,57 @@
+{%- comment -%}
+  One publication row. Usage: {% include pub-row.html pub=p n=forloop.index %}
+  Params: pub (entry of _data/publications.yml), n (optional number),
+  heading (optional heading tag, default h3).
+{%- endcomment -%}
+{%- assign pub = include.pub -%}
+{%- assign _h = include.heading | default: "h3" -%}
+{%- assign _first = pub.links | first -%}
+{%- capture _ext %} target="_blank" rel="noopener noreferrer"{% endcapture -%}
+{%- case pub.type -%}
+  {%- when "journal" -%}{%- assign _type = "Journal" -%}
+  {%- when "conference" -%}{%- assign _type = "Conference" -%}
+  {%- when "workshop" -%}{%- assign _type = "Workshop" -%}
+  {%- when "preprint" -%}{%- assign _type = "Preprint" -%}
+  {%- when "thesis" -%}{%- assign _type = "Thesis" -%}
+  {%- else -%}{%- assign _type = pub.type | capitalize -%}
+{%- endcase -%}
+<article class="pub-row{% if include.n %} pub-row--numbered{% endif %}" data-year="{{ pub.year }}" data-type="{{ pub.type }}" id="pub-{{ pub.id }}">
+  {%- if include.n %}
+  <div class="pub-row-num" aria-hidden="true">{{ include.n }}</div>
+  {%- endif %}
+  <div class="pub-row-body">
+    <{{ _h }} class="pub-row-title">
+      {%- if _first and _first.url -%}<a href="{{ _first.url }}"{{ _ext }}>{{ pub.title | xml_escape }}</a>{%- else -%}{{ pub.title | xml_escape }}{%- endif -%}
+    </{{ _h }}>
+    <p class="pub-row-authors">
+      {%- for a in pub.authors -%}
+        {%- if forloop.last and forloop.length > 1 %} &amp; {% elsif forloop.index > 1 %}, {% endif -%}
+        {%- if a == "Tashu, T. M." -%}<strong class="me">{{ a | xml_escape }}</strong>{%- else -%}{{ a | xml_escape }}{%- endif -%}
+      {%- endfor -%}
+    </p>
+    <p class="pub-row-venue">{{ pub.venue | xml_escape }}</p>
+    <div class="pub-row-meta">
+      <span class="pub-type pub-type--{{ pub.type }}">{{ _type }}</span>
+      {%- for t in pub.tags %}
+      <span class="tag tag-{{ t.color | default: 'muted' }}">{{ t.label | xml_escape }}</span>
+      {%- endfor %}
+      {%- if pub.citations and pub.citations > 0 %}
+      <span class="pub-cites">cited by {{ pub.citations }}</span>
+      {%- endif %}
+    </div>
+    {%- if pub.bibtex %}
+    <details class="bib">
+      <summary>BibTeX</summary>
+      <pre tabindex="0"><code>{{ pub.bibtex | strip | xml_escape }}</code></pre>
+      <button class="copy-bib" type="button">{% include icon.html name="copy" size="14" %}<span>Copy</span></button>
+    </details>
+    {%- endif %}
+  </div>
+  {%- if pub.links and pub.links.size > 0 %}
+  <div class="pub-row-links">
+    {%- for l in pub.links %}
+    <a class="pub-row-link" href="{{ l.url }}"{{ _ext }}>{{ l.label | xml_escape }}<span aria-hidden="true"> ↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+</article>

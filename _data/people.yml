@@ -1,0 +1,125 @@
+# People — every mentee in site-v1 (index.html #mentees), same order. Groups: PhD → MSc → BSc.
+# role + years reproduce the site-v1 role line ("PhD · 2025–2029"); role + institution reproduce "MSc · University of Groningen".
+# publication: id of a related entry in publications.yml (derived from matching titles/authors).
+groups:
+  - name: "PhD candidates"
+    label: "PhD · University of Groningen"
+    institution: "University of Groningen"
+    people:
+      - name: "Putu Kussa Laksana Utama"
+        role: "PhD"
+        years: "2025–2029"
+        thesis: "Multilingual human emotion recognition"
+        tags: ["Emotion Recognition", "Multilingual NLP"]
+        initials: "PK"
+        avatar: gold
+        publication: utama2026balinese
+  - name: "MSc thesis students"
+    label: "M.Sc. · University of Groningen"
+    institution: "University of Groningen"
+    people:
+      - name: "Aylar Ziad Alizadeh"
+        role: "MSc"
+        thesis: "Don't Focus on your Weakness, Use your Strengths: A Multi-Agent Approach in Multi-Hop QA for LLMs"
+        tags: ["Multi-Agent LLMs", "Question Answering"]
+        initials: "AZ"
+        avatar: teal
+      - name: "Thijs Lukkien"
+        role: "MSc"
+        thesis: "The effect of four-bit quantization on multi-agent LLM coding performance"
+        tags: ["Quantization", "Multi-Agent LLMs"]
+        initials: "TL"
+        avatar: gold
+      - name: "Iris Kamsteeg"
+        role: "MSc"
+        thesis: "Uncertainty Quantification for Transformer Models in Entity Resolution for Law Enforcement"
+        tags: ["Uncertainty", "Entity Matching"]
+        initials: "IK"
+        avatar: teal
+        publication: kamsteeg2025calibration
+      - name: "Daniel Skala"
+        role: "MSc"
+        thesis: "Question Anonymization in Slido: Striving for Non-Attributability in Audience Interactions"
+        tags: ["Anonymization", "NLP · Slido"]
+        initials: "DS"
+        avatar: gold
+      - name: "Alina Dima"
+        role: "MSc"
+        thesis: "Next-Word Prediction in the Hrusso Aka Language"
+        tags: ["Low-Resource NLP", "Language Modelling"]
+        initials: "AD"
+        avatar: teal
+        link: "https://fse.studenttheses.ub.rug.nl/34443"
+      - name: "Ruhi Mahadeshwar"
+        role: "MSc"
+        thesis: "Reconstructing non-fluent aphasic speech using large language models"
+        tags: ["Speech · LLMs", "Clinical NLP"]
+        initials: "RM"
+        avatar: gold
+  - name: "BSc thesis students"
+    label: "B.Sc. · University of Groningen"
+    institution: "University of Groningen"
+    people:
+      - name: "Ivan Hegeman"
+        role: "BSc"
+        thesis: "Exploring Combinations of Self-Supervised Speech Embeddings and Classifiers for Aphasia Subtype Classification"
+        tags: ["Speech · Aphasia"]
+        initials: "IH"
+        avatar: dim
+      - name: "Aleksandar Angelov"
+        role: "BSc"
+        thesis: "Difficulty Estimation in Natural Language Tasks with Action Scores"
+        tags: ["Trustworthy NLP"]
+        initials: "AA"
+        avatar: dim
+        publication: angelov2025difficulty
+      - name: "Victorita Nicoleta Simion"
+        role: "BSc"
+        thesis: "Multimodal Sentiment Analysis in Conversational Speech"
+        tags: ["Multimodal · Sentiment"]
+        initials: "VS"
+        avatar: dim
+      - name: "Matei Visan"
+        role: "BSc"
+        thesis: "Utilizing ASR for the Detection of Speech Errors to Classify Aphasia Types"
+        tags: ["ASR · Aphasia"]
+        initials: "MV"
+        avatar: dim
+      - name: "Andreas Chitos"
+        role: "BSc"
+        thesis: "Modeling Aphasia Type in Greek Speaking Patients Utilizing Deep Neural Networks"
+        tags: ["Clinical NLP · Greek"]
+        initials: "AC"
+        avatar: dim
+      - name: "Eduard Kontos"
+        role: "BSc"
+        thesis: "Mapping Transformer Leveraged Embeddings for Cross-Lingual Document Representation"
+        tags: ["Cross-lingual · Embeddings"]
+        initials: "EK"
+        avatar: dim
+        publication: tashu2024mapping
+      - name: "Ekin Fergan"
+        role: "BSc"
+        thesis: "Course Review Sentiment Analysis: A Comparative Study of ML and Deep Learning Models"
+        tags: ["Sentiment Analysis"]
+        initials: "EF"
+        avatar: dim
+        publication: fergan2023sentiment
+      - name: "Henrich Balaj"
+        role: "BSc"
+        thesis: "Detecting Signs of Depression from Social Media Text"
+        tags: ["Mental Health NLP"]
+        initials: "HB"
+        avatar: dim
+      - name: "Mikko Brandon"
+        role: "BSc"
+        thesis: "Making Emotion Classification of Social Media Text by Neural Networks Explainable"
+        tags: ["Emotion AI · XAI"]
+        initials: "MB"
+        avatar: dim
+      - name: "Zeyneb Metin"
+        role: "BSc"
+        thesis: "A Comparative Study on Transfer Learning for Educational Question Generation"
+        tags: ["Transfer Learning · Education"]
+        initials: "ZM"
+        avatar: dim

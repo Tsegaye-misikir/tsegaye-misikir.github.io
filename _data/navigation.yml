@@ -1,0 +1,15 @@
+# Main site navigation (header, mobile menu, footer).
+main:
+  - { label: "About",        url: "/#about" }
+  - { label: "News",         url: "/#news" }
+  - { label: "Research",     url: "/#research" }
+  - { label: "Publications", url: "/publications.html" }
+  - { label: "Teaching",     url: "/#teaching" }
+  - { label: "People",       url: "/#people" }
+  - { label: "Contact",      url: "/#contact" }
+
+# Course sub-navigation, shown on the course pages (nav_active: Teaching).
+courses:
+  - { label: "NLP",          url: "/NLP.html" }
+  - { label: "LLMs",         url: "/llm.html" }
+  - { label: "LT Practical", url: "/LTP.html" }

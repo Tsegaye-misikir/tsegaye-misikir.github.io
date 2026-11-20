@@ -1,9 +1,25 @@
 title: Tsegaye M. Tashu
 description: Assistant Professor in Natural Language Processing, University of Groningen
 url: "https://tsegaye-misikir.github.io"
+baseurl: ""
 github_username: Tsegaye-misikir
+timezone: Europe/Amsterdam
 
-# The site is hand-built HTML without front matter, so Jekyll copies the
-# pages verbatim. Jekyll stays enabled so _data/ files can be used later.
+# Pages are built from _layouts/default.html and the shared includes in
+# _includes/. Content (publications, news, people, courses, profile) lives in
+# _data/*.yml. Files without front matter are copied verbatim.
+plugins:
+  - jekyll-sitemap
+
 exclude:
   - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default

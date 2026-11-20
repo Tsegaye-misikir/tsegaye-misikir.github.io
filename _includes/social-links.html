@@ -1,0 +1,18 @@
+{%- comment -%}
+  Profile/contact links. Usage: {% include social-links.html size="lg" %}
+  size="lg": icon + visible label (hero, contact). size="sm" (default): icon only,
+  labelled with aria-label + title (footer, mobile menu).
+  Order: Email, profile.links (Scholar, ORCID, GitHub, LinkedIn, RUG), CV if set.
+{%- endcomment -%}
+{%- assign p = site.data.profile -%}
+{%- assign _size = include.size | default: "sm" -%}
+{%- capture _ext %} target="_blank" rel="noopener noreferrer"{% endcapture -%}
+<ul class="social-links social-links--{{ _size }}">
+  <li><a class="social-link" href="mailto:{{ p.email }}"{% if _size == "sm" %} aria-label="Email" title="Email: {{ p.email }}"{% endif %}>{% include icon.html name="email" size="18" %}{% if _size != "sm" %}<span>Email</span>{% endif %}</a></li>
+  {%- for l in p.links %}
+  <li><a class="social-link" href="{{ l.url }}"{{ _ext }}{% if _size == "sm" %} aria-label="{{ l.label }} (opens in a new tab)" title="{{ l.label }}"{% endif %}>{% include icon.html name=l.key size="18" %}{% if _size != "sm" %}<span>{{ l.label }}</span>{% endif %}</a></li>
+  {%- endfor %}
+  {%- if p.cv and p.cv != "" %}
+  <li><a class="social-link social-link--cv" href="{{ p.cv }}"{% if _size == "sm" %} aria-label="CV (PDF)" title="CV (PDF)"{% endif %}>{% include icon.html name="cv" size="18" %}{% if _size != "sm" %}<span>CV</span>{% endif %}</a></li>
+  {%- endif %}
+</ul>

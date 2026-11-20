@@ -1,0 +1,22 @@
+{%- assign is_course = false -%}
+{%- if page.course_subnav -%}{%- assign is_course = true -%}{%- endif -%}
+{%- for c in site.data.navigation.courses -%}
+  {%- if c.url == page.url -%}{%- assign is_course = true -%}{%- endif -%}
+{%- endfor -%}
+<!doctype html>
+<html lang="en"{% if is_course %} class="has-subnav"{% endif %}>
+{% include head.html %}
+<body{% if page.body_class %} class="{{ page.body_class }}"{% endif %}>
+  <a class="skip-link" href="#main">Skip to content</a>
+  {% include nav.html %}
+  <main id="main" tabindex="-1">
+{{ content }}
+  </main>
+  {% include footer.html %}
+  <div class="sr-only" aria-live="polite" data-live-region></div>
+  <script src="/assets/js/site.js" defer></script>
+  {%- for js in page.extra_js %}
+  <script src="{{ js }}" defer></script>
+  {%- endfor %}
+</body>
+</html>

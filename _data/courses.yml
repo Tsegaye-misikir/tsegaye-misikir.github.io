@@ -1,0 +1,66 @@
+# Courses — the three course cards in site-v1 (index.html #courses) plus Ocasys facts
+# (scratchpad/ocasys_facts.md, fetched 2026-11-20). Ordered by curriculum: NLP → LLMs → LT Practical.
+# summary is the site-v1 card text verbatim; facts are the card's short facts.
+# Entries with other: true are further courses taught (Ocasys staff page) that have no page or card text.
+- code: WBAI059-05
+  name: "Natural Language Processing"
+  short: "NLP"
+  page: "/NLP.html"
+  icon: "🧠"
+  level: "BSc AI"
+  ects: 5
+  period: "Semester 2a"
+  ocasys: "https://ocasys.rug.nl/current/catalog/course/WBAI059-05"
+  summary: "An 8-week, 10-lecture BSc course spanning the NLP stack: from n-gram language models and word embeddings through CNNs, LSTMs, transformers and fine-tuning to machine translation and RAG-based question answering. Built around a continuous project with baselines, ablations and evaluation at every stage, with custom slide decks and coding notebooks."
+  facts: ["8 weeks", "10 lectures", "Slides & Notebooks"]
+  note: ""
+
+- code: WBAI068-05
+  name: "Large Language Models"
+  short: "LLMs"
+  page: "/llm.html"
+  icon: "🤖"
+  level: "BSc AI"
+  ects: 5
+  period: "Semester 1a"
+  ocasys: "https://ocasys.rug.nl/current/catalog/course/WBAI068-05"
+  summary: "A 7-week Bachelor course that builds on the NLP course: transformer architectures and scaling, pretraining, instruction fine-tuning and RLHF, efficiency, prompting, retrieval-augmented generation, and agentic and multi-agent systems. Covers both the theoretical foundations of modern LLMs and their practical deployment in real-world NLP applications. Lecture materials available."
+  facts: ["7 weeks", "Slides & Notebooks"]
+  since: "2024–25"
+  prerequisites: ["Introduction to Machine Learning (WBAI056-05)", "Natural Language Processing (WBAI059-05)"]
+  note: ""
+
+- code: WBAI027-05
+  name: "Language Technology Practical"
+  short: "LT Practical"
+  page: "/LTP.html"
+  icon: "🔤"
+  level: "BSc AI"
+  ects: 5
+  period: "Semester 1b"
+  ocasys: "https://ocasys.rug.nl/current/catalog/course/WBAI027-05"
+  summary: "A 6-week hands-on practical on QA and conversational systems for BSc Artificial Intelligence students who have completed the NLP or LLM course: transformer-based question answering, retrieval-augmented generation, evaluation of QA and RAG systems, task-oriented dialogue, and multi-agent architectures. Built around a single, continuously developed project with benchmarked weekly deliverables."
+  facts: ["6 weeks", "Slides & Notebooks"]
+  prerequisites: ["Natural Language Processing (WBAI059-05) or Large Language Models (WBAI068-05)"]
+  note: "Not offered in 2026–27"
+
+- code: ""
+  name: "Machine Learning for Computational Cognitive Science"
+  page: ""
+  ocasys: ""
+  years: "2025–26"
+  other: true
+
+- code: ""
+  name: "Introduction to Machine Learning (for AI)"
+  page: ""
+  ocasys: ""
+  years: "2023–26"
+  other: true
+
+- code: ""
+  name: "Artificial Intelligence 1"
+  page: ""
+  ocasys: ""
+  years: "2023–24"
+  other: true

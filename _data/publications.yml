@@ -1,0 +1,963 @@
+# Publications — generated from site-v1 (index.html #research) by scratchpad/data-agent/build.py.
+# Newest year first; within a year the site-v1 order. Owner is always exactly "Tashu, T. M.".
+# type: journal | conference | workshop | preprint | thesis. tag color: teal | gold | muted.
+# citations: Google Scholar (fetched 2026-11-20), matched by title; omitted when no Scholar entry exists.
+# bibtex: Crossref/DataCite (doi.org content negotiation) or ACL Anthology .bib; bibtex_generated: true = hand-written from CEUR-WS metadata.
+
+- id: stereciu2026multimodal
+  title: "Multimodal Fusion for Uncertainty-Aware Emotion Recognition in Conversations"
+  authors: ["Stereciu, T.", "Gebeyehu, T. A.", "Tashu, T. M."]
+  year: 2026
+  venue: "BESC 2026 · Springer LNCS · pp. 38–56 · Bangkok, Thailand"
+  type: conference
+  tags:
+    - { label: "Emotion Recognition", color: teal }
+    - { label: "Multimodal", color: gold }
+    - { label: "Uncertainty", color: muted }
+  links:
+    - { label: "Springer", url: "https://doi.org/10.1007/978-981-92-6910-5_3" }
+  doi: "10.1007/978-981-92-6910-5_3"
+  citations: 0
+  selected: false
+  bibtex: |
+    @inbook{stereciu2026multimodal,
+      title = {Multimodal Fusion for Uncertainty-Aware Emotion Recognition in Conversations},
+      ISBN = {9789819269105},
+      ISSN = {1611-3349},
+      url = {http://dx.doi.org/10.1007/978-981-92-6910-5_3},
+      DOI = {10.1007/978-981-92-6910-5_3},
+      booktitle = {Behavioural and Social Computing},
+      publisher = {Springer Nature Singapore},
+      author = {Stereciu, Teodora and Gebeyehu, Tigist Ali and Tashu, Tsegaye Misikir},
+      year = {2026},
+      month = oct,
+      pages = {38--56}
+    }
+
+- id: nguyen2026multilingual
+  title: "Multilingual Behavioural Emotion Classification with Instruction-Tuned LLMs: Cross-Lingual Multi-label Evidence from XED"
+  authors: ["Nguyen, L. A.", "Muravjov, A.", "Alves, D.", "Gebeyehu, T. A.", "Tashu, T. M."]
+  year: 2026
+  venue: "BESC 2026 · Springer LNCS · pp. 488–507 · Bangkok, Thailand"
+  type: conference
+  tags:
+    - { label: "LLMs", color: gold }
+    - { label: "Emotion Recognition", color: teal }
+    - { label: "Multilingual NLP", color: muted }
+  links:
+    - { label: "Springer", url: "https://doi.org/10.1007/978-981-92-6910-5_28" }
+  doi: "10.1007/978-981-92-6910-5_28"
+  citations: 0
+  selected: false
+  bibtex: |
+    @inbook{nguyen2026multilingual,
+      title = {Multilingual Behavioural Emotion Classification with Instruction-Tuned LLMs: Cross-Lingual Multi-label Evidence from XED},
+      ISBN = {9789819269105},
+      ISSN = {1611-3349},
+      url = {http://dx.doi.org/10.1007/978-981-92-6910-5_28},
+      DOI = {10.1007/978-981-92-6910-5_28},
+      booktitle = {Behavioural and Social Computing},
+      publisher = {Springer Nature Singapore},
+      author = {Nguyen, Lam Anh and Muravjov, Arseni and Alves, Daniella and Gebeyehu, Tigist Ali and Tashu, Tsegaye Misikir},
+      year = {2026},
+      month = oct,
+      pages = {488--507}
+    }
+
+- id: bach2026conversational
+  title: "Conversational Emotion-Cause Pair Extraction: A Single-Step Architecture and the Role of Emotion-Label Supervision"
+  authors: ["Bach, L. R.", "Gebeyehu, T. A.", "Tashu, T. M."]
+  year: 2026
+  venue: "BESC 2026 · Springer LNCS · pp. 419–437 · Bangkok, Thailand"
+  type: conference
+  tags:
+    - { label: "Emotion Recognition", color: teal }
+    - { label: "Conversational AI", color: gold }
+    - { label: "Emotion-Cause Extraction", color: muted }
+  links:
+    - { label: "Springer", url: "https://doi.org/10.1007/978-981-92-6910-5_24" }
+  doi: "10.1007/978-981-92-6910-5_24"
+  citations: 0
+  selected: false
+  bibtex: |
+    @inbook{bach2026conversational,
+      title = {Conversational Emotion-Cause Pair Extraction: A Single-Step Architecture and the Role of Emotion-Label Supervision},
+      ISBN = {9789819269105},
+      ISSN = {1611-3349},
+      url = {http://dx.doi.org/10.1007/978-981-92-6910-5_24},
+      DOI = {10.1007/978-981-92-6910-5_24},
+      booktitle = {Behavioural and Social Computing},
+      publisher = {Springer Nature Singapore},
+      author = {Bach, Linus R. and Gebeyehu, Tigist Ali and Tashu, Tsegaye Misikir},
+      year = {2026},
+      month = oct,
+      pages = {419--437}
+    }
+
+- id: utama2026balinese
+  title: "Cross-Lingual Emotion Recognition in Balinese Text using Multilingual-LLMs under Peer-Collaborations Settings"
+  authors: ["Utama, P. K. L.", "Dibangoye, J. S.", "Tashu, T. M."]
+  year: 2026
+  venue: "LoResLM 2026 · ACL Anthology · pp. 225–238 · Rabat, Morocco"
+  type: workshop
+  tags:
+    - { label: "Low-Resource NLP", color: gold }
+    - { label: "Emotion Recognition", color: teal }
+    - { label: "Multilingual LLMs", color: muted }
+  links:
+    - { label: "PDF", url: "https://aclanthology.org/2026.loreslm-1.21/" }
+  doi: "10.18653/v1/2026.loreslm-1.21"
+  citations: 0
+  selected: true
+  bibtex: |
+    @inproceedings{utama2026balinese,
+        title = "Cross-Lingual Emotion Recognition in {B}alinese Text using Multilingual-{LLM}s under Peer-Collaborations Settings",
+        author = "Utama, Putu Kussa Laksana  and
+          Dibangoye, Jilles Steeve  and
+          Tashu, Tsegaye Misikir",
+        editor = "Hettiarachchi, Hansi  and
+          Ranasinghe, Tharindu  and
+          Plum, Alistair  and
+          Rayson, Paul  and
+          Mitkov, Ruslan  and
+          Gaber, Mohamed  and
+          Premasiri, Damith  and
+          Tan, Fiona Anting  and
+          Uyangodage, Lasitha",
+        booktitle = "Proceedings of the Second Workshop on Language Models for Low-Resource Languages ({L}o{R}es{LM} 2026)",
+        month = mar,
+        year = "2026",
+        address = "Rabat, Morocco",
+        publisher = "Association for Computational Linguistics",
+        url = "https://aclanthology.org/2026.loreslm-1.21/",
+        doi = "10.18653/v1/2026.loreslm-1.21",
+        pages = "225--238",
+        ISBN = "979-8-89176-377-7"
+    }
+
+- id: angelov2025difficulty
+  title: "Difficulty Estimation in Natural Language Tasks with Action Scores"
+  authors: ["Angelov, A.", "Tashu, T. M.", "Valdenegro-Toro, M."]
+  year: 2025
+  venue: "TrustNLP 2025 · ACL Anthology · pp. 351–364"
+  type: workshop
+  tags:
+    - { label: "Trustworthy NLP", color: teal }
+    - { label: "Sample Difficulty", color: muted }
+    - { label: "Transformers", color: gold }
+  links:
+    - { label: "PDF", url: "https://aclanthology.org/2025.trustnlp-main.24/" }
+  doi: "10.18653/v1/2025.trustnlp-main.24"
+  citations: 0
+  selected: false
+  bibtex: |
+    @inproceedings{angelov2025difficulty,
+        title = "Difficulty Estimation in Natural Language Tasks with Action Scores",
+        author = "Angelov, Aleksandar  and
+          Tashu, Tsegaye Misikir  and
+          Valdenegro-Toro, Matias",
+        editor = "Cao, Trista  and
+          Das, Anubrata  and
+          Kumarage, Tharindu  and
+          Wan, Yixin  and
+          Krishna, Satyapriya  and
+          Mehrabi, Ninareh  and
+          Dhamala, Jwala  and
+          Ramakrishna, Anil  and
+          Galystan, Aram  and
+          Kumar, Anoop  and
+          Gupta, Rahul  and
+          Chang, Kai-Wei",
+        booktitle = "Proceedings of the 5th Workshop on Trustworthy {NLP} ({T}rust{NLP} 2025)",
+        month = may,
+        year = "2025",
+        address = "Albuquerque, New Mexico",
+        publisher = "Association for Computational Linguistics",
+        url = "https://aclanthology.org/2025.trustnlp-main.24/",
+        doi = "10.18653/v1/2025.trustnlp-main.24",
+        pages = "351--364",
+        ISBN = "979-8-89176-233-6"
+    }
+
+- id: kamsteeg2025calibration
+  title: "Confidence Calibration in Large Language Model-Based Entity Matching"
+  authors: ["Kamsteeg, I.", "Cardenas-Cartagena, J.", "van Beers, F.", "Tashu, T. M.", "Valdenegro-Toro, M."]
+  year: 2025
+  venue: "UncertaiNLP 2025 · ACL Anthology · pp. 120–137 · Suzhou, China"
+  type: workshop
+  tags:
+    - { label: "LLMs", color: gold }
+    - { label: "Uncertainty", color: teal }
+    - { label: "Entity Matching", color: muted }
+  links:
+    - { label: "PDF", url: "https://aclanthology.org/2025.uncertainlp-main.12/" }
+  doi: "10.18653/v1/2025.uncertainlp-main.12"
+  citations: 4
+  selected: true
+  bibtex: |
+    @inproceedings{kamsteeg2025calibration,
+        title = "Confidence Calibration in Large Language Model-Based Entity Matching",
+        author = "Kamsteeg, Iris  and
+          Cardenas-Cartagena, Juan  and
+          van Beers, Floris  and
+          Misikir Tashu, Tsegaye  and
+          Valdenegro-Toro, Matias",
+        editor = {Eikema, Bryan  and
+          V{\'a}zquez, Ra{\'u}l  and
+          Berant, Jonathan  and
+          de Marneffe, Marie-Catherine  and
+          Plank, Barbara  and
+          Shelmanov, Artem  and
+          Swayamdipta, Swabha  and
+          Tiedemann, J{\"o}rg  and
+          Zerva, Chrysoula  and
+          Aziz, Wilker},
+        booktitle = "Proceedings of the 2nd Workshop on Uncertainty-Aware {NLP} ({U}ncertai{NLP} 2025)",
+        month = nov,
+        year = "2025",
+        address = "Suzhou, China",
+        publisher = "Association for Computational Linguistics",
+        url = "https://aclanthology.org/2025.uncertainlp-main.12/",
+        doi = "10.18653/v1/2025.uncertainlp-main.12",
+        pages = "120--137",
+        ISBN = "979-8-89176-349-4"
+    }
+
+- id: tashu2025crosslingual
+  title: "Cross-Lingual Document Recommendations with Transformer-Based Representations: Evaluating Multilingual Models and Mapping Techniques"
+  authors: ["Tashu, T. M.", "Kontos, E. R.", "Sabatelli, M.", "Valdenegro-Toro, M."]
+  year: 2025
+  venue: "SUMEVAL 2025 · ACL Anthology · pp. 39–47"
+  type: workshop
+  tags:
+    - { label: "Cross-lingual", color: teal }
+    - { label: "Recommendation", color: gold }
+    - { label: "Multilingual NLP", color: muted }
+  links:
+    - { label: "PDF", url: "https://aclanthology.org/2025.sumeval-2.4/" }
+  citations: 5
+  selected: true
+  bibtex: |
+    @inproceedings{tashu2025crosslingual,
+        title = "Cross-Lingual Document Recommendations with Transformer-Based Representations: Evaluating Multilingual Models and Mapping Techniques",
+        author = "Tashu, Tsegaye Misikir  and
+          Kontos, Eduard-Raul  and
+          Sabatelli, Matthia  and
+          Valdenegro-Toro, Matias",
+        booktitle = "Proceedings of the Second Workshop on Scaling Up Multilingual {\&} Multi-Cultural Evaluation",
+        month = jan,
+        year = "2025",
+        address = "Abu Dhabi",
+        publisher = "Association for Computational Linguistics",
+        url = "https://aclanthology.org/2025.sumeval-2.4/",
+        pages = "39--47"
+    }
+
+- id: tudor2025mapping
+  title: "Mapping Cross-Lingual Sentence Representations for Low-Resource Language Pairs Using Pre-trained Language Models"
+  authors: ["Tudor, A. I.", "Tashu, T. M."]
+  year: 2025
+  venue: "LoResLM 2025 · ACL Anthology · pp. 249–257 · Abu Dhabi"
+  type: workshop
+  tags:
+    - { label: "Low-Resource NLP", color: gold }
+    - { label: "Cross-lingual", color: teal }
+    - { label: "mBERT · XLM-R", color: muted }
+  links:
+    - { label: "PDF", url: "https://aclanthology.org/2025.loreslm-1.20/" }
+  citations: 3
+  selected: false
+  bibtex: |
+    @inproceedings{tudor2025mapping,
+        title = "Mapping Cross-Lingual Sentence Representations for Low-Resource Language Pairs Using Pre-trained Language Models",
+        author = "Tudor, Andreea Ioana  and
+          Tashu, Tsegaye Misikir",
+        editor = "Hettiarachchi, Hansi  and
+          Ranasinghe, Tharindu  and
+          Rayson, Paul  and
+          Mitkov, Ruslan  and
+          Gaber, Mohamed  and
+          Premasiri, Damith  and
+          Tan, Fiona Anting  and
+          Uyangodage, Lasitha",
+        booktitle = "Proceedings of the First Workshop on Language Models for Low-Resource Languages",
+        month = jan,
+        year = "2025",
+        address = "Abu Dhabi, United Arab Emirates",
+        publisher = "Association for Computational Linguistics",
+        url = "https://aclanthology.org/2025.loreslm-1.20/",
+        pages = "249--257"
+    }
+
+- id: philip2024phrase
+  title: "Phrase-Level Adversarial Data Generation for Bias Mitigation in Automatic Essay Scoring"
+  authors: ["Philip, H.", "Tashu, T. M."]
+  year: 2024
+  venue: "AIEER 2024 · Springer CCIS · pp. 67–78 · Santiago de Compostela"
+  type: workshop
+  tags:
+    - { label: "Essay Scoring", color: teal }
+    - { label: "Bias Mitigation", color: gold }
+    - { label: "Adversarial Training", color: muted }
+  links:
+    - { label: "Springer", url: "https://doi.org/10.1007/978-3-031-93409-4_6" }
+    - { label: "arXiv", url: "https://arxiv.org/abs/2409.04795" }
+  doi: "10.1007/978-3-031-93409-4_6"
+  citations: 0
+  selected: false
+  bibtex: |
+    @inbook{philip2024phrase,
+      title = {Phrase-Level Adversarial Data Generation for Bias Mitigation in Automatic Essay Scoring},
+      ISBN = {9783031934094},
+      ISSN = {1865-0937},
+      url = {http://dx.doi.org/10.1007/978-3-031-93409-4_6},
+      DOI = {10.1007/978-3-031-93409-4_6},
+      booktitle = {AI in Education and Educational Research},
+      publisher = {Springer Nature Switzerland},
+      author = {Philip, Haddad and Tashu, Tsegaye Misikir},
+      year = {2025},
+      pages = {67--78}
+    }
+
+- id: mahajan2024session
+  title: "A Dynamic Session-Based Recommender System with Graph Neural Networks"
+  authors: ["Mahajan, V.", "Birihanu, E.", "Tashu, T. M."]
+  year: 2024
+  venue: "ITAT 2024 · CEUR-WS Vol. 3792 · pp. 31–36"
+  type: conference
+  tags:
+    - { label: "Recommendation", color: gold }
+    - { label: "Graph Neural Networks", color: teal }
+  links:
+    - { label: "PDF", url: "https://ceur-ws.org/Vol-3792/paper3.pdf" }
+  citations: 1
+  selected: false
+  bibtex_generated: true
+  bibtex: |
+    @inproceedings{mahajan2024session,
+      title = {A Dynamic Session-Based Recommender System with Graph Neural Networks},
+      author = {Mahajan, Vrushali and Birihanu, Ermiyas and Tashu, Tsegaye Misikir},
+      booktitle = {Proceedings of the 24th Conference Information Technologies -- Applications and Theory (ITAT 2024)},
+      series = {CEUR Workshop Proceedings},
+      volume = {3792},
+      pages = {31--36},
+      year = {2024},
+      address = {Drienica, Slovakia},
+      publisher = {CEUR-WS.org},
+      url = {https://ceur-ws.org/Vol-3792/paper3.pdf}
+    }
+
+- id: tashu2024mapping
+  title: "Mapping Transformer Leveraged Embeddings for Cross-Lingual Document Representation"
+  authors: ["Tashu, T. M.", "Kontos, E. R.", "Sabatelli, M.", "Valdenegro-Toro, M."]
+  year: 2024
+  venue: "arXiv · CoRR abs/2401.06583 · 2024"
+  type: preprint
+  tags:
+    - { label: "Cross-lingual", color: teal }
+    - { label: "Document Representation", color: muted }
+    - { label: "Transformers", color: gold }
+  links:
+    - { label: "arXiv", url: "https://arxiv.org/abs/2401.06583" }
+  doi: "10.48550/arXiv.2401.06583"
+  citations: 1
+  selected: false
+  bibtex: |
+    @misc{tashu2024mapping,
+      doi = {10.48550/ARXIV.2401.06583},
+      url = {https://arxiv.org/abs/2401.06583},
+      author = {Tashu, Tsegaye Misikir and Kontos, Eduard-Raul and Sabatelli, Matthia and Valdenegro-Toro, Matias},
+      keywords = {Computation and Language (cs.CL), Artificial Intelligence (cs.AI), Information Retrieval (cs.IR), Machine Learning (cs.LG), FOS: Computer and information sciences, FOS: Computer and information sciences},
+      title = {Mapping Transformer Leveraged Embeddings for Cross-Lingual Document Representation},
+      publisher = {arXiv},
+      year = {2024},
+      copyright = {arXiv.org perpetual, non-exclusive license}
+    }
+
+- id: tashu2023ncc
+  title: "NCC: Neural Concept Compression for Multilingual Document Recommendation"
+  authors: ["Tashu, T. M.", "Lenz, M.", "Horváth, T."]
+  year: 2023
+  venue: "Applied Soft Computing · Vol. 142, 110348 · Elsevier · 2023"
+  type: journal
+  tags:
+    - { label: "Journal Article", color: gold }
+    - { label: "Multilingual NLP", color: teal }
+    - { label: "Recommendation", color: muted }
+  links:
+    - { label: "Paper", url: "https://www.sciencedirect.com/science/article/pii/S1568494623003666" }
+  doi: "10.1016/j.asoc.2023.110348"
+  citations: 5
+  selected: true
+  bibtex: |
+    @article{tashu2023ncc,
+      title = {NCC: Neural concept compression for multilingual document recommendation},
+      volume = {142},
+      ISSN = {1568-4946},
+      url = {http://dx.doi.org/10.1016/j.asoc.2023.110348},
+      DOI = {10.1016/j.asoc.2023.110348},
+      journal = {Applied Soft Computing},
+      publisher = {Elsevier BV},
+      author = {Tashu, Tsegaye Misikir and Lenz, Marc and Horváth, Tomáš},
+      year = {2023},
+      month = jul,
+      pages = {110348}
+    }
+
+- id: fergan2023sentiment
+  title: "Course Review Sentiment Analysis: A Comparative Study of Machine Learning and Deep Learning Methods"
+  authors: ["Fergan, E.", "Tashu, T. M."]
+  year: 2023
+  venue: "BESC 2023 · IEEE · pp. 1–7"
+  type: conference
+  tags:
+    - { label: "Sentiment Analysis", color: teal }
+    - { label: "Education", color: muted }
+    - { label: "Deep Learning", color: gold }
+  links:
+    - { label: "IEEE", url: "https://ieeexplore.ieee.org/abstract/document/10386515" }
+  doi: "10.1109/BESC59560.2023.10386515"
+  citations: 10
+  selected: false
+  bibtex: |
+    @inproceedings{fergan2023sentiment,
+      title = {Course Review Sentiment Analysis: A Comparative Study Of Machine Learning and Deep Learning Methods},
+      url = {http://dx.doi.org/10.1109/BESC59560.2023.10386515},
+      DOI = {10.1109/besc59560.2023.10386515},
+      booktitle = {2023 10th International Conference on Behavioural and Social Computing (BESC)},
+      publisher = {IEEE},
+      author = {Fergan, Ekin and Tashu, Tsegaye Misikir},
+      year = {2023},
+      month = oct,
+      pages = {1--7}
+    }
+
+- id: tosayeva2023covid
+  title: "Pattern Recognition and Context Prediction of COVID-19 Cases in European Countries"
+  authors: ["Tosayeva, A.", "Birihanu, E.", "Tashu, T. M."]
+  year: 2023
+  venue: "ITAT 2023 · CEUR-WS Vol. 3498 · pp. 50–57"
+  type: conference
+  tags:
+    - { label: "Pattern Recognition", color: teal }
+    - { label: "Epidemiology · AI", color: muted }
+  links:
+    - { label: "PDF", url: "https://ceur-ws.org/Vol-3498/paper6.pdf" }
+  citations: 0
+  selected: false
+  bibtex_generated: true
+  bibtex: |
+    @inproceedings{tosayeva2023covid,
+      title = {Pattern Recognition and Context Prediction of {COVID-19} Cases in {European} Countries},
+      author = {Tosayeva, Arzu and Birihanu, Ermiyas and Tashu, Tsegaye Misikir},
+      booktitle = {Proceedings of the 23rd Conference Information Technologies -- Applications and Theory (ITAT 2023)},
+      series = {CEUR Workshop Proceedings},
+      volume = {3498},
+      pages = {50--57},
+      year = {2023},
+      address = {Tatranské Matliare, Slovakia},
+      publisher = {CEUR-WS.org},
+      url = {https://ceur-ws.org/Vol-3498/paper6.pdf}
+    }
+
+- id: tashu2022synonym
+  title: "Synonym-Based Essay Generation and Augmentation for Robust Automatic Essay Scoring"
+  authors: ["Tashu, T. M.", "Horváth, T."]
+  year: 2022
+  venue: "IDEAL 2022 · Springer LNCS · pp. 12–21"
+  type: conference
+  tags:
+    - { label: "Essay Scoring", color: gold }
+    - { label: "Data Augmentation", color: teal }
+  links:
+    - { label: "Springer", url: "https://doi.org/10.1007/978-3-031-21753-1_2" }
+  doi: "10.1007/978-3-031-21753-1_2"
+  citations: 5
+  selected: false
+  bibtex: |
+    @inbook{tashu2022synonym,
+      title = {Synonym-Based Essay Generation and Augmentation for Robust Automatic Essay Scoring},
+      ISBN = {9783031217531},
+      ISSN = {1611-3349},
+      url = {http://dx.doi.org/10.1007/978-3-031-21753-1_2},
+      DOI = {10.1007/978-3-031-21753-1_2},
+      booktitle = {Intelligent Data Engineering and Automated Learning – IDEAL 2022},
+      publisher = {Springer International Publishing},
+      author = {Tashu, Tsegaye Misikir and Horváth, Tomáš},
+      year = {2022},
+      pages = {12--21}
+    }
+
+- id: tashu2022essay
+  title: "Deep Learning Architecture for Automatic Essay Scoring"
+  authors: ["Tashu, T. M.", "Maurya, C. K.", "Horváth, T."]
+  year: 2022
+  venue: "arXiv · CoRR abs/2206.08232 · 2022"
+  type: preprint
+  tags:
+    - { label: "Essay Scoring", color: gold }
+    - { label: "Deep Learning", color: teal }
+    - { label: "NLP for Education", color: muted }
+  links:
+    - { label: "arXiv", url: "https://arxiv.org/abs/2206.08232" }
+  doi: "10.48550/arXiv.2206.08232"
+  citations: 23
+  selected: true
+  bibtex: |
+    @misc{tashu2022essay,
+      doi = {10.48550/ARXIV.2206.08232},
+      url = {https://arxiv.org/abs/2206.08232},
+      author = {Tashu, Tsegaye Misikir and Maurya, Chandresh Kumar and Horvath, Tomas},
+      keywords = {Computation and Language (cs.CL), Artificial Intelligence (cs.AI), FOS: Computer and information sciences, FOS: Computer and information sciences},
+      title = {Deep Learning Architecture for Automatic Essay Scoring},
+      publisher = {arXiv},
+      year = {2022},
+      copyright = {arXiv.org perpetual, non-exclusive license}
+    }
+
+- id: ouaari2022memes
+  title: "Multimodal Feature Extraction for Memes Sentiment Classification"
+  authors: ["Ouaari, S.", "Tashu, T. M.", "Horváth, T."]
+  year: 2022
+  venue: "IEEE CITDS 2022 · pp. 285–290"
+  type: conference
+  tags:
+    - { label: "Sentiment Analysis", color: teal }
+    - { label: "Multimodal", color: muted }
+  links:
+    - { label: "IEEE", url: "https://doi.org/10.1109/CITDS54976.2022.9914260" }
+    - { label: "arXiv", url: "https://arxiv.org/abs/2207.03317" }
+  doi: "10.1109/CITDS54976.2022.9914260"
+  citations: 18
+  selected: false
+  bibtex: |
+    @inproceedings{ouaari2022memes,
+      title = {Multimodal Feature Extraction for Memes Sentiment Classification},
+      url = {http://dx.doi.org/10.1109/CITDS54976.2022.9914260},
+      DOI = {10.1109/citds54976.2022.9914260},
+      booktitle = {2022 IEEE 2nd Conference on Information Technology and Data Science (CITDS)},
+      publisher = {IEEE},
+      author = {Ouaari, Sofiane and Tashu, Tsegaye Misikir and Horvath, Tomas},
+      year = {2022},
+      month = may,
+      pages = {285--290}
+    }
+
+- id: tashu2022ecommerce
+  title: "Multimodal E-Commerce Product Classification Using Hierarchical Fusion"
+  authors: ["Tashu, T. M.", "Fattouh, S.", "Kiss, P.", "Horváth, T."]
+  year: 2022
+  venue: "IEEE CITDS 2022 · pp. 279–284"
+  type: conference
+  tags:
+    - { label: "Multimodal", color: gold }
+    - { label: "Classification", color: teal }
+    - { label: "E-Commerce", color: muted }
+  links:
+    - { label: "IEEE", url: "https://doi.org/10.1109/CITDS54976.2022.9914136" }
+  doi: "10.1109/CITDS54976.2022.9914136"
+  citations: 15
+  selected: false
+  bibtex: |
+    @inproceedings{tashu2022ecommerce,
+      title = {Multimodal E-Commerce Product Classification Using Hierarchical Fusion},
+      url = {http://dx.doi.org/10.1109/CITDS54976.2022.9914136},
+      DOI = {10.1109/citds54976.2022.9914136},
+      booktitle = {2022 IEEE 2nd Conference on Information Technology and Data Science (CITDS)},
+      publisher = {IEEE},
+      author = {Tashu, Tsegaye Misikir and Fattouh, Sara and Kiss, Peter and Horvath, Tomas},
+      year = {2022},
+      month = may,
+      pages = {279--284}
+    }
+
+- id: tashu2021coattention
+  title: "Multimodal Emotion Recognition from Art Using Sequential Co-Attention"
+  authors: ["Tashu, T. M.", "Hajiyeva, S.", "Horváth, T."]
+  year: 2021
+  venue: "Journal of Imaging · Vol. 7(8), Art. 157 · MDPI · 2021"
+  type: journal
+  tags:
+    - { label: "Journal Article", color: gold }
+    - { label: "Emotion Recognition", color: teal }
+    - { label: "Multimodal", color: muted }
+  links:
+    - { label: "Paper", url: "https://www.mdpi.com/2313-433X/7/8/157" }
+  doi: "10.3390/jimaging7080157"
+  citations: 41
+  selected: true
+  bibtex: |
+    @article{tashu2021coattention,
+      title = {Multimodal Emotion Recognition from Art Using Sequential Co-Attention},
+      volume = {7},
+      ISSN = {2313-433X},
+      url = {http://dx.doi.org/10.3390/jimaging7080157},
+      DOI = {10.3390/jimaging7080157},
+      number = {8},
+      journal = {Journal of Imaging},
+      publisher = {MDPI AG},
+      author = {Tashu, Tsegaye Misikir and Hajiyeva, Sakina and Horvath, Tomas},
+      year = {2021},
+      month = aug,
+      pages = {157}
+    }
+
+- id: tashu2021attention
+  title: "Attention-Based Multi-modal Emotion Recognition from Art"
+  authors: ["Tashu, T. M.", "Horváth, T."]
+  year: 2021
+  venue: "ICPR 2020 Workshops · Springer LNCS (Part III) · pp. 604–612"
+  type: workshop
+  tags:
+    - { label: "Emotion Recognition", color: teal }
+    - { label: "Attention · Multimodal", color: muted }
+  links:
+    - { label: "Springer", url: "https://doi.org/10.1007/978-3-030-68796-0_43" }
+  doi: "10.1007/978-3-030-68796-0_43"
+  citations: 5
+  selected: false
+  bibtex: |
+    @inbook{tashu2021attention,
+      title = {Attention-Based Multi-modal Emotion Recognition from Art},
+      ISBN = {9783030687960},
+      ISSN = {1611-3349},
+      url = {http://dx.doi.org/10.1007/978-3-030-68796-0_43},
+      DOI = {10.1007/978-3-030-68796-0_43},
+      booktitle = {Pattern Recognition. ICPR International Workshops and Challenges},
+      publisher = {Springer International Publishing},
+      author = {Tashu, Tsegaye Misikir and Horváth, Tomáš},
+      year = {2021},
+      pages = {604--612}
+    }
+
+- id: salamon2021linear
+  title: "Linear Concept Approximation for Multilingual Document Recommendation"
+  authors: ["Salamon, V. T.", "Tashu, T. M.", "Horváth, T."]
+  year: 2021
+  venue: "IDEAL 2021 · pp. 147–156"
+  type: conference
+  tags:
+    - { label: "Multilingual NLP", color: gold }
+    - { label: "Recommendation", color: teal }
+  links:
+    - { label: "Springer", url: "https://doi.org/10.1007/978-3-030-91608-4_15" }
+  doi: "10.1007/978-3-030-91608-4_15"
+  citations: 6
+  selected: false
+  bibtex: |
+    @inbook{salamon2021linear,
+      title = {Linear Concept Approximation for Multilingual Document Recommendation},
+      ISBN = {9783030916084},
+      ISSN = {1611-3349},
+      url = {http://dx.doi.org/10.1007/978-3-030-91608-4_15},
+      DOI = {10.1007/978-3-030-91608-4_15},
+      booktitle = {Intelligent Data Engineering and Automated Learning – IDEAL 2021},
+      publisher = {Springer International Publishing},
+      author = {Salamon, Vilmos Tibor and Tashu, Tsegaye Misikir and Horváth, Tomáš},
+      year = {2021},
+      pages = {147--156}
+    }
+
+- id: lenz2021interlingual
+  title: "Learning Inter-Lingual Document Representations via Concept Compression"
+  authors: ["Lenz, M.", "Tashu, T. M.", "Horváth, T."]
+  year: 2021
+  venue: "IDEAL 2021 · pp. 268–276"
+  type: conference
+  tags:
+    - { label: "Cross-lingual", color: teal }
+    - { label: "Concept Compression", color: muted }
+  links:
+    - { label: "Springer", url: "https://doi.org/10.1007/978-3-030-91608-4_27" }
+  doi: "10.1007/978-3-030-91608-4_27"
+  citations: 3
+  selected: false
+  bibtex: |
+    @inbook{lenz2021interlingual,
+      title = {Learning Inter-Lingual Document Representations via Concept Compression},
+      ISBN = {9783030916084},
+      ISSN = {1611-3349},
+      url = {http://dx.doi.org/10.1007/978-3-030-91608-4_27},
+      DOI = {10.1007/978-3-030-91608-4_27},
+      booktitle = {Intelligent Data Engineering and Automated Learning – IDEAL 2021},
+      publisher = {Springer International Publishing},
+      author = {Lenz, Marc and Tashu, Tsegaye Misikir and Horváth, Tomáš},
+      year = {2021},
+      pages = {268--276}
+    }
+
+- id: tashu2021thesis
+  title: "Semantic-based Automatic Short Essay Evaluation and Recommendation System"
+  authors: ["Tashu, T. M."]
+  year: 2021
+  venue: "PhD Thesis · Eötvös Loránd University, Hungary · 2021"
+  type: thesis
+  tags:
+    - { label: "PhD Thesis", color: gold }
+    - { label: "Essay Evaluation", color: teal }
+    - { label: "NLP for Education", color: muted }
+  links:
+    - { label: "Thesis", url: "https://doi.org/10.15476/elte.2020.119" }
+  doi: "10.15476/elte.2020.119"
+  selected: false
+  bibtex: |
+    @phdthesis{tashu2021thesis,
+      title = {Semantic-based Automatic Short Essay Evaluation and Recommendation System},
+      url = {http://dx.doi.org/10.15476/elte.2020.119},
+      DOI = {10.15476/elte.2020.119},
+      school = {Eötvös Loránd University},
+      author = {Tashu, Tsegaye Misikir},
+      year = {2021}
+    }
+
+- id: zolotareva2020summarization
+  title: "Abstractive Text Summarization using Transfer Learning"
+  authors: ["Zolotareva, E.", "Tashu, T. M.", "Horváth, T."]
+  year: 2020
+  venue: "ITAT 2020 · CEUR-WS Vol. 2718 · pp. 75–80"
+  type: conference
+  tags:
+    - { label: "Text Summarization", color: teal }
+    - { label: "Transfer Learning", color: muted }
+  links:
+    - { label: "PDF", url: "https://ceur-ws.org/Vol-2718/paper28.pdf" }
+  citations: 52
+  selected: false
+  bibtex_generated: true
+  bibtex: |
+    @inproceedings{zolotareva2020summarization,
+      title = {Abstractive Text Summarization using Transfer Learning},
+      author = {Zolotareva, Ekaterina and Tashu, Tsegaye Misikir and Horváth, Tomáš},
+      booktitle = {Proceedings of the 20th Conference Information Technologies -- Applications and Theory (ITAT 2020)},
+      series = {CEUR Workshop Proceedings},
+      volume = {2718},
+      pages = {75--80},
+      year = {2020},
+      address = {Oravská Lesná, Slovakia},
+      publisher = {CEUR-WS.org},
+      url = {https://ceur-ws.org/Vol-2718/paper28.pdf}
+    }
+
+- id: tashu2020smartscore
+  title: "SmartScore — Short Answer Scoring Made Easy Using Sem-LSH"
+  authors: ["Tashu, T. M.", "Horváth, T."]
+  year: 2020
+  venue: "ICSC 2020 · pp. 145–149"
+  type: conference
+  tags:
+    - { label: "Essay Scoring", color: gold }
+    - { label: "Semantic Hashing", color: teal }
+  links:
+    - { label: "IEEE", url: "https://doi.org/10.1109/ICSC.2020.00028" }
+  doi: "10.1109/ICSC.2020.00028"
+  citations: 7
+  selected: false
+  bibtex: |
+    @inproceedings{tashu2020smartscore,
+      title = {SmartScore-Short Answer Scoring Made Easy Using Sem-LSH},
+      url = {http://dx.doi.org/10.1109/ICSC.2020.00028},
+      DOI = {10.1109/icsc.2020.00028},
+      booktitle = {2020 IEEE 14th International Conference on Semantic Computing (ICSC)},
+      publisher = {IEEE},
+      author = {Tashu, Tsegaye Misikir and Horvath, Tomas},
+      year = {2020},
+      month = feb,
+      pages = {145--149}
+    }
+
+- id: tashu2020offtopic
+  title: "Off-Topic Essay Detection Using C-BGRU Siamese"
+  authors: ["Tashu, T. M."]
+  year: 2020
+  venue: "ICSC 2020 · pp. 221–225"
+  type: conference
+  tags:
+    - { label: "Essay Scoring", color: teal }
+    - { label: "Siamese Networks", color: muted }
+  links:
+    - { label: "IEEE", url: "https://doi.org/10.1109/ICSC.2020.00046" }
+  doi: "10.1109/ICSC.2020.00046"
+  citations: 10
+  selected: false
+  bibtex: |
+    @inproceedings{tashu2020offtopic,
+      title = {Off-Topic Essay Detection Using C-BGRU Siamese},
+      url = {http://dx.doi.org/10.1109/ICSC.2020.00046},
+      DOI = {10.1109/icsc.2020.00046},
+      booktitle = {2020 IEEE 14th International Conference on Semantic Computing (ICSC)},
+      publisher = {IEEE},
+      author = {Tashu, Tsegaye Misikir},
+      year = {2020},
+      month = feb,
+      pages = {221--225}
+    }
+
+- id: peska2019swarm
+  title: "Swarm Intelligence Techniques in Recommender Systems — A Review of Recent Research"
+  authors: ["Peška, L.", "Tashu, T. M.", "Horváth, T."]
+  year: 2019
+  venue: "Swarm and Evolutionary Computation · Vol. 48, pp. 201–219 · Elsevier · 2019"
+  type: journal
+  tags:
+    - { label: "Journal Article", color: gold }
+    - { label: "Recommendation", color: teal }
+    - { label: "Swarm Intelligence", color: muted }
+  links:
+    - { label: "Paper", url: "https://doi.org/10.1016/j.swevo.2019.04.003" }
+  doi: "10.1016/j.swevo.2019.04.003"
+  citations: 61
+  selected: false
+  bibtex: |
+    @article{peska2019swarm,
+      title = {Swarm intelligence techniques in recommender systems - A review of recent research},
+      volume = {48},
+      ISSN = {2210-6502},
+      url = {http://dx.doi.org/10.1016/j.swevo.2019.04.003},
+      DOI = {10.1016/j.swevo.2019.04.003},
+      journal = {Swarm and Evolutionary Computation},
+      publisher = {Elsevier BV},
+      author = {Peška, Ladislav and Tashu, Tsegaye Misikir and Horváth, Tomáš},
+      year = {2019},
+      month = aug,
+      pages = {201--219}
+    }
+
+- id: tashu2019feedback
+  title: "Semantic-Based Feedback Recommendation for Automatic Essay Evaluation"
+  authors: ["Tashu, T. M.", "Horváth, T."]
+  year: 2019
+  venue: "IntelliSys 2019 · Springer AISC · Vol. 2, pp. 334–346"
+  type: conference
+  tags:
+    - { label: "Essay Scoring", color: gold }
+    - { label: "Feedback Generation", color: teal }
+  links:
+    - { label: "Springer", url: "https://doi.org/10.1007/978-3-030-29513-4_24" }
+  doi: "10.1007/978-3-030-29513-4_24"
+  citations: 15
+  selected: false
+  bibtex: |
+    @inbook{tashu2019feedback,
+      title = {Semantic-Based Feedback Recommendation for Automatic Essay Evaluation},
+      ISBN = {9783030295134},
+      ISSN = {2194-5365},
+      url = {http://dx.doi.org/10.1007/978-3-030-29513-4_24},
+      DOI = {10.1007/978-3-030-29513-4_24},
+      booktitle = {Intelligent Systems and Applications},
+      publisher = {Springer International Publishing},
+      author = {Tashu, Tsegaye Misikir and Horváth, Tomáš},
+      year = {2019},
+      month = aug,
+      pages = {334--346}
+    }
+
+- id: tashu2019exam
+  title: "Intelligent On-line Exam Management and Evaluation System"
+  authors: ["Tashu, T. M.", "Esclamado, J. P.", "Horváth, T."]
+  year: 2019
+  venue: "ITS 2019 · pp. 105–111"
+  type: conference
+  tags:
+    - { label: "NLP for Education", color: teal }
+    - { label: "Exam Management", color: muted }
+  links:
+    - { label: "Springer", url: "https://doi.org/10.1007/978-3-030-22244-4_14" }
+  doi: "10.1007/978-3-030-22244-4_14"
+  citations: 10
+  selected: false
+  bibtex: |
+    @inbook{tashu2019exam,
+      title = {Intelligent On-line Exam Management and Evaluation System},
+      ISBN = {9783030222444},
+      ISSN = {1611-3349},
+      url = {http://dx.doi.org/10.1007/978-3-030-22244-4_14},
+      DOI = {10.1007/978-3-030-22244-4_14},
+      booktitle = {Intelligent Tutoring Systems},
+      publisher = {Springer International Publishing},
+      author = {Tashu, Tsegaye Misikir and Esclamado, Julius P. and Horvath, Tomas},
+      year = {2019},
+      pages = {105--111}
+    }
+
+- id: tashu2019annotation
+  title: "Reducing Annotation Effort in Automatic Essay Evaluation Using Locality Sensitive Hashing"
+  authors: ["Tashu, T. M.", "Szabó, D.", "Horváth, T."]
+  year: 2019
+  venue: "ITS 2019 · Springer LNCS · pp. 186–192"
+  type: conference
+  tags:
+    - { label: "Essay Scoring", color: gold }
+    - { label: "LSH", color: teal }
+  links:
+    - { label: "Springer", url: "https://doi.org/10.1007/978-3-030-22244-4_23" }
+  doi: "10.1007/978-3-030-22244-4_23"
+  citations: 4
+  selected: false
+  bibtex: |
+    @inbook{tashu2019annotation,
+      title = {Reducing Annotation Effort in Automatic Essay Evaluation Using Locality Sensitive Hashing},
+      ISBN = {9783030222444},
+      ISSN = {1611-3349},
+      url = {http://dx.doi.org/10.1007/978-3-030-22244-4_23},
+      DOI = {10.1007/978-3-030-22244-4_23},
+      booktitle = {Intelligent Tutoring Systems},
+      publisher = {Springer International Publishing},
+      author = {Tashu, Tsegaye Misikir and Szabó, Dávid and Horváth, Tomáš},
+      year = {2019},
+      pages = {186--192}
+    }
+
+- id: tashu2018pairwise
+  title: "Pair-Wise: Automatic Essay Evaluation using Word Mover's Distance"
+  authors: ["Tashu, T. M.", "Horváth, T."]
+  year: 2018
+  venue: "CSEDU 2018 · Vol. 1, pp. 59–66"
+  type: conference
+  tags:
+    - { label: "Essay Scoring", color: gold }
+    - { label: "Word Embeddings", color: teal }
+  links:
+    - { label: "Paper", url: "https://doi.org/10.5220/0006679200590066" }
+  doi: "10.5220/0006679200590066"
+  citations: 28
+  selected: false
+  bibtex: |
+    @inproceedings{tashu2018pairwise,
+      title = {Pair-Wise: Automatic Essay Evaluation using Word Mover’s Distance},
+      url = {http://dx.doi.org/10.5220/0006679200590066},
+      DOI = {10.5220/0006679200590066},
+      booktitle = {Proceedings of the 10th International Conference on Computer Supported Education},
+      publisher = {SCITEPRESS - Science and Technology Publications},
+      author = {Misikir Tashu, Tsegaye and Horváth, Tomáš},
+      year = {2018},
+      pages = {59--66}
+    }
+
+- id: tashu2018layered
+  title: "A Layered Approach to Automatic Essay Evaluation Using Word-Embedding"
+  authors: ["Tashu, T. M.", "Horváth, T."]
+  year: 2018
+  venue: "CSEDU 2018 (Selected Papers) · pp. 77–94"
+  type: conference
+  tags:
+    - { label: "Essay Scoring", color: gold }
+    - { label: "Word Embeddings", color: teal }
+    - { label: "Deep Learning", color: muted }
+  links:
+    - { label: "Springer", url: "https://doi.org/10.1007/978-3-030-21151-6_5" }
+  doi: "10.1007/978-3-030-21151-6_5"
+  citations: 11
+  selected: false
+  bibtex: |
+    @inbook{tashu2018layered,
+      title = {A Layered Approach to Automatic Essay Evaluation Using Word-Embedding},
+      ISBN = {9783030211516},
+      ISSN = {1865-0937},
+      url = {http://dx.doi.org/10.1007/978-3-030-21151-6_5},
+      DOI = {10.1007/978-3-030-21151-6_5},
+      booktitle = {Computer Supported Education},
+      publisher = {Springer International Publishing},
+      author = {Tashu, Tsegaye Misikir and Horváth, Tomáš},
+      year = {2019},
+      pages = {77--94}
+    }

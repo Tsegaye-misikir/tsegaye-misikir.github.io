@@ -1,488 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NLP Course — Tsegaye M. Tashu</title>
-  <meta name="description" content="Course guide for Natural Language Processing (WBAI059-05, 5 ECTS), an 8-week, 10-lecture BSc Artificial Intelligence course at the University of Groningen: language models, word embeddings, CNNs, LSTMs, Transformers, fine-tuning and RAG, with a continuous hands-on project.">
-  <link rel="canonical" href="https://tsegaye-misikir.github.io/NLP.html">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Natural Language Processing — Course Guide">
-  <meta property="og:description" content="An 8-week, 10-lecture BSc AI course at the University of Groningen covering the NLP stack from statistical language models to Transformers, fine-tuning and RAG.">
-  <meta property="og:url" content="https://tsegaye-misikir.github.io/NLP.html">
-  <meta property="og:site_name" content="Tsegaye M. Tashu">
-  <meta name="twitter:card" content="summary">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="favicon.png" type="image/png" sizes="180x180">
-  <link rel="apple-touch-icon" href="favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=Sora:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-  <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+---
+title: "NLP Course"
+description: "Course guide for Natural Language Processing (WBAI059-05, 5 ECTS), an 8-week, 10-lecture BSc Artificial Intelligence course at the University of Groningen: language models, word embeddings, CNNs, LSTMs, Transformers, fine-tuning and RAG, with a continuous hands-on project."
+nav_active: Teaching
+body_class: "course-page course-nlp"
+extra_css: [/assets/css/course.css]
+extra_js:
+  - https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js
+  - /assets/js/course.js
+---
+{%- comment -%} Course facts header: this page's entry in _data/courses.yml (matched on page.url). {%- endcomment -%}
+{%- assign course = site.data.courses | where: "page", page.url | first -%}
+{%- if course %}
+<aside class="course-facts" aria-label="Course facts">
+  <div class="course-facts-inner">
+    <p class="course-facts-name">{{ course.name }}</p>
+    <dl class="course-facts-list">
+      <div><dt>Code</dt><dd>{{ course.code }}</dd></div>
+      <div><dt>Credits</dt><dd>{{ course.ects }} ECTS</dd></div>
+      <div><dt>Level</dt><dd>{{ course.level }}</dd></div>
+      <div><dt>Period</dt><dd>{{ course.period }}</dd></div>
+      {%- if course.since %}
+      <div><dt>Since</dt><dd>{{ course.since }}</dd></div>
+      {%- endif %}
+    </dl>
+    {%- if course.note and course.note != "" %}
+    <p class="course-facts-note">{{ course.note }}</p>
+    {%- endif %}
+    {%- if course.ocasys and course.ocasys != "" %}
+    <a class="course-facts-link" href="{{ course.ocasys }}" target="_blank" rel="noopener noreferrer">Ocasys entry {% include icon.html name="external" size="12" %}<span class="sr-only"> (opens in a new tab)</span></a>
+    {%- endif %}
+  </div>
+</aside>
+{%- endif %}
 
-    :root {
-      --bg:        #0d1520;
-      --bg2:       #111d2e;
-      --bg3:       #162034;
-      --bg4:       #0a1119;
-      --line:      rgba(255,255,255,0.07);
-      --text:      #e8e2d6;
-      --muted:     #8a96a9;
-      --gold:      #d4a853;
-      --gold-dim:  rgba(212,168,83,0.13);
-      --teal:      #4ba89a;
-      --teal-dim:  rgba(75,168,154,0.11);
-      --red:       #d9785f;
-      --red-dim:   rgba(192,97,74,0.12);
-      --serif:     'DM Serif Display', Georgia, serif;
-      --sans:      'Sora', sans-serif;
-      --mono:      'JetBrains Mono', monospace;
-      --ease:      cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 16px;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
-
-    /* ── NOISE ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: 0.35;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      background-size: 256px 256px;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 clamp(1.5rem, 5vw, 4rem); height: 64px;
-      background: rgba(13,21,32,0.9); backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav-logo { font-family: var(--serif); font-size: 1.1rem; color: var(--text); text-decoration: none; }
-    .nav-logo span { color: var(--gold); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
-      color: var(--muted); text-decoration: none; letter-spacing: 0.08em;
-      text-transform: uppercase; transition: color 0.2s; position: relative;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
-      height: 1px; background: var(--gold);
-      transform: scaleX(0); transform-origin: left; transition: transform 0.25s var(--ease);
-    }
-    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
-    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
-
-    /* ── LAYOUT ── */
-    .section { padding: 6rem clamp(1.5rem, 8vw, 6rem); }
-    /* sections now live inside <main>, where the hero is child 1, so odd = the old even */
-    main > .section:nth-child(odd) { background: var(--bg2); }
-    .container { max-width: 1100px; }
-
-    .section-label {
-      font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem;
-      display: flex; align-items: center; gap: 0.75rem;
-    }
-    .section-label::after { content: ''; display: inline-block; width: 36px; height: 1px; background: var(--gold); opacity: 0.5; }
-
-    h2.section-title {
-      font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 400; line-height: 1.15; color: var(--text); margin-bottom: 2.5rem;
-    }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh; padding-top: 64px;
-      display: flex; flex-direction: column; justify-content: center;
-      padding-left: clamp(1.5rem, 8vw, 6rem); padding-right: clamp(1.5rem, 8vw, 6rem);
-      position: relative; overflow: hidden;
-    }
-
-    /* animated grid */
-    .hero-grid-bg {
-      position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: radial-gradient(ellipse at 60% 50%, black 10%, transparent 65%);
-    }
-    .hero-glow {
-      position: absolute; width: 700px; height: 700px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(212,168,83,0.06) 0%, transparent 70%);
-      top: -150px; right: -200px; pointer-events: none;
-    }
-    .hero-glow2 {
-      position: absolute; width: 500px; height: 500px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(75,168,154,0.05) 0%, transparent 70%);
-      bottom: -100px; left: -100px; pointer-events: none;
-    }
-
-    .hero-inner {
-      max-width: 1100px;
-      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5rem; align-items: center;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--teal);
-      border: 1px solid rgba(75,168,154,0.25); padding: 0.35rem 0.85rem;
-      margin-bottom: 1.5rem; background: var(--teal-dim);
-    }
-    .hero-badge::before { content: '●'; font-size: 0.5rem; animation: blink 2s 3; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-    h1.hero-title {
-      font-family: var(--serif); font-size: clamp(3rem, 6vw, 5rem);
-      font-weight: 400; line-height: 1.05; color: var(--text); margin-bottom: 0.5rem;
-    }
-    h1.hero-title em { font-style: italic; color: var(--gold); }
-
-    .hero-subtitle {
-      font-family: var(--serif); font-style: italic;
-      font-size: clamp(1rem, 2vw, 1.3rem); color: var(--muted); margin-bottom: 1.75rem;
-    }
-    .hero-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.85; max-width: 460px; margin-bottom: 2rem; }
-
-    .hero-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
-    .tag {
-      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.07em;
-      padding: 0.28rem 0.8rem; border-radius: 2px; border: 1px solid;
-    }
-    .tag-gold  { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
-    .tag-teal  { border-color: var(--teal); color: var(--teal); background: var(--teal-dim); }
-    .tag-muted { border-color: rgba(255,255,255,0.12); color: var(--muted); }
-
-    .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.7rem 1.6rem; font-family: var(--mono); font-size: 0.7rem;
-      font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
-      text-decoration: none; border-radius: 2px; transition: all 0.22s var(--ease); cursor: pointer;
-    }
-    .btn-primary { background: var(--gold); color: var(--bg); border: 1px solid var(--gold); }
-    .btn-primary:hover { background: transparent; color: var(--gold); }
-    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--line); }
-    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
-
-    /* hero stat strip */
-    .hero-stats {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
-      border: 1px solid var(--line); background: var(--line);
-    }
-    .hero-stat {
-      background: var(--bg3); padding: 1.25rem 1.5rem;
-      position: relative; overflow: hidden;
-    }
-    .hero-stat::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--gold), transparent);
-      transform: scaleX(0); transform-origin: left; transition: transform 0.3s var(--ease);
-    }
-    .hero-stat:hover::before { transform: scaleX(1); }
-    .hero-stat-num { font-family: var(--serif); font-size: 2rem; color: var(--gold); line-height: 1; }
-    .hero-stat-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem; }
-
-    /* ── PREREQUISITES ── */
-    .prereqs-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 4rem; align-items: start; }
-    .prereqs-grid > * { min-width: 0; }
-    .prereqs-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.5rem; }
-
-    .skill-bars { display: flex; flex-direction: column; gap: 1.1rem; }
-    .skill-bar-item {}
-    .skill-bar-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
-    .skill-bar-name { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--text); }
-    .skill-bar-level { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
-    .skill-bar-track { height: 4px; background: var(--line); position: relative; overflow: hidden; }
-    .skill-bar-fill {
-      position: absolute; top: 0; left: 0; height: 100%; width: 100%;
-      background: linear-gradient(90deg, var(--gold), var(--teal));
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 1s var(--ease);
-    }
-    .skill-bar-fill.animate { transform: scaleX(1); }
-
-    /* radar canvas wrapper */
-    .radar-wrap { position: relative; max-width: 380px; margin: 0 auto; }
-    #radarChart { display: block; max-width: 100%; height: auto; }
-
-    /* ── OBJECTIVES ── */
-    .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
-    .obj-card {
-      background: var(--bg3); padding: 2rem 1.75rem;
-      position: relative; overflow: hidden; transition: background 0.2s;
-    }
-    .obj-card:hover { background: var(--bg2); }
-    .obj-num {
-      font-family: var(--serif); font-size: 3rem; color: rgba(212,168,83,0.12);
-      line-height: 1; position: absolute; top: 1rem; right: 1.25rem;
-    }
-    .obj-icon { font-size: 1.4rem; margin-bottom: 1rem; }
-    .obj-title { font-family: var(--serif); font-size: 1rem; line-height: 1.35; margin-bottom: 0.6rem; }
-    .obj-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
-
-    /* ── CURRICULUM ── */
-    .curriculum-header {
-      display: flex; align-items: flex-end; justify-content: space-between;
-      margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
-    }
-    .curriculum-hint { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; }
-
-    .week-group { margin-bottom: 0.6rem; }
-    .week-btn {
-      width: 100%; background: var(--bg3); border: 1px solid var(--line);
-      padding: 0; cursor: pointer; text-align: left;
-      transition: border-color 0.2s;
-      display: block;
-    }
-    .week-btn:hover { border-color: rgba(212,168,83,0.3); }
-    .week-btn.open { border-color: rgba(212,168,83,0.4); }
-
-    .week-btn-inner {
-      display: grid; grid-template-columns: 3rem 1fr auto;
-      align-items: center; padding: 1.1rem 1.5rem; gap: 1.25rem;
-    }
-    .week-btn-inner > span, .week-title { display: block; }
-    .week-num {
-      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
-      color: var(--gold); text-transform: uppercase;
-    }
-    .week-title { font-family: var(--serif); font-size: 1rem; color: var(--text); }
-    .week-tags-inline { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.25rem; }
-
-    .week-chevron {
-      color: var(--muted); font-size: 0.8rem; transition: transform 0.25s var(--ease);
-      font-family: var(--mono);
-    }
-    .week-btn.open .week-chevron { transform: rotate(180deg); color: var(--gold); }
-
-    .week-body {
-      max-height: 0; overflow: hidden;
-      transition: max-height 0.4s var(--ease), opacity 0.3s;
-      opacity: 0;
-      border-top: 0px solid var(--line);
-    }
-    .week-body.open {
-      max-height: none; opacity: 1;
-      border-top: 1px solid var(--line);
-    }
-
-    .week-body-inner {
-      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; 
-    }
-    .week-col {
-      min-width: 0;
-      padding: 1.5rem 1.75rem;
-      border-right: 1px solid var(--line);
-    }
-    .week-col:last-child { border-right: none; }
-    .week-col-label {
-      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem;
-    }
-    .week-col ul { list-style: none; }
-    .week-col ul li {
-      font-size: 0.82rem; color: var(--muted); padding: 0.3rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      display: flex; align-items: flex-start; gap: 0.5rem;
-    }
-    .week-col ul li::before { content: '→'; color: var(--gold); flex-shrink: 0; font-family: var(--mono); font-size: 0.7rem; margin-top: 0.1rem; }
-    .week-col ul li:last-child { border-bottom: none; }
-    .week-col-reading { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
-
-    /* ── APPLICATIONS ── */
-    .apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-    .app-card {
-      border: 1px solid var(--line); background: var(--bg3);
-      padding: 1.75rem; position: relative; overflow: hidden;
-      transition: border-color 0.25s, transform 0.25s;
-    }
-    .app-card:hover { border-color: rgba(75,168,154,0.35); transform: translateY(-3px); }
-    .app-card::after {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-      height: 2px; background: linear-gradient(90deg, var(--teal), transparent);
-      transform: scaleX(0); transform-origin: left; transition: transform 0.3s var(--ease);
-    }
-    .app-card:hover::after { transform: scaleX(1); }
-    .app-icon { font-size: 1.8rem; margin-bottom: 1rem; }
-    .app-title { font-family: var(--serif); font-size: 1rem; margin-bottom: 0.6rem; }
-    .app-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
-
-    /* ── ETHICS ── */
-    .ethics-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-    .ethics-intro { font-size: 0.95rem; color: var(--muted); line-height: 1.85; margin-bottom: 2rem; }
-
-    .ethics-items { display: flex; flex-direction: column; gap: 1px; }
-    .ethics-item {
-      border: 1px solid var(--line); background: var(--bg3);
-      padding: 1.5rem 1.75rem; margin-bottom: 0;
-      transition: border-color 0.2s;
-    }
-    .ethics-item + .ethics-item { margin-top: 1px; }
-    .ethics-item:hover { border-color: rgba(192,97,74,0.3); }
-    .ethics-item-header { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 0.6rem; }
-    .ethics-icon { font-size: 1.2rem; flex-shrink: 0; }
-    .ethics-title { font-family: var(--serif); font-size: 1rem; }
-    .ethics-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; padding-left: 2.2rem; }
-
-    /* Responsibility framework visual */
-    .ethics-visual {
-      border: 1px solid var(--line); background: var(--bg4); padding: 2rem;
-      position: sticky; top: 80px;
-    }
-    .ev-title { font-family: var(--serif); font-size: 1rem; margin-bottom: 1.5rem; color: var(--text); }
-    .ev-ring-wrap { display: flex; flex-direction: column; gap: 1rem; }
-    .ev-principle {
-      display: flex; align-items: center; gap: 1rem;
-      padding: 0.85rem 1rem;
-      background: var(--bg3); border-left: 2px solid var(--gold);
-    }
-    .ev-principle-icon { font-size: 1rem; flex-shrink: 0; }
-    .ev-principle-text {}
-    .ev-principle-title { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
-    .ev-principle-desc { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
-
-    /* ── ASSESSMENT ── */
-    .assessment-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
-    .assess-card {
-      border: 1px solid var(--line); background: var(--bg3);
-      overflow: hidden; transition: border-color 0.2s;
-    }
-    .assess-card:hover { border-color: rgba(212,168,83,0.3); }
-    .assess-header {
-      padding: 1.5rem 1.75rem 1.25rem;
-      border-bottom: 1px solid var(--line);
-      display: flex; align-items: flex-start; gap: 1rem;
-    }
-    .assess-icon {
-      width: 44px; height: 44px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-      background: var(--gold-dim); border: 1px solid rgba(212,168,83,0.2);
-    }
-    .assess-meta {}
-    .assess-weight {
-      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em;
-      color: var(--gold); text-transform: uppercase; margin-bottom: 0.3rem;
-    }
-    .assess-title { font-family: var(--serif); font-size: 1rem; line-height: 1.3; }
-    .assess-body { padding: 1.25rem 1.75rem; }
-    .assess-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
-    .assess-bar-track { height: 3px; background: var(--line); position: relative; }
-    .assess-bar-fill {
-      position: absolute; top: 0; left: 0; height: 100%;
-      background: linear-gradient(90deg, var(--gold), var(--teal));
-      transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--ease);
-    }
-    .assess-bar-fill.animate { transform: scaleX(1); }
-
-    /* ── FOOTER ── */
-    footer {
-      padding: 2rem clamp(1.5rem, 8vw, 6rem);
-      border-top: 1px solid var(--line);
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
-    }
-    .footer-copy { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; }
-    .footer-links a { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); text-decoration: none; }
-    .footer-links a:hover { color: var(--gold); }
-
-    /* ── SCROLL REVEAL ── */
-    .reveal {
-      opacity: 0; transform: translateY(20px);
-      transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
-    }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    /* ── ACCESSIBILITY ── */
-    .skip-link { position: absolute; left: -9999px; top: 0; }
-    .skip-link:focus {
-      left: 1rem; top: 1rem; z-index: 1001;
-      background: var(--gold); color: var(--bg); padding: .5rem 1rem;
-      font-family: var(--mono); font-size: .8rem; text-decoration: none;
-    }
-    a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-
-    /* ── MOBILE NAV TOGGLE ── */
-    .nav-toggle { display: none; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .hero-inner, .prereqs-grid, .ethics-layout { grid-template-columns: minmax(0,1fr); }
-      .objectives-grid { grid-template-columns: 1fr 1fr; }
-      .apps-grid { grid-template-columns: 1fr 1fr; }
-      .assessment-grid { grid-template-columns: 1fr; }
-      .week-body-inner { grid-template-columns: 1fr; }
-      .week-col { border-right: none; border-bottom: 1px solid var(--line); }
-      .week-col:last-child { border-bottom: none; }
-      .nav-links { display: none; }
-      .nav-toggle {
-        display: inline-flex; align-items: center; justify-content: center;
-        min-width: 44px; min-height: 44px; font-size: 1.4rem; line-height: 1;
-        background: none; border: 1px solid var(--line); color: var(--text); cursor: pointer;
-      }
-      nav.open .nav-links {
-        display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0;
-        background: rgba(13,21,32,0.97); padding: 1rem clamp(1.5rem,5vw,4rem) 1.5rem;
-        gap: 1rem; border-bottom: 1px solid var(--line);
-      }
-    }
-    @media (max-width: 580px) {
-      .objectives-grid, .apps-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-      .fade-in, .reveal { opacity: 1 !important; transform: none !important; }
-    }
-  </style>
-</head>
-<body>
-<a class="skip-link" href="#main">Skip to content</a>
-
-<!-- ── NAV ── -->
-<nav>
-  <a href="index.html" class="nav-logo">T.M.<span>Tashu</span></a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="index.html#about">About</a></li>
-    <li><a href="index.html#research">Research</a></li>
-    <li><a href="NLP.html" class="active" aria-current="page">NLP Course</a></li>
-    <li><a href="llm.html">LLM Course</a></li>
-    <li><a href="LTP.html">LT Practical</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
-  </ul>
-  <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button>
-</nav>
-
-<main id="main">
 
 <!-- ── HERO ── -->
 <section id="hero">
-  <div class="hero-grid-bg"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-glow2" aria-hidden="true"></div>
   <div class="hero-inner">
     <div>
       <div class="hero-badge">Natural Language Processing · BSc AI</div>
@@ -498,12 +54,12 @@
         <span class="tag tag-gold">8 Weeks · 10 Lectures</span>
         <span class="tag tag-teal">Python · PyTorch · HuggingFace</span>
         <span class="tag tag-muted">BSc AI · UGroningen</span>
-        <a class="tag tag-muted" href="https://ocasys.rug.nl/current/catalog/course/WBAI059-05" target="_blank" rel="noopener noreferrer" style="text-decoration:none;" title="Official course description in Ocasys, the University of Groningen course catalogue">WBAI059-05 · 5 ECTS · Ocasys ↗</a>
+        <a class="tag tag-muted" href="https://ocasys.rug.nl/current/catalog/course/WBAI059-05" target="_blank" rel="noopener noreferrer" title="Official course description in Ocasys, the University of Groningen course catalogue">WBAI059-05 · 5 ECTS · Ocasys ↗</a>
         <span class="tag tag-teal">Project-Based</span>
       </div>
       <div class="hero-actions">
         <a href="#curriculum" class="btn btn-primary">Explore Curriculum ↓</a>
-        <a href="index.html#contact" class="btn btn-outline">Contact Instructor</a>
+        <a href="/#contact" class="btn btn-outline">Contact Instructor</a>
       </div>
     </div>
     <div>
@@ -527,14 +83,14 @@
       </div>
 
       <!-- inline quick-nav -->
-      <div style="margin-top:1.25rem; border:1px solid var(--line); background:var(--bg3); padding:1.25rem 1.5rem;">
-        <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem;">Jump to section</div>
-        <div style="display:flex;flex-direction:column;gap:0.35rem;">
-          <a href="#prerequisites" style="font-size:0.82rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid var(--line);transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'"><span style="font-family:var(--mono);color:var(--gold);font-size:0.65rem;">01</span> Prerequisites &amp; Skills</a>
-          <a href="#objectives" style="font-size:0.82rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid var(--line);transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'"><span style="font-family:var(--mono);color:var(--gold);font-size:0.65rem;">02</span> Learning Objectives</a>
-          <a href="#curriculum" style="font-size:0.82rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid var(--line);transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'"><span style="font-family:var(--mono);color:var(--gold);font-size:0.65rem;">03</span> Weekly Curriculum</a>
-          <a href="#applications" style="font-size:0.82rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid var(--line);transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'"><span style="font-family:var(--mono);color:var(--gold);font-size:0.65rem;">04</span> Real-World Applications</a>
-          <a href="#ethics" style="font-size:0.82rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'"><span style="font-family:var(--mono);color:var(--gold);font-size:0.65rem;">05</span> Ethics &amp; Societal Impact</a>
+      <div class="quick-nav">
+        <div class="quick-nav-label">Jump to section</div>
+        <div class="quick-nav-links">
+          <a class="quick-nav-link" href="#prerequisites"><span class="quick-nav-num">01</span> Prerequisites &amp; Skills</a>
+          <a class="quick-nav-link" href="#objectives"><span class="quick-nav-num">02</span> Learning Objectives</a>
+          <a class="quick-nav-link" href="#curriculum"><span class="quick-nav-num">03</span> Weekly Curriculum</a>
+          <a class="quick-nav-link" href="#applications"><span class="quick-nav-num">04</span> Real-World Applications</a>
+          <a class="quick-nav-link" href="#ethics"><span class="quick-nav-num">05</span> Ethics &amp; Societal Impact</a>
         </div>
       </div>
     </div>
@@ -609,43 +165,43 @@
 </section>
 
 <!-- ── OBJECTIVES ── -->
-<section id="objectives" class="section">
+<section id="objectives" class="section section-alt">
   <div class="container">
     <div class="section-label">02 — Objectives</div>
     <h2 class="section-title">Core Learning<br><em>Outcomes</em></h2>
     <div class="objectives-grid">
       <div class="obj-card">
-        <div class="obj-num" aria-hidden="true">01</div>
+        <div class="obj-num" data-num="01" aria-hidden="true"></div>
         <div class="obj-icon" aria-hidden="true">✂️</div>
         <div class="obj-title">Master Text Preprocessing</div>
         <div class="obj-desc">Gain proficiency in tokenization, stemming, lemmatization, and text normalisation techniques for robust NLP pipelines.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num" aria-hidden="true">02</div>
+        <div class="obj-num" data-num="02" aria-hidden="true"></div>
         <div class="obj-icon" aria-hidden="true">📐</div>
         <div class="obj-title">Understand Language Models</div>
         <div class="obj-desc">Comprehend the principles behind n-gram models, neural language models, and the probability theory underpinning text generation.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num" aria-hidden="true">03</div>
+        <div class="obj-num" data-num="03" aria-hidden="true"></div>
         <div class="obj-icon" aria-hidden="true">🏗️</div>
         <div class="obj-title">Implement Core NLP Tasks</div>
         <div class="obj-desc">Build systems for text classification, sentiment analysis, POS tagging, and Named Entity Recognition from scratch.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num" aria-hidden="true">04</div>
+        <div class="obj-num" data-num="04" aria-hidden="true"></div>
         <div class="obj-icon" aria-hidden="true">🧠</div>
         <div class="obj-title">Apply Deep Learning to NLP</div>
         <div class="obj-desc">Implement RNNs, LSTMs, and the Transformer self-attention mechanism for advanced sequence modelling problems.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num" aria-hidden="true">05</div>
+        <div class="obj-num" data-num="05" aria-hidden="true"></div>
         <div class="obj-icon" aria-hidden="true">🚀</div>
         <div class="obj-title">Develop Practical Applications</div>
         <div class="obj-desc">Gain hands-on experience building machine translation, information extraction, and RAG-based question answering systems.</div>
       </div>
       <div class="obj-card">
-        <div class="obj-num" aria-hidden="true">06</div>
+        <div class="obj-num" data-num="06" aria-hidden="true"></div>
         <div class="obj-icon" aria-hidden="true">⚖️</div>
         <div class="obj-title">Analyse Ethical Implications</div>
         <div class="obj-desc">Critically assess and address bias, fairness, privacy, and responsible deployment in NLP systems and their societal impact.</div>
@@ -660,27 +216,27 @@
     <div class="curriculum-header">
       <div>
         <div class="section-label">03 — Curriculum</div>
-        <h2 class="section-title" style="margin-bottom:0">8-Week<br><em>Course Plan</em></h2>
+        <h2 class="section-title">8-Week<br><em>Course Plan</em></h2>
       </div>
       <div class="curriculum-hint">Click any week to expand ↓</div>
     </div>
 
     <!-- Week 1 -->
     <div class="week-group">
-      <button class="week-btn" type="button" id="w1-btn" aria-expanded="false" aria-controls="w1-body" onclick="toggleWeek(this)">
+      <button class="week-btn" type="button" id="w1-btn" aria-expanded="false" aria-controls="w1-body">
         <span class="week-btn-inner">
           <span class="week-num">W01</span>
           <span>
-            <span class="week-title">Introduction to NLP <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 1</span></span>
+            <span class="week-title">Introduction to NLP <span class="week-lecture">· Lecture 1</span></span>
             <span class="week-tags-inline">
               <span class="tag tag-teal">Foundations</span>
               <span class="tag tag-muted">Experiment Design</span>
             </span>
           </span>
-          <span class="week-chevron">▼</span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
         </span>
       </button>
-      <div class="week-body" id="w1-body" role="region" aria-labelledby="w1-btn" aria-hidden="true" inert>
+      <div class="week-body" id="w1-body" role="region" aria-labelledby="w1-btn">
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -695,7 +251,7 @@
           <div class="week-col">
             <div class="week-col-label">Lab / Deliverable</div>
             <ul>
-              <li>Create project repo: <code style="font-family:var(--mono);font-size:0.75rem;color:var(--teal);">data/ src/ notebooks/ reports/</code></li>
+              <li>Create project repo: <code>data/ src/ notebooks/ reports/</code></li>
               <li>Implement dataset loading + train/dev/test split</li>
               <li>Implement evaluation metrics (accuracy + F1)</li>
               <li>Push code + short README explaining how to run</li>
@@ -713,20 +269,20 @@
 
     <!-- Week 2 -->
     <div class="week-group">
-      <button class="week-btn" type="button" id="w2-btn" aria-expanded="false" aria-controls="w2-body" onclick="toggleWeek(this)">
+      <button class="week-btn" type="button" id="w2-btn" aria-expanded="false" aria-controls="w2-body">
         <span class="week-btn-inner">
           <span class="week-num">W02</span>
           <span>
-            <span class="week-title">N-gram Language Models + Classical Text Classification <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 2</span></span>
+            <span class="week-title">N-gram Language Models + Classical Text Classification <span class="week-lecture">· Lecture 2</span></span>
             <span class="week-tags-inline">
               <span class="tag tag-gold">Statistical LM</span>
               <span class="tag tag-teal">TF-IDF · Logistic Regression</span>
             </span>
           </span>
-          <span class="week-chevron">▼</span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
         </span>
       </button>
-      <div class="week-body" id="w2-body" role="region" aria-labelledby="w2-btn" aria-hidden="true" inert>
+      <div class="week-body" id="w2-body" role="region" aria-labelledby="w2-btn">
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -760,20 +316,20 @@
 
     <!-- Week 3 -->
     <div class="week-group">
-      <button class="week-btn" type="button" id="w3-btn" aria-expanded="false" aria-controls="w3-body" onclick="toggleWeek(this)">
+      <button class="week-btn" type="button" id="w3-btn" aria-expanded="false" aria-controls="w3-body">
         <span class="week-btn-inner">
           <span class="week-num">W03</span>
           <span>
-            <span class="week-title">Vector Semantics: TF-IDF → Word Embeddings <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 3</span></span>
+            <span class="week-title">Vector Semantics: TF-IDF → Word Embeddings <span class="week-lecture">· Lecture 3</span></span>
             <span class="week-tags-inline">
               <span class="tag tag-teal">Word2Vec · Dense Embeddings</span>
               <span class="tag tag-muted">Distributional Semantics</span>
             </span>
           </span>
-          <span class="week-chevron">▼</span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
         </span>
       </button>
-      <div class="week-body" id="w3-body" role="region" aria-labelledby="w3-btn" aria-hidden="true" inert>
+      <div class="week-body" id="w3-body" role="region" aria-labelledby="w3-btn">
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -807,20 +363,20 @@
 
     <!-- Week 4 -->
     <div class="week-group">
-      <button class="week-btn" type="button" id="w4-btn" aria-expanded="false" aria-controls="w4-body" onclick="toggleWeek(this)">
+      <button class="week-btn" type="button" id="w4-btn" aria-expanded="false" aria-controls="w4-body">
         <span class="week-btn-inner">
           <span class="week-num">W04</span>
           <span>
-            <span class="week-title">Neural NLP I: Feed-Forward Networks &amp; CNNs for Text <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 4</span></span>
+            <span class="week-title">Neural NLP I: Feed-Forward Networks &amp; CNNs for Text <span class="week-lecture">· Lecture 4</span></span>
             <span class="week-tags-inline">
               <span class="tag tag-gold">FFNN · CNN</span>
               <span class="tag tag-teal">Neural Text Classification</span>
             </span>
           </span>
-          <span class="week-chevron">▼</span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
         </span>
       </button>
-      <div class="week-body" id="w4-body" role="region" aria-labelledby="w4-btn" aria-hidden="true" inert>
+      <div class="week-body" id="w4-body" role="region" aria-labelledby="w4-btn">
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -853,20 +409,20 @@
 
     <!-- Week 5 -->
     <div class="week-group">
-      <button class="week-btn" type="button" id="w5-btn" aria-expanded="false" aria-controls="w5-body" onclick="toggleWeek(this)">
+      <button class="week-btn" type="button" id="w5-btn" aria-expanded="false" aria-controls="w5-body">
         <span class="week-btn-inner">
           <span class="week-num">W05</span>
           <span>
-            <span class="week-title">Neural NLP II: RNNs, LSTMs &amp; Sequence Encoding <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 5</span></span>
+            <span class="week-title">Neural NLP II: RNNs, LSTMs &amp; Sequence Encoding <span class="week-lecture">· Lecture 5</span></span>
             <span class="week-tags-inline">
               <span class="tag tag-gold">RNN · LSTM · GRU</span>
               <span class="tag tag-teal">Sequential Modelling · PyTorch</span>
             </span>
           </span>
-          <span class="week-chevron">▼</span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
         </span>
       </button>
-      <div class="week-body" id="w5-body" role="region" aria-labelledby="w5-btn" aria-hidden="true" inert>
+      <div class="week-body" id="w5-body" role="region" aria-labelledby="w5-btn">
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -901,20 +457,20 @@
 
     <!-- Week 6 -->
     <div class="week-group">
-      <button class="week-btn" type="button" id="w6-btn" aria-expanded="false" aria-controls="w6-body" onclick="toggleWeek(this)">
+      <button class="week-btn" type="button" id="w6-btn" aria-expanded="false" aria-controls="w6-body">
         <span class="week-btn-inner">
           <span class="week-num">W06</span>
           <span>
-            <span class="week-title">Seq2Seq MT + Attention + Decoding Strategies <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lectures 6–7</span></span>
+            <span class="week-title">Seq2Seq MT + Attention + Decoding Strategies <span class="week-lecture">· Lectures 6–7</span></span>
             <span class="week-tags-inline">
               <span class="tag tag-gold">Machine Translation</span>
               <span class="tag tag-teal">Attention · BLEU · Beam Search</span>
             </span>
           </span>
-          <span class="week-chevron">▼</span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
         </span>
       </button>
-      <div class="week-body" id="w6-body" role="region" aria-labelledby="w6-btn" aria-hidden="true" inert>
+      <div class="week-body" id="w6-body" role="region" aria-labelledby="w6-btn">
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -949,20 +505,20 @@
 
     <!-- Week 7 -->
     <div class="week-group">
-      <button class="week-btn" type="button" id="w7-btn" aria-expanded="false" aria-controls="w7-body" onclick="toggleWeek(this)">
+      <button class="week-btn" type="button" id="w7-btn" aria-expanded="false" aria-controls="w7-body">
         <span class="week-btn-inner">
           <span class="week-num">W07</span>
           <span>
-            <span class="week-title">Transformers + Pretraining &amp; Fine-tuning <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lectures 8–9</span></span>
+            <span class="week-title">Transformers + Pretraining &amp; Fine-tuning <span class="week-lecture">· Lectures 8–9</span></span>
             <span class="week-tags-inline">
               <span class="tag tag-gold">Self-Attention · BERT · GPT</span>
               <span class="tag tag-teal">Fine-tuning · HuggingFace</span>
             </span>
           </span>
-          <span class="week-chevron">▼</span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
         </span>
       </button>
-      <div class="week-body" id="w7-body" role="region" aria-labelledby="w7-btn" aria-hidden="true" inert>
+      <div class="week-body" id="w7-body" role="region" aria-labelledby="w7-btn">
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -996,20 +552,20 @@
 
     <!-- Week 8 -->
     <div class="week-group">
-      <button class="week-btn" type="button" id="w8-btn" aria-expanded="false" aria-controls="w8-body" onclick="toggleWeek(this)">
+      <button class="week-btn" type="button" id="w8-btn" aria-expanded="false" aria-controls="w8-body">
         <span class="week-btn-inner">
           <span class="week-num">W08</span>
           <span>
-            <span class="week-title">Structured Prediction + QA / RAG + Wrap-up <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);">· Lecture 10</span></span>
+            <span class="week-title">Structured Prediction + QA / RAG + Wrap-up <span class="week-lecture">· Lecture 10</span></span>
             <span class="week-tags-inline">
               <span class="tag tag-teal">NER · CRF</span>
               <span class="tag tag-gold">QA · RAG · Retrieval</span>
             </span>
           </span>
-          <span class="week-chevron">▼</span>
+          <span class="week-chevron" aria-hidden="true">▼</span>
         </span>
       </button>
-      <div class="week-body" id="w8-body" role="region" aria-labelledby="w8-btn" aria-hidden="true" inert>
+      <div class="week-body" id="w8-body" role="region" aria-labelledby="w8-btn">
         <div class="week-body-inner">
           <div class="week-col">
             <div class="week-col-label">Overview &amp; Outcomes</div>
@@ -1044,7 +600,7 @@
 </section>
 
 <!-- ── APPLICATIONS ── -->
-<section id="applications" class="section">
+<section id="applications" class="section section-alt">
   <div class="container">
     <div class="section-label">04 — Applications</div>
     <h2 class="section-title">Real-World<br><em>NLP Applications</em></h2>
@@ -1097,7 +653,7 @@
           throughout all eight weeks.
         </p>
         <div class="ethics-items">
-          <div class="ethics-item reveal">
+          <div class="ethics-item fade-in">
             <div class="ethics-item-header">
               <div class="ethics-icon" aria-hidden="true">⚠️</div>
               <div class="ethics-title">Algorithmic Bias in Text Data</div>
@@ -1108,7 +664,7 @@
               methods, debiasing techniques, and structural causes of representation harm.
             </div>
           </div>
-          <div class="ethics-item reveal">
+          <div class="ethics-item fade-in">
             <div class="ethics-item-header">
               <div class="ethics-icon" aria-hidden="true">🔒</div>
               <div class="ethics-title">Privacy &amp; Data Security</div>
@@ -1119,7 +675,7 @@
               and the particular challenges of training data memorisation in large language models.
             </div>
           </div>
-          <div class="ethics-item reveal">
+          <div class="ethics-item fade-in">
             <div class="ethics-item-header">
               <div class="ethics-icon" aria-hidden="true">🎭</div>
               <div class="ethics-title">Misinformation &amp; Synthetic Text</div>
@@ -1130,7 +686,7 @@
               the societal responsibilities of NLP researchers and practitioners.
             </div>
           </div>
-          <div class="ethics-item reveal">
+          <div class="ethics-item fade-in">
             <div class="ethics-item-header">
               <div class="ethics-icon" aria-hidden="true">🌱</div>
               <div class="ethics-title">Environmental Sustainability</div>
@@ -1154,28 +710,28 @@
                 <div class="ev-principle-desc">Equitable performance across demographic groups and languages</div>
               </div>
             </div>
-            <div class="ev-principle" style="border-left-color:var(--teal);">
+            <div class="ev-principle ev-principle--teal">
               <div class="ev-principle-icon" aria-hidden="true">🔍</div>
               <div class="ev-principle-text">
-                <div class="ev-principle-title" style="color:var(--teal);">Transparency</div>
+                <div class="ev-principle-title ev-principle-title--teal">Transparency</div>
                 <div class="ev-principle-desc">Interpretable decisions, model cards, and datasheets</div>
               </div>
             </div>
-            <div class="ev-principle" style="border-left-color:var(--muted);">
+            <div class="ev-principle ev-principle--muted">
               <div class="ev-principle-icon" aria-hidden="true">🛡️</div>
               <div class="ev-principle-text">
-                <div class="ev-principle-title" style="color:#aab;">Privacy</div>
+                <div class="ev-principle-title ev-principle-title--soft">Privacy</div>
                 <div class="ev-principle-desc">Data minimisation, anonymisation, and GDPR compliance</div>
               </div>
             </div>
-            <div class="ev-principle" style="border-left-color:var(--red);">
+            <div class="ev-principle ev-principle--red">
               <div class="ev-principle-icon" aria-hidden="true">🎯</div>
               <div class="ev-principle-text">
-                <div class="ev-principle-title" style="color:var(--red);">Accountability</div>
+                <div class="ev-principle-title ev-principle-title--red">Accountability</div>
                 <div class="ev-principle-desc">Clear responsibility chains for AI system outcomes</div>
               </div>
             </div>
-            <div class="ev-principle" style="border-left-color:var(--gold);">
+            <div class="ev-principle ev-principle--gold">
               <div class="ev-principle-icon" aria-hidden="true">🌍</div>
               <div class="ev-principle-text">
                 <div class="ev-principle-title">Societal Benefit</div>
@@ -1183,9 +739,9 @@
               </div>
             </div>
           </div>
-          <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--line);">
-            <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem;">Relevant Frameworks</div>
-            <div style="font-size:0.78rem;color:var(--muted);line-height:1.8;">
+          <div class="ev-footer">
+            <div class="ev-footer-label">Relevant Frameworks</div>
+            <div class="ev-footer-text">
               EU AI Act · IEEE Ethically Aligned Design ·
               ACM FAccT · Montreal Declaration for Responsible AI
             </div>
@@ -1196,174 +752,6 @@
   </div>
 </section>
 
-</main>
-
-<!-- ── FOOTER ── -->
-<footer>
-  <div class="footer-copy">© 2026 Tsegaye M. Tashu · University of Groningen</div>
-  <div class="footer-links">
-    <a href="index.html">Portfolio</a>
-    <a href="llm.html">LLM Course</a>
-    <a href="LTP.html">LT Practical</a>
-    <a href="index.html#research">Research</a>
-    <a href="mailto:t.m.tashu@rug.nl">Email</a>
-  </div>
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
-<script>
-  // ── MOBILE NAV ──
-  (function () {
-    const nav = document.querySelector('nav');
-    const toggle = nav.querySelector('.nav-toggle');
-    const links = document.getElementById('navLinks');
-    function setOpen(open) {
-      nav.classList.toggle('open', open);
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    }
-    toggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && nav.classList.contains('open')) {
-        setOpen(false);
-        toggle.focus();
-      }
-    });
-  })();
-
-  // ── ACCORDION ──
-  function closeWeekBody(body) {
-    if (body.style.maxHeight === 'none' || body.style.maxHeight === '') {
-      body.style.maxHeight = body.scrollHeight + 'px';
-      void body.offsetHeight; // force reflow so the collapse animates from the real height
-    }
-    body.classList.remove('open');
-    body.style.maxHeight = '0px';
-    body.setAttribute('aria-hidden', 'true');
-    body.inert = true;
-  }
-  function openWeekBody(body) {
-    body.inert = false;
-    body.removeAttribute('aria-hidden');
-    body.classList.add('open');
-    body.style.maxHeight = body.scrollHeight + 'px';
-    // once expanded, drop the cap so content can reflow (e.g. on resize) without clipping
-    const release = () => { if (body.classList.contains('open')) body.style.maxHeight = 'none'; };
-    body.addEventListener('transitionend', function onEnd(e) {
-      if (e.propertyName !== 'max-height') return;
-      body.removeEventListener('transitionend', onEnd);
-      release();
-    });
-    setTimeout(release, 600);
-  }
-  function toggleWeek(btn) {
-    const body = document.getElementById(btn.getAttribute('aria-controls')) || btn.nextElementSibling;
-    const isOpen = btn.classList.contains('open');
-    // close all
-    document.querySelectorAll('.week-btn').forEach(b => {
-      if (b.classList.contains('open')) {
-        b.classList.remove('open');
-        b.setAttribute('aria-expanded', 'false');
-        const other = document.getElementById(b.getAttribute('aria-controls'));
-        if (other) closeWeekBody(other);
-      }
-    });
-    if (!isOpen) {
-      btn.classList.add('open');
-      btn.setAttribute('aria-expanded', 'true');
-      openWeekBody(body);
-    }
-  }
-
-  // ── RADAR CHART ──
-  // Chart.js is loaded with defer, so it is only guaranteed to exist once the DOM is parsed.
-  document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById('radarChart');
-    if (!canvas || typeof Chart === 'undefined') return;
-    new Chart(canvas.getContext('2d'), {
-      type: 'radar',
-      data: {
-        labels: ['Python', 'Linear Algebra', 'Statistics', 'ML Fundamentals', 'Deep Learning', 'Git / CLI'],
-        datasets: [
-          {
-            label: 'Recommended Entry Level',
-            data: [88, 70, 65, 65, 42, 45],
-            backgroundColor: 'rgba(212,168,83,0.1)',
-            borderColor: 'rgba(212,168,83,0.7)',
-            pointBackgroundColor: '#d4a853',
-            pointBorderColor: 'transparent',
-            pointRadius: 4,
-            borderWidth: 1.5,
-          },
-          {
-            label: 'Expected Exit Level',
-            data: [95, 82, 80, 88, 80, 72],
-            backgroundColor: 'rgba(75,168,154,0.08)',
-            borderColor: 'rgba(75,168,154,0.6)',
-            pointBackgroundColor: '#4ba89a',
-            pointBorderColor: 'transparent',
-            pointRadius: 4,
-            borderWidth: 1.5,
-            borderDash: [4, 3],
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio: 1,
-        animation: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? false : undefined,
-        plugins: {
-          legend: {
-            labels: {
-              color: '#8a96a9',
-              font: { family: "'JetBrains Mono', monospace", size: 10 },
-              boxWidth: 12,
-            }
-          }
-        },
-        scales: {
-          r: {
-            min: 0, max: 100,
-            ticks: {
-              stepSize: 25,
-              display: false,
-            },
-            grid: { color: 'rgba(255,255,255,0.07)' },
-            angleLines: { color: 'rgba(255,255,255,0.07)' },
-            pointLabels: {
-              color: '#8a96a9',
-              font: { family: "'JetBrains Mono', monospace", size: 10 }
-            }
-          }
-        }
-      }
-    });
-  });
-
-  // ── SCROLL REVEAL ──
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-        revealObserver.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-  // ── SKILL BARS ──
-  const barObserver = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      document.querySelectorAll('.skill-bar-fill').forEach(fill => {
-        const w = parseFloat(fill.style.getPropertyValue('--w') || fill.parentElement.dataset.w || 0.7);
-        fill.style.transform = `scaleX(${w})`;
-      });
-      barObserver.disconnect();
-    }
-  }, { threshold: 0.3 });
-  barObserver.observe(document.getElementById('skillBars'));
+<script type="application/json" id="radar-config">
+{"labels": ["Python", "Linear Algebra", "Statistics", "ML Fundamentals", "Deep Learning", "Git / CLI"], "datasets": [{"label": "Recommended Entry Level", "data": [88, 70, 65, 65, 42, 45], "color": "gold", "fill": 0.1, "border": 0.7, "dashed": false}, {"label": "Expected Exit Level", "data": [95, 82, 80, 88, 80, 72], "color": "teal", "fill": 0.08, "border": 0.6, "dashed": true}]}
 </script>
-</body>
-</html>

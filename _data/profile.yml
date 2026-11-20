@@ -1,0 +1,26 @@
+# Single source for identity, contact and profile links.
+# Used by head.html (meta, JSON-LD), nav/footer, social-links.html and the home page.
+name: "Tsegaye M. Tashu"
+full_name: "Tsegaye Misikir Tashu"
+title: "Assistant Professor in Natural Language Processing"
+affiliation: "University of Groningen"
+# From the RUG staff page: Faculty of Science and Engineering, Artificial Intelligence (Bernoulli Institute).
+unit: "Faculty of Science and Engineering · Bernoulli Institute"
+email: "t.m.tashu@rug.nl"
+photo: "/assets/img/profile.jpg"     # 210x280, from the RUG staff page
+photo_width: 210
+photo_height: 280
+photo_alt: "Portrait of Tsegaye Misikir Tashu"
+cv: ""                               # path or URL of a CV PDF; empty → no CV button
+tagline: "Researching multilingual NLP, emotion recognition, and AI for education — bridging computational linguistics with practical, human-centred AI systems."
+links:
+  - { key: scholar,    label: "Google Scholar", url: "https://scholar.google.co.uk/citations?user=PtsMPscAAAAJ&hl=en" }
+  - { key: orcid,      label: "ORCID",          url: "https://orcid.org/0000-0002-4498-2486" }
+  - { key: github,     label: "GitHub",         url: "https://github.com/Tsegaye-misikir" }
+  - { key: linkedin,   label: "LinkedIn",       url: "https://www.linkedin.com/in/tsegaye-misikir-tashu-phd-aa609955/" }
+  - { key: university, label: "RUG staff page", url: "https://www.rug.nl/staff/t.m.tashu/" }
+# Condensed from the call-to-action at the end of the site-v1 Mentees section.
+prospective: >-
+  Interested in doing research under my supervision? I welcome motivated students working on
+  multilingual NLP, affective AI, or NLP for education — at both BSc and MSc level.
+scholar_stats: { citations: 375, h_index: 10, i10_index: 13, as_of: "Nov 2026" }
