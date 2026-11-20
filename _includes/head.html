@@ -1,0 +1,73 @@
+{%- assign profile = site.data.profile -%}
+{%- if page.url == "/" -%}
+  {%- assign _title = profile.name | append: " — NLP Researcher & Educator" -%}
+{%- elsif page.title -%}
+  {%- assign _title = page.title | append: " — " | append: profile.name -%}
+{%- else -%}
+  {%- assign _title = profile.name -%}
+{%- endif -%}
+{%- assign _desc = page.description | default: site.description | strip_newlines | strip -%}
+{%- assign _image = profile.photo | absolute_url -%}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ _title | escape }}</title>
+  <meta name="description" content="{{ _desc | escape }}">
+  <meta name="color-scheme" content="dark light">
+  {%- if page.noindex %}
+  <meta name="robots" content="noindex">
+  {%- else %}
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  {%- endif %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ _title | escape }}">
+  <meta property="og:description" content="{{ _desc | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:site_name" content="{{ profile.name | escape }}">
+  <meta property="og:image" content="{{ _image }}">
+  <meta property="og:image:alt" content="{{ profile.photo_alt | escape }}">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.png" type="image/png" sizes="180x180">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <script>
+    /* Theme bootstrap: runs before CSS so there is no flash of the wrong theme. */
+    (function (d) {
+      d.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') d.setAttribute('data-theme', t);
+      } catch (e) {}
+    })(document.documentElement);
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=Sora:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  {%- for css in page.extra_css %}
+  <link rel="stylesheet" href="{{ css }}">
+  {%- endfor %}
+  {%- if page.head_extra %}
+  {{ page.head_extra }}
+  {%- endif %}
+  {%- if page.url == "/" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": {{ profile.full_name | jsonify }},
+    "alternateName": {{ profile.name | jsonify }},
+    "jobTitle": {{ profile.title | jsonify }},
+    "affiliation": { "@type": "CollegeOrUniversity", "name": {{ profile.affiliation | jsonify }} },
+    "url": {{ "/" | absolute_url | jsonify }},
+    "image": {{ _image | jsonify }},
+    "email": {{ "mailto:" | append: profile.email | jsonify }},
+    "sameAs": [
+      {%- for l in profile.links %}
+      {{ l.url | jsonify }}{% unless forloop.last %},{% endunless %}
+      {%- endfor %}
+    ]
+  }
+  </script>
+  {%- endif %}
+</head>

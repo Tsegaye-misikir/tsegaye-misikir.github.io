@@ -1,0 +1,112 @@
+---
+title: Publications
+description: "All publications of Tsegaye M. Tashu (University of Groningen) on multilingual NLP, emotion recognition and AI for education, with filters by year and type and BibTeX for every entry."
+nav_active: Publications
+extra_css: [/assets/css/publications.css]
+body_class: page-publications
+---
+{%- assign profile = site.data.profile -%}
+{%- assign stats = profile.scholar_stats -%}
+{%- assign pubs = site.data.publications -%}
+{%- assign total = pubs | size -%}
+{%- assign years = pubs | map: "year" | uniq -%}
+{%- assign year_first = years | last -%}
+{%- assign year_last = years | first -%}
+{%- assign by_year = pubs | group_by: "year" -%}
+{%- assign type_keys = "journal,conference,workshop,preprint,thesis" | split: "," -%}
+{%- assign type_labels = "Journal,Conference,Workshop,Preprint,Thesis" | split: "," -%}
+{%- for l in profile.links -%}{%- if l.key == "scholar" -%}{%- assign scholar_url = l.url -%}{%- endif -%}{%- endfor -%}
+{%- capture _ext %} target="_blank" rel="noopener noreferrer"{% endcapture -%}
+
+<section class="section pubs-head" aria-labelledby="pubs-title">
+  <div class="container pubs-head-grid">
+    <div class="pubs-head-text">
+      <p class="section-label">Research</p>
+      <h1 class="section-title" id="pubs-title">Publications</h1>
+      <p class="pubs-lede">{{ total }} publications from {{ year_first }} to {{ year_last }}, newest first: journal articles, conference and workshop papers, preprints and my PhD thesis. Every entry has its links and a BibTeX record.</p>
+      <div class="btn-group pubs-actions">
+        <a class="btn btn-primary btn-sm" href="/publications.bib" download="tashu-publications.bib">Download BibTeX (.bib)</a>
+        <button class="btn btn-ghost btn-sm" type="button" data-copy="#all-bibtex">{% include icon.html name="copy" size="14" %}<span>Copy all BibTeX</span></button>
+        {%- if scholar_url %}
+        <a class="btn btn-ghost btn-sm" href="{{ scholar_url | escape }}"{{ _ext }}>{% include icon.html name="scholar" size="14" %}Google Scholar<span aria-hidden="true"> ↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+        {%- endif %}
+      </div>
+    </div>
+    {%- if stats %}
+    <div class="pubs-stats">
+      <dl class="pubs-stats-grid">
+        <div class="stat-card"><dt class="stat-label">Publications</dt><dd class="stat-number">{{ total }}</dd></div>
+        <div class="stat-card"><dt class="stat-label">Citations</dt><dd class="stat-number">{{ stats.citations }}+</dd></div>
+        <div class="stat-card"><dt class="stat-label">h-index</dt><dd class="stat-number">{{ stats.h_index }}</dd></div>
+        <div class="stat-card"><dt class="stat-label">i10-index</dt><dd class="stat-number">{{ stats.i10_index }}</dd></div>
+      </dl>
+      <p class="stat-note">Citations, h-index and i10-index: Google Scholar, as of {{ stats.as_of }}.</p>
+    </div>
+    {%- endif %}
+  </div>
+</section>
+
+<section class="section section-alt pubs-body" aria-label="Publication list">
+  <div class="container">
+    <form class="pub-filters" data-pub-filters role="search" aria-label="Filter publications" action="/publications.html">
+      <div class="filter-group filter-group--search">
+        <label class="filter-label" for="pub-search">Search</label>
+        <input class="pub-search" type="search" id="pub-search" name="q" data-pub-search placeholder="Title, author, venue or topic" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="filter-group" role="group" aria-labelledby="filter-type-label">
+        <span class="filter-label" id="filter-type-label">Type</span>
+        <button class="pub-filter-btn active" type="button" data-filter-type="all" aria-pressed="true">All<span class="count">{{ total }}</span></button>
+        {%- for t in type_keys %}
+        {%- assign _n = pubs | where: "type", t | size -%}
+        {%- if _n > 0 %}
+        <button class="pub-filter-btn" type="button" data-filter-type="{{ t }}" aria-pressed="false">{{ type_labels[forloop.index0] }}<span class="count">{{ _n }}</span></button>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+      <div class="filter-group" role="group" aria-labelledby="filter-year-label">
+        <span class="filter-label" id="filter-year-label">Year</span>
+        <button class="pub-filter-btn active" type="button" data-filter-year="all" aria-pressed="true">All</button>
+        {%- for y in years %}
+        <button class="pub-filter-btn" type="button" data-filter-year="{{ y }}" aria-pressed="false">{{ y }}</button>
+        {%- endfor %}
+      </div>
+    </form>
+    <p class="pub-count pubs-count" aria-live="polite" aria-atomic="true">Showing <span data-pub-count>{{ total }}</span> of {{ total }} publications</p>
+
+    <div class="pubs-years">
+    {%- assign n = 0 -%}
+    {%- for g in by_year %}
+      <section class="pub-year" data-year="{{ g.name }}" aria-labelledby="year-{{ g.name }}">
+        <h2 id="year-{{ g.name }}">{{ g.name }}</h2>
+        <div class="pub-list">
+        {%- for p in g.items -%}
+          {%- assign n = n | plus: 1 %}
+          {% include pub-row.html pub=p n=n %}
+        {%- endfor %}
+        </div>
+      </section>
+    {%- endfor %}
+    </div>
+
+    <div class="pub-empty" data-pub-empty hidden>
+      <p>No publications match these filters.</p>
+      <a class="text-link" href="/publications.html">Show all {{ total }} publications</a>
+    </div>
+
+    <p class="pubs-note">This list is curated from Google Scholar{% if scholar_url %} (<a href="{{ scholar_url | escape }}"{{ _ext }}>full profile<span class="sr-only"> (opens in a new tab)</span></a>){% endif %}. Scholar entries for edited proceedings volumes are not included. Citation counts are from Google Scholar{% if stats %}, as of {{ stats.as_of }}{% endif %}.</p>
+  </div>
+</section>
+
+{%- capture _sep %}
+
+{% endcapture -%}
+<pre id="all-bibtex" hidden>
+{%- assign _first_bib = true -%}
+{%- for p in pubs -%}
+  {%- if p.bibtex -%}
+    {%- unless _first_bib -%}{{ _sep }}{%- endunless -%}
+    {{- p.bibtex | strip | xml_escape -}}
+    {%- assign _first_bib = false -%}
+  {%- endif -%}
+{%- endfor -%}
+</pre>

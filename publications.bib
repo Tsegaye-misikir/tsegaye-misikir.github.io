@@ -1,0 +1,11 @@
+---
+layout: null
+permalink: /publications.bib
+sitemap: false
+---
+% Publications of {{ site.data.profile.full_name }} ({{ site.data.profile.affiliation }})
+% {{ site.data.publications | size }} entries, generated from _data/publications.yml on {{ site.time | date: "%Y-%m-%d" }}.
+% Web version: {{ "/publications.html" | absolute_url }}
+{% for p in site.data.publications %}{% if p.bibtex %}
+{{ p.bibtex | strip }}
+{% endif %}{% endfor %}

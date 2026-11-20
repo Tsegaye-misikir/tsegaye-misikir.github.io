@@ -1,0 +1,66 @@
+# News — all site-v1 items (index.html #news), newest first. body is HTML, copied verbatim.
+# badge = site-v1 badge class suffix (badge-paper → paper); category_color maps it to the palette.
+
+- date: "2026-10"
+  label: "Oct 2026"
+  category: "Paper"
+  category_color: gold
+  badge: paper
+  title: "Three papers at BESC 2026 · Bangkok"
+  body: "Published in Springer LNCS (BESC 2026 Proceedings, Part I), covering uncertainty-aware multimodal emotion recognition in conversations, multilingual emotion classification with instruction-tuned LLMs on XED, and conversational emotion-cause pair extraction."
+
+- date: "2026-03"
+  label: "Mar 2026"
+  category: "Paper"
+  category_color: gold
+  badge: paper
+  title: "Cross-lingual emotion recognition in Balinese at LoResLM 2026 · Rabat"
+  body: "With PhD student P. K. L. Utama and J. S. Dibangoye: cross-lingual emotion recognition in Balinese text using multilingual LLMs under peer-collaboration settings, published in the ACL Anthology."
+
+- date: "2025-11"
+  label: "Nov 2025"
+  category: "Paper"
+  category_color: gold
+  badge: paper
+  title: "Confidence calibration paper at UncertaiNLP @ EMNLP 2025 · Suzhou"
+  body: "Work on confidence calibration in large language model-based entity matching presented at the UncertaiNLP workshop, co-located with EMNLP 2025."
+
+- date: "2025-05"
+  label: "May 2025"
+  category: "Paper"
+  category_color: gold
+  badge: paper
+  title: "Difficulty estimation paper at TrustNLP @ NAACL 2025 · Albuquerque"
+  body: "Work on difficulty estimation in natural language tasks with action scores presented at the TrustNLP workshop, co-located with NAACL 2025."
+
+- date: "2025-01"
+  label: "Jan 2025"
+  category: "Paper"
+  category_color: gold
+  badge: paper
+  title: "Cross-lingual document recommendations paper at SUMEVAL @ COLING 2025 · Abu Dhabi"
+  body: "New results on multilingual transformer representations for document recommendation, presented at the SUMEVAL workshop @ COLING 2025, Abu Dhabi, with E.-R. Kontos, M. Sabatelli and M. Valdenegro-Toro."
+
+- date: "2025-01"
+  label: "Jan 2025"
+  category: "Paper"
+  category_color: gold
+  badge: paper
+  title: "Low-resource cross-lingual NLP paper presented at LoResLM 2025 · Abu Dhabi"
+  body: "Mapping cross-lingual sentence representations for low-resource language pairs using pre-trained language models."
+
+- date: "2024-09"
+  label: "Sep 2024"
+  category: "Preprint"
+  category_color: muted
+  badge: preprint
+  title: "New preprint on adversarial bias mitigation in automatic essay scoring"
+  body: "Phrase-level adversarial training to reduce demographic bias in neural AES models — arXiv:2409.04795. The peer-reviewed version, \"Phrase-Level Adversarial Data Generation for Bias Mitigation in Automatic Essay Scoring\", was published at AIEER 2024 (Springer CCIS)."
+
+- date: "2024-09"
+  label: "Sep 2024"
+  category: "Teaching"
+  category_color: teal
+  badge: teaching
+  title: "Large Language Models course launched at University of Groningen"
+  body: "New Bachelor course Large Language Models (WBAI068-05) for BSc Artificial Intelligence students now running, covering RLHF, RAG pipelines, and multi-agent systems."

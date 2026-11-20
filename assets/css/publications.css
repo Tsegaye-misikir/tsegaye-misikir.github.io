@@ -1,0 +1,92 @@
+/* Publications page (publications.html). Shared pub-row, filter and BibTeX
+   styles live in site.css; this file only lays out the page itself. */
+
+/* ── Header ── */
+.pubs-head { padding-top: 4.5rem; padding-bottom: 4rem; }
+.pubs-head-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+  gap: 3rem;
+  align-items: end;
+}
+.pubs-head .section-title { margin-bottom: 1.25rem; }
+.pubs-lede { font-size: 1rem; color: var(--muted); line-height: 1.8; max-width: 40rem; margin-bottom: 2rem; }
+.pubs-actions { gap: 0.75rem; }
+.pubs-actions .btn { min-height: 40px; }
+.pubs-actions .icon { flex-shrink: 0; }
+
+.pubs-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+.pubs-stats-grid .stat-card { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 0.35rem; padding: 1rem 1.25rem; }
+.pubs-stats-grid dd { margin: 0; }
+.pubs-stats-grid .stat-number { font-size: 2rem; margin-bottom: 0; }
+.pubs-stats .stat-note { margin-top: 0.75rem; line-height: 1.6; }
+
+/* ── List ── */
+.pubs-body { padding-top: 3.5rem; }
+.pub-filters {
+  margin-bottom: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--line);
+  background: var(--bg3);
+  box-shadow: var(--card-shadow);
+}
+.pub-filters .filter-label { min-width: 4rem; }
+.filter-group--search .pub-search { flex: 1 1 16rem; min-width: 0; min-height: 40px; }
+/* Filters need site.js; without it the full list is shown and the bar is hidden. */
+html:not(.js) .pub-filters { display: none; }
+
+.pubs-count { margin-bottom: 2.5rem; }
+.pubs-years .pub-year:last-child { margin-bottom: 0; }
+.pub-year[hidden] { display: none; }
+.pub-year > h2 { scroll-margin-top: calc(var(--header-h) + 1rem); }
+
+.pub-empty { padding: 2rem 0 1rem; }
+.pub-empty p { margin-bottom: 0.75rem; }
+.pub-empty[hidden] { display: none; }
+
+.pubs-note {
+  margin-top: 3rem; padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem; line-height: 1.7; color: var(--muted);
+  max-width: 44rem;
+}
+.pubs-note a { color: var(--teal); }
+.pubs-note a:hover { color: var(--gold); }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .pubs-head-grid { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; align-items: start; }
+  .pubs-stats { max-width: 32rem; }
+  .pubs-stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .pubs-head { padding-top: 3rem; padding-bottom: 3rem; }
+  .pubs-body { padding-top: 2.5rem; }
+  .pubs-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pub-filters { padding: 1rem; }
+  .pub-filters .filter-group { gap: 0.4rem; }
+  .pub-filters .filter-label { flex-basis: 100%; min-width: 0; }
+  .filter-group--search .pub-search { flex-basis: 100%; max-width: none; }
+  .pub-filter-btn { padding: 0.4rem 0.75rem; min-height: 36px; }
+}
+@media (max-width: 520px) {
+  .pubs-actions { flex-direction: column; align-items: stretch; }
+  .pubs-actions .btn { justify-content: center; }
+  .pubs-stats-grid .stat-card { padding: 0.85rem 1rem; }
+  .pubs-stats-grid .stat-number { font-size: 1.7rem; }
+}
+
+@media print {
+  .pub-filters, .pubs-actions, .pub-empty { display: none !important; }
+  .pub-year[hidden], .pub-row[hidden] { display: block !important; }
+  .pub-row[hidden] { display: grid !important; }
+}
+
+/* The count inside filter buttons: site.css dims it with opacity, which drops
+   it below 4.5:1 on the active (gold-dim) button; keep full colour here. */
+.pub-filter-btn .count { opacity: 1; margin-left: 0.4rem; font-weight: 400; }

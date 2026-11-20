@@ -1,160 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Page not found — Tsegaye M. Tashu</title>
-  <meta name="robots" content="noindex">
-  <meta name="description" content="The requested page could not be found on the website of Tsegaye M. Tashu, University of Groningen.">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="/favicon.png" type="image/png" sizes="180x180">
-  <link rel="apple-touch-icon" href="/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=Sora:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:        #0d1520;
-      --bg2:       #111d2e;
-      --bg3:       #162034;
-      --line:      rgba(255,255,255,0.07);
-      --text:      #e8e2d6;
-      --muted:     #8a96a9;
-      --gold:      #d4a853;
-      --gold-dim:  rgba(212,168,83,0.15);
-      --teal:      #4ba89a;
-      --teal-dim:  rgba(75,168,154,0.12);
-      --red:       #d9785f;
-      --serif:     'DM Serif Display', Georgia, serif;
-      --sans:      'Sora', sans-serif;
-      --mono:      'JetBrains Mono', monospace;
-      --ease:      cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 16px;
-      line-height: 1.7;
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-    }
-
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      background-size: 256px 256px;
-      pointer-events: none; z-index: 999; opacity: 0.4;
-    }
-
-    .skip-link { position: absolute; left: -9999px; top: 0; }
-    .skip-link:focus { left: 1rem; top: 1rem; z-index: 1001; background: var(--gold); color: var(--bg); padding: .5rem 1rem; font-family: var(--mono); font-size: .8rem; text-decoration: none; }
-    a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-
-    header {
-      display: flex; align-items: center;
-      padding: 0 clamp(1.5rem, 5vw, 4rem);
-      height: 64px;
-      border-bottom: 1px solid var(--line);
-    }
-    .nav-logo {
-      font-family: var(--serif);
-      font-size: 1.15rem;
-      color: var(--text);
-      text-decoration: none;
-      letter-spacing: 0.01em;
-    }
-    .nav-logo span { color: var(--gold); }
-
-    main {
-      flex: 1;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 4rem clamp(1.5rem, 8vw, 6rem);
-      max-width: 52rem;
-    }
-    .eyebrow {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
-    }
-    h1 {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(2.4rem, 6vw, 4rem);
-      line-height: 1.1;
-      margin-bottom: 1.25rem;
-    }
-    h1 em { color: var(--gold); font-style: italic; }
-    .lead { color: var(--muted); max-width: 36rem; margin-bottom: 2.5rem; }
-
-    .links { list-style: none; display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .btn {
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 0.8rem 1.4rem;
-      border-radius: 2px;
-      transition: all 0.25s var(--ease);
-    }
-    .btn-primary { background: var(--gold); color: var(--bg); border: 1px solid var(--gold); }
-    .btn-primary:hover { background: transparent; color: var(--gold); }
-    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--line); }
-    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
-
-    footer {
-      padding: 2rem clamp(1.5rem, 8vw, 6rem);
-      border-top: 1px solid var(--line);
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1rem;
-    }
-    .footer-copy { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; }
-    .footer-links { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; }
-    .footer-links a { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; }
-    .footer-links a:hover { color: var(--gold); }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-      .fade-in, .reveal { opacity: 1 !important; transform: none !important; }
-    }
-  </style>
-</head>
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <header>
-    <a href="/" class="nav-logo">T.M.<span>Tashu</span></a>
-  </header>
-
-  <main id="main">
-    <p class="eyebrow">Error 404</p>
-    <h1>Page <em>not found</em></h1>
-    <p class="lead">The page you were looking for does not exist or has moved. Try one of these instead.</p>
-    <ul class="links">
-      <li><a class="btn btn-primary" href="/">Home</a></li>
-      <li><a class="btn btn-outline" href="/NLP.html">NLP Course</a></li>
-      <li><a class="btn btn-outline" href="/llm.html">LLM Course</a></li>
-      <li><a class="btn btn-outline" href="/LTP.html">LT Practical</a></li>
-    </ul>
-  </main>
-
-  <footer>
-    <div class="footer-copy">© 2026 Tsegaye M. Tashu · University of Groningen</div>
-    <div class="footer-links">
-      <a href="mailto:t.m.tashu@rug.nl">Email</a>
-      <a href="https://github.com/Tsegaye-misikir" target="_blank" rel="noopener noreferrer">GitHub</a>
-    </div>
-  </footer>
-</body>
-</html>
+---
+title: Page not found
+description: The requested page could not be found on the website of Tsegaye M. Tashu, University of Groningen.
+permalink: /404.html
+sitemap: false
+noindex: true
+---
+<section class="section error-page" aria-labelledby="error-title">
+  <p class="section-label">Error 404</p>
+  <h1 class="section-title" id="error-title">Page <em>not found</em></h1>
+  <p class="lead">The page you were looking for does not exist or has moved. Try one of these instead.</p>
+  <ul class="btn-group">
+    <li><a class="btn btn-primary" href="/">Home</a></li>
+    <li><a class="btn btn-outline" href="/publications.html">Publications</a></li>
+    <li><a class="btn btn-outline" href="/NLP.html">NLP Course</a></li>
+    <li><a class="btn btn-outline" href="/llm.html">LLM Course</a></li>
+    <li><a class="btn btn-outline" href="/LTP.html">LT Practical</a></li>
+  </ul>
+</section>

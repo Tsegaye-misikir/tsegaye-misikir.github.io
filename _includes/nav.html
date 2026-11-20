@@ -1,0 +1,50 @@
+{%- comment -%}
+  Site header: main nav (desktop row / mobile panel), theme toggle, menu button,
+  and — on course pages — the course sub-nav. Active item: page.nav_active
+  (matched against the labels in _data/navigation.yml).
+  `is_course` is computed in _layouts/default.html.
+{%- endcomment -%}
+{%- assign nav = site.data.navigation -%}
+<header class="site-header">
+  <nav class="site-nav" aria-label="Main">
+    <a class="nav-logo" href="/">T.M.<span>Tashu</span></a>
+    <div class="nav-menu" id="site-menu" data-nav-menu>
+      <ul class="nav-links">
+        {%- for item in nav.main %}
+        {%- assign _active = false -%}
+        {%- if page.nav_active == item.label or page.url == item.url -%}{%- assign _active = true -%}{%- endif %}
+        <li><a href="{{ item.url }}"{% if _active %} class="active" aria-current="{% if page.url == item.url %}page{% else %}true{% endif %}"{% endif %}>{{ item.label }}</a></li>
+        {%- endfor %}
+      </ul>
+      <div class="nav-menu-extra">
+        <p class="nav-menu-label">Courses</p>
+        <ul class="nav-menu-courses">
+          {%- for c in nav.courses %}
+          <li><a href="{{ c.url }}"{% if page.url == c.url %} aria-current="page"{% endif %}>{{ c.label }}</a></li>
+          {%- endfor %}
+        </ul>
+        {% include social-links.html size="sm" %}
+      </div>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="true" aria-label="Dark theme" title="Switch to light theme">
+        {% include icon.html name="sun" size="18" class="icon-sun" %}
+        {% include icon.html name="moon" size="18" class="icon-moon" %}
+      </button>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-menu" aria-label="Open menu">
+        {% include icon.html name="menu" size="22" class="icon-open" %}
+        {% include icon.html name="close" size="22" class="icon-close" %}
+      </button>
+    </div>
+  </nav>
+  {%- if is_course %}
+  <nav class="course-subnav" aria-label="Courses">
+    <a class="course-subnav-back" href="/#teaching">Teaching</a>
+    <ul>
+      {%- for c in nav.courses %}
+      <li><a href="{{ c.url }}"{% if page.url == c.url %} aria-current="page"{% endif %}>{{ c.label }}</a></li>
+      {%- endfor %}
+    </ul>
+  </nav>
+  {%- endif %}
+</header>

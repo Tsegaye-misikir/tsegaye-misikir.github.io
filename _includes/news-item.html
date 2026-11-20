@@ -1,0 +1,36 @@
+{%- comment -%}
+  One news entry. Usage: {% include news-item.html item=i %}
+  Fields: date (YYYY-MM), label ("Oct 2026"), category, category_color
+  (gold | gold-soft | teal | red | muted, or the site-v1 names paper | preprint |
+  teaching | award | service), title, body (HTML), links [{label, url}].
+  Param heading (optional, default h3).
+{%- endcomment -%}
+{%- assign item = include.item -%}
+{%- assign _h = include.heading | default: "h3" -%}
+{%- assign _parts = item.label | split: " " -%}
+<article class="news-item">
+  <time class="news-date" datetime="{{ item.date }}">
+    {%- if _parts.size > 1 -%}
+    <span class="nd-month">{{ _parts | first }}</span><span class="nd-year">{{ _parts | last }}</span>
+    {%- else -%}
+    <span class="nd-month">{{ item.label }}</span>
+    {%- endif -%}
+  </time>
+  <div class="news-body">
+    {%- if item.category %}
+    <span class="news-badge badge-{{ item.badge | default: item.category_color | default: 'muted' }}">{{ item.category }}</span>
+    {%- endif %}
+    <{{ _h }} class="news-title">{{ item.title }}</{{ _h }}>
+    {%- if item.body %}
+    <div class="news-desc">{{ item.body }}</div>
+    {%- endif %}
+    {%- if item.links and item.links.size > 0 %}
+    <p class="news-links">
+      {%- for l in item.links %}
+      {%- assign _c = l.url | slice: 0, 4 %}
+      <a href="{{ l.url }}"{% if _c == "http" %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ l.label }}{% if _c == "http" %}<span aria-hidden="true"> ↗</span>{% else %}<span aria-hidden="true"> →</span>{% endif %}</a>
+      {%- endfor %}
+    </p>
+    {%- endif %}
+  </div>
+</article>
